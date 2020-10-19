@@ -77,18 +77,19 @@ class Matcher:
             '交易时间': '交易时间',
             '收/付方名称': '对方名称',
             '收/付方帐号': '对方账号',
-            '业务名称': '交易类型',
+            '交易类型': '交易类型',
             '摘要': '摘要',
             '贷方金额': '流入金额',
             '借方金额': '流出金额',
             '余额': '交易后余额',
-            '交易类型': '系统分类',
+            # '交易类型': '系统分类',
             '起息日': '本方银行', # wrong
         }
         mongo.insert_data(mapping_rules, 'base_rule', 'mapping')
         # print(mongo.show_datas('base_rule', db='mapping'))
 
     def mapping(self):
+        # get base rule and rule summary from mongodb
         self.base_rules_summary = mongo.show_datas('base_rule', {'type': 'rule_summary'}, 'mapping')[0]
         self.base_rules = mongo.show_datas('base_rule', {'type': 'base_rules'}, 'mapping')[0]
         # print(self.base_rules)
@@ -96,11 +97,12 @@ class Matcher:
         self.target_unmatched = self.base_rules_summary['target_headers'].copy()
         # print(target_unmatched)
         self.option_unmatched = list(self.option_list).copy()
+        self.option_unmatched.append('none')        # 用作空选项
         for item in self.option_list:
             if item in self.base_rules:
                 self.matched_mapping[item] = self.base_rules[item]
                 self.target_unmatched.remove(self.base_rules[item])
-                self.option_unmatched.remove(item)
+                self.option_unmatched.remove(item)            # 可多选？去不去掉呢？？
         # 去掉input excel中随录信息包含值
         if self.self_name:
             self.target_unmatched.remove('本方名称')
@@ -112,25 +114,22 @@ class Matcher:
 
 
     def manual_mapping(self):
-        # Manual add rules
+        # Manually add rules
         i = 0
         while self.target_unmatched:
             cur_tar = self.target_unmatched[0]
-            print('options: ', self.option_unmatched)
+            print('Options: ', self.option_unmatched)
             selected = input('与"{}"对应的是：'.format(cur_tar))
             if selected not in self.option_unmatched:
                 print('错误！不存在此选项')
                 continue
             self.matched_mapping[selected] = cur_tar
-            self.option_unmatched.remove(selected)
+            self.option_unmatched.remove(selected)      #可多选？去不去掉呢？？
             self.target_unmatched.remove(cur_tar)
 
         print(self.matched_mapping, self.option_unmatched, self.target_unmatched)
 
     def dataframe_generator(self):
-        # 生成反向mapping
-        for key, val in self.matched_mapping.items():
-            self.revered_mapping[val] = key
         self.generated_df = pd.DataFrame(columns=self.base_rules_summary['target_headers'])
         for row in self.target_df.index:
             insert_row = {
@@ -148,7 +147,7 @@ class Matcher:
         print(self.generated_df)
 
     def excel_generator(self):
-        writer = pd.ExcelWriter('output.xlsx')
+        writer = pd.ExcelWriter('output/output2.xlsx')
         self.generated_df.to_excel(writer, sheet_name='Sheet1')
         writer.save()
         print('DataFrame is written successfully to the Excel File.')
