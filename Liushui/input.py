@@ -2,6 +2,7 @@ import re
 import pandas as pd
 import time
 import Modules.mongodb as mongo
+import Modules.public_module as md
 
 class Matcher:
     def __init__(self, file_path, user_name):
@@ -148,7 +149,6 @@ class Matcher:
         # 生成反向mapping
         for key, val in self.matched_mapping.items():   # 如果有多个none怎么办呢？:此时还无none, 所以需要先reverse，再加none
             self.reversed_mapping[val] = key
-
         # Manually add rules
         i = 0
         while self.target_unmatched:    # 一个个处理还没有匹配上的target选项
@@ -180,12 +180,15 @@ class Matcher:
             for item in self.base_rules_summary['target_headers']:
                 if item == '本方名称' or item == '本方账号':
                     continue
-                if self.reversed_mapping[item] == 'none':
+                elif self.reversed_mapping[item] == 'none':
                     # mapped_item = ''
                     insert_row[item] = ''  # 注意！mapped_item不能为空。
                 else:
                     mapped_item = self.reversed_mapping[item]
-                    insert_row[item] = self.target_df.loc[row, mapped_item]         # 注意！mapped_item不能为空。
+                    inserted_item = self.target_df.loc[row, mapped_item]         # 注意！mapped_item不能为空。
+                    if item == '交易日期':
+                        inserted_item = md.to_date(str(inserted_item))
+                    insert_row[item] = inserted_item
             # print(insert_row)
             self.generated_df = self.generated_df.append(insert_row, ignore_index=True) # 注意df得新赋值，而不是直接.append
 
