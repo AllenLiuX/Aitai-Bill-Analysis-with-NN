@@ -32,7 +32,7 @@ def benford(nums):
         t = str(i)[0]       #首字母
         if t != '0':
             dict[t] += 1
-    print(dict)
+    # print(dict)
     real = []   # array of real prob
     for key, val in dict.items():
         # dict[key] = val/len(nums)

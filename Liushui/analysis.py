@@ -42,18 +42,16 @@ class Analyzer:
                 income2.append(income[i])
             if not np.isnan(out[i]):
                 out2.append(out[i])
-            # if not np.isnan(balance[i]):
-            #     balance2.append(balance[i])
-        # print((balance2))
         all = income2 + out2
-        print(md.benford(all))
-        # print(md.benford(income2))
-        # print(md.benford(out2))
-        # print(md.benford(balance2))
+        res = md.benford(all)
+        print('benford coefficient: ', res[0])
+        print('total samples: ', len(all))
+        return res[0], len(all)
+
 
 def run(file_path):
     analyst = Analyzer(file_path)
-    # analyst.balance_check(0)
+    analyst.balance_check(0)
     analyst.benford_check()
 
 if __name__ == '__main__':

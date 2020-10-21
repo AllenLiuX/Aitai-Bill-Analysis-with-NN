@@ -194,25 +194,26 @@ class Matcher:
 
         print(self.generated_df)
 
-    def excel_generator(self):
-        writer = pd.ExcelWriter('output/output2.xlsx')
+    def excel_generator(self, output_path):
+        writer = pd.ExcelWriter(output_path)
         self.generated_df.to_excel(writer, sheet_name='Sheet1')
         writer.save()
         print('DataFrame is written successfully to the Excel File.')
 
 
-def run(file_path, user_name):
+def run(file_path, output_path, user_name):
     matcher = Matcher(file_path, user_name)
     matcher.info_extractor()
     matcher.rule_setup()
     matcher.mapping()
     matcher.manual_mapping()
     matcher.dataframe_generator()
-    matcher.excel_generator()
+    matcher.excel_generator(output_path)
 
     # matcher.clear_user_rule()
 
 if __name__ == '__main__':
     start_time = time.time()
-    run('data/aita_bank_template.xls', 'vincent')
+    run('data/sample1.xls', 'output/sample1.xlsx', 'vincent')
+    run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
     print("--- %s seconds ---" % (time.time() - start_time))
