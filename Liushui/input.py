@@ -19,6 +19,8 @@ class Matcher:
         self.end_date = ''
         self.transaction_num = 0
         self.currency = 'CNY'
+        self.init_balance = 0
+        self.gen_date = ''
 
         self.option_list = []
 
@@ -43,6 +45,8 @@ class Matcher:
                     'self_account': ['银行帐号', '银行账号'],
                     'start_date': ['查询开始日期'],
                     'end_date': ['查询结束日期'],
+                    'init_balance': ['对帐单期初余额'],
+                    'gen_date': ['对帐单期初余额']
         }
         for index in self.raw_df.index:     # 逐行看关键词是否存在
             for i in range(len(self.raw_df.loc[index].values)):
@@ -94,7 +98,7 @@ class Matcher:
         self.base_rules = mongo.show_datas('base_rule', {'type': 'base_rules'}, 'mapping')[0]
         try:
             self.user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': self.user_name}, 'mapping')[0]
-            self.base_rules.update(self.user_rules)         # 合并user_rules 进base_rule!
+            # self.base_rules.update(self.user_rules)         # 合并user_rules 进base_rule!
         except:
             self.user_rules["type"] = "user_rules"
             self.user_rules['name'] = self.user_name
@@ -121,21 +125,24 @@ class Matcher:
     def update_rule(self, query):       # query should be in the form of {'target': 'option'}
         for key in query:
             selected = query[key]
-            # 1. 分情况更新target_unmatched和user_rule
-            if key in self.target_unmatched:  # 还没被match的
-                self.target_unmatched.remove(key)
-            else:  # 之前有设置过tar对应哪个，如果是user_rule，应该删掉该规则
-                for k, v in self.user_rules.items():
-                    if self.reversed_mapping[key] == k and key == v:       #当前mapping和userrule左右均能对应上的一条
-                        del self.user_rules[k]
-            self.user_rules[selected] = key
-            mongo.delete_col('user_rule', 'mapping')  # 每次删掉原有collection
-            mongo.insert_data(self.user_rules, 'user_rule', 'mapping')
-
-            # 2. 更新option_unmatched, reversed_mapping 为之后生成excel作准备
+            # 1.更新option_unmatched
             if selected not in self.option_unmatched:
                 print('错误！不存在此选项')
                 return False
+
+            # 2. 分情况更新target_unmatched和user_rule
+            if key in self.target_unmatched:  # 还没被match的
+                self.target_unmatched.remove(key)
+            # else:  # 之前有设置过tar对应哪个，如果是user_rule，应该删掉该规则
+                # for k, v in self.user_rules.items():
+                #     if self.reversed_mapping[key] == k and key == v:       #当前mapping和userrule左右均能对应上的一条
+                #         del self.user_rules[k]
+            # self.user_rules[selected] = key
+            self.user_rules[key] = selected
+            mongo.delete_col('user_rule', 'mapping')  # 每次删掉原有collection
+            mongo.insert_data(self.user_rules, 'user_rule', 'mapping')
+
+            # 3. 更新reversed_mapping 为之后生成excel作准备
             self.reversed_mapping[key] = selected
             if selected != 'none':  # none 不去掉，因为还可能被选择
                 self.option_unmatched.remove(selected)  # 可多选？去不去掉呢？去掉
@@ -143,16 +150,21 @@ class Matcher:
 
     def clear_user_rule(self):
         mongo.delete_datas({'name': self.user_name}, 'user_rule', 'mapping')
-        mongo.delete_col('user_rule', 'mapping')
+        # mongo.delete_col('user_rule', 'mapping')
         
     def manual_mapping(self):
         # 生成反向mapping
         for key, val in self.matched_mapping.items():   # 如果有多个none怎么办呢？:此时还无none, 所以需要先reverse，再加none
             self.reversed_mapping[val] = key
+        self.reversed_mapping.update(self.user_rules)         # 合并user_rules 进base_rule!
+
         # Manually add rules
         i = 0
         while self.target_unmatched:    # 一个个处理还没有匹配上的target选项
             cur_tar = self.target_unmatched[0]
+            if cur_tar in self.reversed_mapping:        # user_rule被加进reversemap了，但target_unmatched并没有被update
+                self.target_unmatched.remove(cur_tar)
+                continue
             print('Options: ')
             for i in range(0, len(self.option_unmatched), 4):   # 每四个换一行显示
                 print(self.option_unmatched[i:i + 4])
@@ -169,6 +181,26 @@ class Matcher:
             # self.target_unmatched.remove(cur_tar)
 
         # print(self.matched_mapping, self.option_unmatched, self.target_unmatched)
+    def database_input(self):
+        info = {}
+        info['type'] = 'form'
+        info['path'] = self.file_path
+        info['time'] = [self.start_date, self.end_date]
+        info['account'] = self.self_account
+        info['currency'] = self.currency
+        info['gen_date'] = self.gen_date
+        self.transaction_num = self.target_df.shape[1]
+        info['transctions'] = self.transaction_num
+        name_mapping = {    # 之后可以考虑用头四个字转拼音来生成collection名字
+            '上海爱钛技术咨询有限公司': 'aitai',
+            '宜昌华昊新材料科技有限公司': 'huahao'
+        }
+        if self.self_name in name_mapping:
+            col_name = name_mapping[self.self_name]
+        else:
+            col_name = self.self_name
+        mongo.insert_data(info, col_name, 'mapping')
+
 
     def dataframe_generator(self):
         self.generated_df = pd.DataFrame(columns=self.base_rules_summary['target_headers'])
@@ -203,14 +235,15 @@ class Matcher:
 
 def run(file_path, output_path, user_name):
     matcher = Matcher(file_path, user_name)
+    # matcher.clear_user_rule()
     matcher.info_extractor()
     matcher.rule_setup()
     matcher.mapping()
     matcher.manual_mapping()
+    matcher.database_input()
     matcher.dataframe_generator()
     matcher.excel_generator(output_path)
 
-    # matcher.clear_user_rule()
 
 if __name__ == '__main__':
     start_time = time.time()
