@@ -3,6 +3,7 @@ import re
 import math
 import numpy as np
 import pandas as pd
+from operator import itemgetter
 
 def to_date(str):
     if len(str) == 10:
@@ -24,6 +25,7 @@ def correlation_coefficient(a, b):
     corr_factor = cov_ab / sq
     return corr_factor
 
+
 def benford(nums):
     dict = {}
     for i in range(1,10):
@@ -43,9 +45,30 @@ def benford(nums):
     cor = correlation_coefficient(real, expect)
     # cor = np.corrcoef(real, expect)[0][1]
     return [cor, real]
-    
+
+
+def merge_dates(dates):
+    D = sorted(dates, key=itemgetter(0))
+    res = []
+    if len(D) <= 1:
+        return D
+    start = D[0][0]
+    end = D[0][1]
+    for i in D[1:]:
+        if i[0] <= end+1:       # +1因为两端相差1天也是连续
+            end = max(i[1], end)
+            continue
+        else:
+            res.append([start, end])
+            start = i[0]
+            end = i[1]
+    res.append([start, end])
+    return res
+
 if __name__ == '__main__':
     to_date('20200101')
-    nums = [123, 125, 129, 235, 45, 43363, 134, 4346, 643, 3 , 356, 8, 6,5, 8, 97, 5]
+    nums = [123, 125, 129, 235, 45, 43363, 134, 4346, 643, 3, 356, 8, 6, 5, 8, 97, 5]
+    dates = [[1,5], [2, 4], [1, 3], [10,11], [8, 9]]
+    print(merge_dates(dates))
     print(benford(nums))
 

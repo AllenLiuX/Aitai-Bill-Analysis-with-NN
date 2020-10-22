@@ -5,7 +5,7 @@ import Modules.mongodb as mongo
 import Modules.public_module as md
 
 class Matcher:
-    def __init__(self, file_path, user_name):
+    def __init__(self, file_path, output_path, user_name):
         # dataframes
         self.raw_df = pd.read_excel(file_path)
         self.target_df = None
@@ -13,6 +13,7 @@ class Matcher:
         self.user_name = user_name
 
         self.file_path = file_path
+        self.output_path = output_path
         self.self_name = ''
         self.self_account = ''
         self.start_date = ''
@@ -46,7 +47,7 @@ class Matcher:
                     'start_date': ['查询开始日期'],
                     'end_date': ['查询结束日期'],
                     'init_balance': ['对帐单期初余额'],
-                    'gen_date': ['对帐单期初余额']
+                    'gen_date': ['生成日期']
         }
         for index in self.raw_df.index:     # 逐行看关键词是否存在
             for i in range(len(self.raw_df.loc[index].values)):
@@ -181,20 +182,28 @@ class Matcher:
             # self.target_unmatched.remove(cur_tar)
 
         # print(self.matched_mapping, self.option_unmatched, self.target_unmatched)
+
+    def clear_company_file(self, path, name):
+        mongo.delete_datas({'path': path}, name, 'mapping')
+
     def database_input(self):
+        name_mapping = {  # 之后可以考虑用头四个字转拼音来生成collection名字
+            '上海爱钛技术咨询有限公司': 'aitai',
+            '宜昌华昊新材料科技有限公司': 'huahao'
+        }
+
+        self.clear_company_file(self.output_path, name_mapping[self.self_name])
+
         info = {}
         info['type'] = 'form'
-        info['path'] = self.file_path
-        info['time'] = [self.start_date, self.end_date]
+        info['path'] = self.output_path
+        info['company_name'] = self.self_name       # 方便账号间比对加入的。其实可以不要
+        info['dates'] = [self.start_date, self.end_date]
         info['account'] = self.self_account
         info['currency'] = self.currency
         info['gen_date'] = self.gen_date
         self.transaction_num = self.target_df.shape[1]
-        info['transctions'] = self.transaction_num
-        name_mapping = {    # 之后可以考虑用头四个字转拼音来生成collection名字
-            '上海爱钛技术咨询有限公司': 'aitai',
-            '宜昌华昊新材料科技有限公司': 'huahao'
-        }
+        info['transctions_num'] = self.transaction_num
         if self.self_name in name_mapping:
             col_name = name_mapping[self.self_name]
         else:
@@ -226,15 +235,15 @@ class Matcher:
 
         print(self.generated_df)
 
-    def excel_generator(self, output_path):
-        writer = pd.ExcelWriter(output_path)
+    def excel_generator(self):
+        writer = pd.ExcelWriter(self.output_path)
         self.generated_df.to_excel(writer, sheet_name='Sheet1')
         writer.save()
         print('DataFrame is written successfully to the Excel File.')
 
 
 def run(file_path, output_path, user_name):
-    matcher = Matcher(file_path, user_name)
+    matcher = Matcher(file_path, output_path, user_name)
     # matcher.clear_user_rule()
     matcher.info_extractor()
     matcher.rule_setup()
@@ -242,7 +251,7 @@ def run(file_path, output_path, user_name):
     matcher.manual_mapping()
     matcher.database_input()
     matcher.dataframe_generator()
-    matcher.excel_generator(output_path)
+    matcher.excel_generator()
 
 
 if __name__ == '__main__':
