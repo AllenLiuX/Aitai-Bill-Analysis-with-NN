@@ -1,0 +1,24 @@
+
+2020-10-23 11:29:23.394 test {}
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 150, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 126, in test
+    arg1 = args['arg1']  # str
+KeyError: 'arg1'
+
+2020-10-23 11:29:49.805 test {}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 150, in post
+    res = dic_api[api_name](args)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 126, in test
+    arg1 = args['arg1']  # str
+KeyError: 'arg1'
+
+2020-10-23 11:29:59.475 test {}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 150, in post
+    res = dic_api[api_name](args)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 126, in test
+    arg1 = args['arg1']  # str
+KeyError: 'arg1'

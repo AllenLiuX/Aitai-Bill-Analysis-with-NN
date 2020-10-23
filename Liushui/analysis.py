@@ -11,6 +11,7 @@ class Analyzer:
         self.file_paths = []
         self.dates = []
         self.self_accounts = []
+        self.path2account = {}
 
     """
     @:param error_tolerance 是交易后算余额所能容忍的误差值。建议设置大于1
@@ -24,6 +25,7 @@ class Analyzer:
             self.file_paths.append(form['path'])
             self.dates.append(form['dates'])
             self.self_accounts.append(form['account'])
+            self.path2account[form['path']] = form['account']
         self.company_name = forms[0]['company_name']
         # make dates from str to int
         for d in range(len(self.dates)):
@@ -72,7 +74,6 @@ class Analyzer:
         print('total samples: ', len(all))
         return res[0], len(all)
 
-
     def info_missing_check(self, file_path):
         cur_df = pd.read_excel(file_path)
         abstract = cur_df['摘要'].values
@@ -107,7 +108,56 @@ class Analyzer:
                         invalid_accounts.append(cur_account)
         print('missing accounts:', invalid_accounts)
 
+    def cross_validation(self):
+        invalid_accounts = []
+        account2df = {}
+        # 先把账号下表格都打开
+        for path in self.file_paths:
+            cur_df = pd.read_excel(path)
+            account2df[self.path2account[path]] = cur_df
 
+        account2trans = {}
+        for account in self.self_accounts:
+            cur_df = account2df[account]
+
+            accounts = []  # 对方账号
+            for index in cur_df.index:  # 逐行找向自己公司转账的条目，并提取账号
+                if cur_df.loc[index, '对方名称'] == self.company_name:
+                    cur_account = cur_df.loc[index, '对方账号']
+                    accounts.append(cur_account)
+                    if cur_account not in self.self_accounts:
+                        invalid_accounts.append(cur_account)
+                    cur_trans = cur_df.loc[index]
+                    if account not in account2trans:
+                        account2trans[account] = [cur_trans]
+                    else:
+                        account2trans[account].append(cur_trans)
+
+        unmatched_trans = []
+        for from_acc, trans in account2trans.items():
+            for tran in trans:
+                tran_date = tran.loc['交易日期']
+                tran_in = tran.loc['流入金额']
+                tran_out = tran.loc['流出金额']
+                out_acc = tran.loc['对方账号']
+                if out_acc in account2df:
+                    to_df = account2df[out_acc]
+                else:
+                    print('not existed account: ', out_acc)
+                    continue
+                matched = False
+                for index in cur_df.index:
+                    if cur_df.loc[index, '对方账号'] == from_acc and cur_df.loc[index, '交易日期']==tran_date:
+                        if cur_df.loc[index, '流入金额']==tran_out or cur_df.loc[index, '流出金额']==tran_in:
+                            print('Get one matched transaction.', from_acc, out_acc)
+                            matched = True
+                            break
+                if not matched:
+                    print('---- not matched!----\n', tran)
+                    unmatched_trans.append(tran)
+
+        print('missing accounts:', invalid_accounts)
+        return unmatched_trans
 
 def run(name):
     analyst = Analyzer(name)
@@ -121,7 +171,8 @@ def run(name):
         analyst.info_missing_check(path)
     print('----- overall report -----')
     analyst.dates_check()
-    analyst.inner_account_check()
+    # analyst.inner_account_check()
+    analyst.cross_validation()
 
 if __name__ == '__main__':
     start_time = time.time()

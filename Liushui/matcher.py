@@ -120,6 +120,18 @@ class Matcher:
         if self.self_account:
             self.target_unmatched.remove('本方账号')
 
+        # 生成反向mapping
+        for key, val in self.matched_mapping.items():  # 如果有多个none怎么办呢？:此时还无none, 所以需要先reverse，再加none
+            self.reversed_mapping[val] = key
+        self.reversed_mapping.update(self.user_rules)  # 合并user_rules 进base_rule!
+        target_unmatched = []
+        for i in self.target_unmatched:    # 一个个处理还没有匹配上的target选项
+            # cur_tar = self.target_unmatched[0]
+            if i not in self.reversed_mapping:        # user_rule被加进reversemap了，但target_unmatched并没有被update
+                target_unmatched.append(i)
+        self.target_unmatched = target_unmatched
+        return [self.target_unmatched, self.option_unmatched]
+
         # print(self.matched_mapping)
         # print(self.option_unmatched, self.target_unmatched)
 
@@ -154,15 +166,11 @@ class Matcher:
         # mongo.delete_col('user_rule', 'mapping')
         
     def manual_mapping(self):
-        # 生成反向mapping
-        for key, val in self.matched_mapping.items():   # 如果有多个none怎么办呢？:此时还无none, 所以需要先reverse，再加none
-            self.reversed_mapping[val] = key
-        self.reversed_mapping.update(self.user_rules)         # 合并user_rules 进base_rule!
-
         # Manually add rules
         i = 0
         while self.target_unmatched:    # 一个个处理还没有匹配上的target选项
             cur_tar = self.target_unmatched[0]
+            print(cur_tar)
             if cur_tar in self.reversed_mapping:        # user_rule被加进reversemap了，但target_unmatched并没有被update
                 self.target_unmatched.remove(cur_tar)
                 continue
@@ -231,9 +239,9 @@ class Matcher:
                         inserted_item = md.to_date(str(inserted_item))
                     insert_row[item] = inserted_item
             # print(insert_row)
-            self.generated_df = self.generated_df.append(insert_row, ignore_index=True) # 注意df得新赋值，而不是直接.append
+            self.generated_df = self.generated_df.append(insert_row, ignore_index=True)     # 注意df得新赋值，而不是直接.append
 
-        print(self.generated_df)
+        # print(self.generated_df)
 
     def excel_generator(self):
         writer = pd.ExcelWriter(self.output_path)
@@ -241,6 +249,22 @@ class Matcher:
         writer.save()
         print('DataFrame is written successfully to the Excel File.')
 
+
+def store(file_path, output_path, user_name):
+    matcher = Matcher(file_path, output_path, user_name)
+    # matcher.clear_user_rule()
+    matcher.info_extractor()
+    matcher.rule_setup()
+    remains = matcher.mapping()
+    if remains[0]:      # target_unmatched is not empty
+        return remains
+    data_store(matcher)
+    return 'success'
+
+def data_store(matcher):
+    matcher.database_input()
+    matcher.dataframe_generator()
+    matcher.excel_generator()
 
 def run(file_path, output_path, user_name):
     matcher = Matcher(file_path, output_path, user_name)
@@ -252,10 +276,12 @@ def run(file_path, output_path, user_name):
     matcher.database_input()
     matcher.dataframe_generator()
     matcher.excel_generator()
+    return 'success'
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    run('data/sample1.xls', 'output/sample1.xlsx', 'vincent')
-    run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
+    res = store('data/sample1.xls', 'output/sample1.xlsx', 'vincent2')
+    print(res)
+    # run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
     print("--- %s seconds ---" % (time.time() - start_time))
