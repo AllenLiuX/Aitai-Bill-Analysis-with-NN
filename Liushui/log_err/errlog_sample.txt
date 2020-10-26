@@ -192,3 +192,17 @@ Traceback (most recent call last):
   File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 271, in add_rules
     user_rules["type"] = "user_rules"
 UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-26 17:14:03.077 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent"}
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 207, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 142, in match
+    data = matcher.store(file_path, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 318, in store
+    data_store(file_path, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 327, in data_store
+    matcher.separate_col()
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 282, in separate_col
+    self.generated_df['流入金额'][self.generated_df['流入金额'] <= 0] = 0
+TypeError: 'NoneType' object is not subscriptable

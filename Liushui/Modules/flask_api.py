@@ -158,6 +158,7 @@ def match(args):
         }
     return res
 
+
 def addrules(args):
     keys = [
         'query',
@@ -189,10 +190,41 @@ def addrules(args):
     }
     return res
 
+
+def analyze(args):
+    keys = [
+        'company',
+    ]
+    lost_keys = get_lost_keys(args, keys)
+    if lost_keys:
+        return {'respCode': '9999',
+                'respMsg': '缺少参数: %s' % ' '.join(lost_keys)}
+    try:
+        company = args['company']
+    except Exception as e:
+        return {
+            'respCode': '9999',
+            'respMsg': '数据类型错误: %s' % str(e),
+            'sample_args': {
+                'company': 'aitai',
+            }  # 后端传递入参都是字符, 需要检查数据类型
+        }
+    data = analysis.run(company)
+    res = {
+        'respCode': '0000',
+        'respMsg': 'success',
+        'data': {
+            'data': data
+        }
+    }
+    return res
+
 # 接口字典, api名称:api函数, 新增接口地址更新此字典
 dic_api = {'api1': api1,
            'match': match,
-           'addrules': addrules}
+           'addrules': addrules,
+           'analyze': analyze,
+           }
 
 
 # restful接口类

@@ -282,6 +282,8 @@ class Matcher:
             self.generated_df['流入金额'][self.generated_df['流入金额'] <= 0] = 0
             self.generated_df['流出金额'][self.generated_df['流出金额'] >= 0] = 0
             self.generated_df['流出金额'] = -self.generated_df['流出金额']
+            self.generated_df['流入金额'].fillna(0, inplace=True)
+            self.generated_df['流出金额'].fillna(0, inplace=True)
 
     def excel_generator(self):
         writer = pd.ExcelWriter(self.output_path)
@@ -325,6 +327,7 @@ def data_store(file_path, output_path, user_name):
     matcher.mapping()
     matcher.database_input()
     matcher.dataframe_generator()
+    matcher.separate_col()
     matcher.excel_generator()
 
 
@@ -345,8 +348,8 @@ def run(file_path, output_path, user_name):
 if __name__ == '__main__':
     start_time = time.time()
     # res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent')
-    res = run('data/亿控2019年银行日记账.xls', 'output/yikong.xlsx', 'vincent')
-    res = add_rules({'交易时间': 'none'}, 'vincent')
+    res = run('data/sample1.xls', 'output/sample3.xlsx', 'aitai')
+    # res = add_rules({'交易时间': 'none'}, 'vincent')
     print(res)
     # run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
     print("--- %s seconds ---" % (time.time() - start_time))

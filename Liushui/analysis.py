@@ -20,7 +20,9 @@ class Analyzer:
         return self.file_paths
 
     def get_infos(self):
-        forms = self.base_rules = mongo.show_datas(self.name, {'type': 'form'}, 'mapping')
+        forms = mongo.show_datas(self.name, {'type': 'form'}, 'mapping')
+        if not forms:
+            return False
         for form in forms:
             self.file_paths.append(form['path'])
             self.dates.append(form['dates'])
@@ -34,6 +36,7 @@ class Analyzer:
         print(self.file_paths)
         print(self.dates)
         print(self.self_accounts)
+        return True
 
 
     def balance_check(self, error_tolerance, file_path):
@@ -43,16 +46,16 @@ class Analyzer:
         out = cur_df['流出金额'].values
         balance = cur_df['交易后余额'].values
         for i in range(1, len(income)):
-            if not np.isnan(income[i]) or income[0] != 0:
+            if (not np.isnan(income[i])) and income[i] != 0:
                 if abs(balance[i-1] + income[i] - balance[i]) > error_tolerance:
                     invalid.append(i)
-            elif not np.isnan(out[i]) or out[i] != 0:
+            elif (not np.isnan(out[i])) and out[i] != 0:
                 if abs(balance[i-1] - out[i] != balance[i]) > error_tolerance:
                     invalid.append(i)
-            else:
-                invalid.append(i)
+            # else:
+            #     invalid.append(i)
         # print(cur_df.loc[invalid]['交易日期'].values[:5])
-        invalid_dates = cur_df.loc[invalid]['交易日期'].values     # 提取所有不正确余额对应的日期
+        invalid_dates = cur_df.loc[invalid]['交易日期'].values.tolist()     # 提取所有不正确余额对应的日期 <class 'numpy.ndarray'>
         print('ratio of invalid balance: ', len(invalid_dates)/len(income))
         return invalid_dates
 
@@ -87,7 +90,7 @@ class Analyzer:
                 receiver_num += 1
         print('缺失的对方名称有：', receiver_num)
         print('缺失的摘要有：', abstract_num)
-        return abstract_num, receiver_num
+        return [abstract_num, receiver_num]
 
     def dates_check(self):
         merged_dates = md.merge_dates(self.dates)
@@ -106,6 +109,7 @@ class Analyzer:
                     if cur_account not in self.self_accounts:
                         invalid_accounts.append(cur_account)
         print('missing accounts:', invalid_accounts)
+        return invalid_accounts
 
     def cross_validation(self):
         invalid_accounts = []
@@ -155,27 +159,36 @@ class Analyzer:
                     print('---- not matched!----\n', tran)
                     unmatched_trans.append(tran)
 
-        print('missing accounts:', invalid_accounts)
+        # print('missing accounts:', invalid_accounts)
         return unmatched_trans
 
 
 def run(name):
     analyst = Analyzer(name)
-    analyst.get_infos()
+    infostatus = analyst.get_infos()
+    if not infostatus:
+        return 'invalid name'
 
+    res = {}
     print('------ Reports ------')
     for path in analyst.get_paths():
+        cur_info = {}
         print('----- '+path+' ------')
-        analyst.balance_check(0, path)
-        analyst.benford_check(path)
-        analyst.info_missing_check(path)
+        cur_info['balence_error_dates'] = analyst.balance_check(0, path)
+        cur_info['benford'] = analyst.benford_check(path)
+        infomiss = analyst.info_missing_check(path)
+        cur_info['abstract_missing'] = infomiss[0]
+        cur_info['receiver_missing'] = infomiss[1]
+        res[path] = cur_info
     print('----- overall report -----')
-    analyst.dates_check()
-    # analyst.inner_account_check()
-    analyst.cross_validation()
+    res['dates_coverage'] = analyst.dates_check()
+    res['missing_accounts'] = analyst.inner_account_check()
+    res['unmatched_trans'] = analyst.cross_validation()
+    return res
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    run('aitai')
+    res = run('aitai')
+    print(res)
     print("--- %s seconds ---" % (time.time() - start_time))
