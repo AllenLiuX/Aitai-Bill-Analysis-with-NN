@@ -4,12 +4,33 @@ import math
 import numpy as np
 import pandas as pd
 from operator import itemgetter
+import pdfplumber
+import camelot
+import tabula
 
 def to_date(str):
     if len(str) > 8:
         str = str[:4] + str[5:7] + str[8:10]
     date = datetime.datetime.strptime(str, '%Y%m%d').date()
     return date
+
+
+def pdf2df(path):
+    # tables = tabula.read_pdf(path, encoding='gbk', pages='all')
+    # # t = tables[0].df
+    # print(tables)
+    with pdfplumber.open(path) as pdf:
+         # for table in pdf.pages[2].extract_tables():
+         #     tb = pd.DataFrame(table[1:], columns=table[0], index=None)
+         #     print(tb)
+        # for t in table:
+        #     # 得到的table是嵌套list类型，转化成DataFrame更加方便查看和分析
+        #     df = pd.DataFrame(t[1:], columns=t[0])
+        #     print(df)
+            table = pdf.pages[2].extract_tables()
+            print('result')
+            print(table)
+    # return table
 
 
 def correlation_coefficient(a, b):
@@ -67,8 +88,9 @@ def merge_dates(dates):
 
 if __name__ == '__main__':
     to_date('20200101')
+    pdf2df('../data/202001-202003泰隆流水.pdf')
     nums = [123, 125, 129, 235, 45, 43363, 134, 4346, 643, 3, 356, 8, 6, 5, 8, 97, 5]
     dates = [[1,5], [2, 4], [1, 3], [10,11], [8, 9]]
-    print(merge_dates(dates))
-    print(benford(nums))
+    # print(merge_dates(dates))
+    # print(benford(nums))
 

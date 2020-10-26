@@ -43,10 +43,10 @@ class Analyzer:
         out = cur_df['流出金额'].values
         balance = cur_df['交易后余额'].values
         for i in range(1, len(income)):
-            if not np.isnan(income[i]):
+            if not np.isnan(income[i]) or income[0] != 0:
                 if abs(balance[i-1] + income[i] - balance[i]) > error_tolerance:
                     invalid.append(i)
-            elif not np.isnan(out[i]):
+            elif not np.isnan(out[i]) or out[i] != 0:
                 if abs(balance[i-1] - out[i] != balance[i]) > error_tolerance:
                     invalid.append(i)
             else:
@@ -88,7 +88,6 @@ class Analyzer:
         print('缺失的对方名称有：', receiver_num)
         print('缺失的摘要有：', abstract_num)
         return abstract_num, receiver_num
-
 
     def dates_check(self):
         merged_dates = md.merge_dates(self.dates)
@@ -147,8 +146,8 @@ class Analyzer:
                     continue
                 matched = False
                 for index in cur_df.index:
-                    if cur_df.loc[index, '对方账号'] == from_acc and cur_df.loc[index, '交易日期']==tran_date:
-                        if cur_df.loc[index, '流入金额']==tran_out or cur_df.loc[index, '流出金额']==tran_in:
+                    if cur_df.loc[index, '对方账号'] == from_acc and cur_df.loc[index, '交易日期'] == tran_date:
+                        if cur_df.loc[index, '流入金额'] == tran_out or cur_df.loc[index, '流出金额'] == tran_in:
                             print('Get one matched transaction.', from_acc, out_acc)
                             matched = True
                             break
@@ -158,6 +157,7 @@ class Analyzer:
 
         print('missing accounts:', invalid_accounts)
         return unmatched_trans
+
 
 def run(name):
     analyst = Analyzer(name)
@@ -173,6 +173,7 @@ def run(name):
     analyst.dates_check()
     # analyst.inner_account_check()
     analyst.cross_validation()
+
 
 if __name__ == '__main__':
     start_time = time.time()

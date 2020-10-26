@@ -1,8 +1,9 @@
 import re
 import pandas as pd
 import time
-import sys
+import sys, os
 import hashlib
+import re
 import Modules.mongodb as mongo
 import Modules.public_module as md
 # sys.encoding = 'utf8'
@@ -19,10 +20,11 @@ class Matcher:
         self.raw_df = pd.read_excel(file_path)
         self.target_df = None
         self.generated_df = None
-        self.user_name = user_name
 
+        self.user_name = user_name
         self.file_path = file_path
         self.output_path = output_path
+        self.title = file_path.split('/')[-1]
         self.self_name = ''
         self.self_account = ''
         self.start_date = ''
@@ -40,7 +42,7 @@ class Matcher:
         self.user_rules = {}
 
         # mapping variables
-        self.matched_mapping = {}
+        # self.matched_mapping = {}
         self.reversed_mapping = {}
         # self.option_unmatched = []
         self.target_unmatched = []
@@ -50,7 +52,7 @@ class Matcher:
         row_num_found = False
         row_num = 0
         keywords_dict = {
-                    'header_key': ['摘要', '交易类型', '交易时间'],
+                    'header_key': ['摘要', '交易类型', '交易时间', '日期', '备注'],
                     'self_name': ['公司名称'],
                     'self_account': ['银行帐号', '银行账号'],
                     'start_date': ['查询开始日期'],
@@ -103,6 +105,7 @@ class Matcher:
             '账户余额': '交易后余额',
             '对方户名': '对方名称',
             '对方账号': '对方账号',
+            # '日期': '交易日期',
             # '交易类型': '系统分类',
         }
         mongo.insert_data(mapping_rules, 'base_rule', 'mapping')
@@ -118,15 +121,16 @@ class Matcher:
             self.user_rules["type"] = "user_rule"
             self.user_rules['name'] = self.user_name
             # print('no user rules yet.')
-        self.matched_mapping = {}
         self.target_unmatched = self.base_rules_summary['target_headers'].copy()    # 需要.copy，防止总的headers list被修改
         # self.option_unmatched = list(self.option_list).copy()
         # self.option_unmatched.append('none')        # 用作空选项
         self.option_list.append('none')
-        for item in self.option_list:
-            if item in self.base_rules:     # 如果在baserule里已找到匹配项
-                self.matched_mapping[item] = self.base_rules[item]
-                self.target_unmatched.remove(self.base_rules[item])
+        for key in self.option_list:
+            if key in self.base_rules:     # 如果在baserule里已找到匹配项
+                val = self.base_rules[key]
+                # self.matched_mapping[item] = self.base_rules[item]
+                self.reversed_mapping[val] = key
+                self.target_unmatched.remove(val)
                 # self.option_unmatched.remove(item)            # 可多选？去不去掉呢？？
         # 去掉input excel中随录信息包含值
         if self.self_name:
@@ -135,8 +139,8 @@ class Matcher:
             self.target_unmatched.remove('本方账号')
 
         # 生成反向mapping
-        for key, val in self.matched_mapping.items():  # 如果有多个none怎么办呢？:此时还无none, 所以需要先reverse，再加none
-            self.reversed_mapping[val] = key
+        # for key, val in self.matched_mapping.items():  # 如果有多个none怎么办呢？:此时还无none, 所以需要先reverse，再加none
+        #     self.reversed_mapping[val] = key
         self.reversed_mapping.update(self.user_rules)  # 合并user_rules 进base_rule!
         target_unmatched = []
         for i in self.target_unmatched:    # 一个个处理还没有匹配上的target选项
@@ -148,8 +152,8 @@ class Matcher:
         return [self.target_unmatched, self.option_list]
 
     def update_rule(self, query):       # query should be in the form of {'target': 'option'}
-        for key in query:
-            selected = query[key]
+        for key, selected in query.items():
+            # selected = query[key]
             # 1.更新option_unmatched
             # if selected not in self.option_unmatched:
             if selected not in self.option_list:
@@ -160,7 +164,8 @@ class Matcher:
             if key in self.target_unmatched:  # 还没被match的
                 self.target_unmatched.remove(key)
             self.user_rules[key] = selected
-            mongo.delete_col('user_rule', 'mapping')  # 每次删掉原有collection
+            # mongo.delete_col('user_rule', 'mapping')  # 每次删掉原有collection
+            mongo.delete_datas({'name': self.user_name}, 'user_rule', 'mapping')
             mongo.insert_data(self.user_rules, 'user_rule', 'mapping')
 
             # 3. 更新reversed_mapping 为之后生成excel作准备
@@ -192,8 +197,35 @@ class Matcher:
         name_mapping = {  # 之后可以考虑用头四个字转拼音来生成collection名字
             '上海爱钛技术咨询有限公司': 'aitai',
             '宜昌华昊新材料科技有限公司': 'huahao',
-
+            '爱钛': 'aitai',
+            '华昊': 'huahao',
+            '亿控': 'yikong',
+            '同普': 'tongpu',
         }
+        # 从标题提取name
+        if not self.self_name:
+            for name in name_mapping:
+                if name in self.title:
+                    self.self_name = name
+
+        #从标题提取日期
+        if not self.start_date:
+            res = re.findall(r'(20[12]\d)(\d*)-?(\d*)', self.title)[0]
+            print (res)
+            if not res[1] and not res[2]:   # 只匹配到年份
+                self.start_date = res[0]+'0101'
+                self.end_date = res[0] + '1231'
+            elif not res[2]:
+                self.start_date = res[0]+res[1]+'01'
+                self.start_date = res[0] + res[1] + '30'
+            elif len(res[1]) == 2 and len(res[2]) == 2:
+                self.start_date = res[0] + res[1] + '01'
+                self.start_date = res[0] + res[2] + '30'
+            elif len(res[1]) == 2 and len(res[2]) == 1:
+                self.start_date = res[0] + res[1] + '01'
+                self.start_date = res[0] + '0' + res[2] + '30'
+            print(res)
+
         if self.self_name in name_mapping:
             comp_id = name_mapping[self.self_name]
         elif not self.self_name:
@@ -220,6 +252,8 @@ class Matcher:
         mongo.insert_data(info, comp_id, 'mapping')
 
     def dataframe_generator(self):
+        print(self.base_rules)
+        print(self.reversed_mapping)
         self.generated_df = pd.DataFrame(columns=self.base_rules_summary['target_headers'])
         for row in self.target_df.index:
             insert_row = {
@@ -242,6 +276,12 @@ class Matcher:
             self.generated_df = self.generated_df.append(insert_row, ignore_index=True)     # 注意df得新赋值，而不是直接.append
 
         # print(self.generated_df)
+
+    def separate_col(self):
+        if self.reversed_mapping['流出金额'] == self.reversed_mapping['流入金额']:
+            self.generated_df['流入金额'][self.generated_df['流入金额'] <= 0] = 0
+            self.generated_df['流出金额'][self.generated_df['流出金额'] >= 0] = 0
+            self.generated_df['流出金额'] = -self.generated_df['流出金额']
 
     def excel_generator(self):
         writer = pd.ExcelWriter(self.output_path)
@@ -297,14 +337,16 @@ def run(file_path, output_path, user_name):
     matcher.manual_mapping()
     matcher.database_input()
     matcher.dataframe_generator()
+    matcher.separate_col()
     matcher.excel_generator()
     return 'success'
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent3')
-    # res = add_rules({'a': 'b'}, 'vincent3')
+    # res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent')
+    res = run('data/亿控2019年银行日记账.xls', 'output/yikong.xlsx', 'vincent')
+    res = add_rules({'交易时间': 'none'}, 'vincent')
     print(res)
     # run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
     print("--- %s seconds ---" % (time.time() - start_time))
