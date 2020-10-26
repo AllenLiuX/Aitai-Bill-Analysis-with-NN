@@ -1,8 +1,12 @@
 import re
 import pandas as pd
 import time
+import sys
+import hashlib
 import Modules.mongodb as mongo
 import Modules.public_module as md
+# sys.encoding = 'utf8'
+
 
 
 # def clear_company_file(path, name):
@@ -93,6 +97,10 @@ class Matcher:
             '贷方金额': '流入金额',
             '借方金额': '流出金额',
             '余额': '交易后余额',
+            '收取金额': '流入金额',
+            '支出金额': '流出金额',
+            '账户余额': '交易后余额',
+            '对方账号': '对方账号',
             # '交易类型': '系统分类',
         }
         mongo.insert_data(mapping_rules, 'base_rule', 'mapping')
@@ -163,7 +171,7 @@ class Matcher:
     def manual_mapping(self):
         while self.target_unmatched:    # 一个个处理还没有匹配上的target选项
             cur_tar = self.target_unmatched[0]
-            print(cur_tar)
+            # print(cur_tar)
             if cur_tar in self.reversed_mapping:        # user_rule被加进reversemap了，但target_unmatched并没有被update
                 self.target_unmatched.remove(cur_tar)
                 continue
@@ -176,10 +184,17 @@ class Matcher:
     def database_input(self):
         name_mapping = {  # 之后可以考虑用头四个字转拼音来生成collection名字
             '上海爱钛技术咨询有限公司': 'aitai',
-            '宜昌华昊新材料科技有限公司': 'huahao'
+            '宜昌华昊新材料科技有限公司': 'huahao',
+
         }
+        if self.self_name in name_mapping:
+            comp_id = name_mapping[self.self_name]
+        elif not self.self_name:
+            comp_id = 'temp'
+        else:
+            comp_id = self.self_name
         # clear_company_file(self.output_path, name_mapping[self.self_name])
-        mongo.delete_datas({'path': self.output_path}, name_mapping[self.self_name], 'mapping')
+        mongo.delete_datas({'path': self.output_path}, comp_id, 'mapping')
 
         info = {
             'type': 'form',
@@ -193,11 +208,8 @@ class Matcher:
         }
         # self.transaction_num = self.target_df.shape[1]
         # info['transctions_num'] = self.transaction_num
-        if self.self_name in name_mapping:
-            col_name = name_mapping[self.self_name]
-        else:
-            col_name = self.self_name
-        mongo.insert_data(info, col_name, 'mapping')
+
+        mongo.insert_data(info, comp_id, 'mapping')
 
     def dataframe_generator(self):
         self.generated_df = pd.DataFrame(columns=self.base_rules_summary['target_headers'])
@@ -283,8 +295,8 @@ def run(file_path, output_path, user_name):
 
 if __name__ == '__main__':
     start_time = time.time()
-    res = store('data/sample1.xls', 'output/sample1.xlsx', 'vincent2')
-    res = add_rules({'a': 'b'}, 'vincent3')
+    res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent3')
+    # res = add_rules({'a': 'b'}, 'vincent3')
     print(res)
     # run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
     print("--- %s seconds ---" % (time.time() - start_time))
