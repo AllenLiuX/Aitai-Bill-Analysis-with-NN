@@ -34,14 +34,14 @@ def delete_datas(query, collection, db='articles'):
     mydb = myclient[db]
     mycol = mydb[collection]
     x = mycol.delete_many(query)
-    print(x.deleted_count, ' objects has been deleted.')
+    # print(x.deleted_count, ' objects has been deleted.')
 
 
 def update_datas(query, values, collection, db='articles'):
     mydb = myclient[db]
     mycol = mydb[collection]
     x = mycol.update_many(query, values)
-    print(x.modified_count, ' objects has been modified.')
+    # print(x.modified_count, ' objects has been modified.')
 
 
 def delete_col(collection, db='articles'):

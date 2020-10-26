@@ -104,11 +104,13 @@ def api1(args):
     lis_data = ['lily', 1, 0.88]
 
     # 结果集成
-    res = {'respCode': '0000', 'respMsg': 'success', 'data': {'df_data': return_df(df_data),
-                                                              'dic_data': dic_data,
-                                                              'lis_data': lis_data,
-                                                              'args': args
-                                                              }
+    res = {
+        'respCode': '0000', 'respMsg': 'success', 'data': {
+            'df_data': return_df(df_data),
+            'dic_data': dic_data,
+            'lis_data': lis_data,
+            'args': args
+         }
            }
     return res
 
@@ -120,7 +122,7 @@ def match(args):
         'output_path',
         'user_name',
     ]
-    print(args)
+    # print(args)
     lost_keys = get_lost_keys(args, keys)
     if lost_keys:
         return {'respCode': '9999',
@@ -138,6 +140,46 @@ def match(args):
             }  # 后端传递入参都是字符, 需要检查数据类型
         }
     data = matcher.store(file_path, output_path, user_name)
+    if data != 'success':
+        res = {
+            'respCode': '0000',
+            'respMsg': 'need rule mapping',
+            'data': {
+                'data': data
+            }
+        }
+    else:
+        res = {
+            'respCode': '0000',
+            'respMsg': 'success',
+            'data': {
+                'data': data
+            }
+        }
+    return res
+
+def addrules(args):
+    keys = [
+        'query',
+        'user',
+    ]
+    lost_keys = get_lost_keys(args, keys)
+    if lost_keys:
+        return {'respCode': '9999',
+                'respMsg': '缺少参数: %s' % ' '.join(lost_keys)}
+    try:
+        query = json.loads(args['query'])
+        user = args['user']
+        print(query.items())
+    except Exception as e:
+        return {
+            'respCode': '9999',
+            'respMsg': '数据类型错误: %s' % str(e),
+            'sample_args': {
+                'arg1': '文本',
+            }  # 后端传递入参都是字符, 需要检查数据类型
+        }
+    data = matcher.add_rules(query, user)
     res = {
         'respCode': '0000',
         'respMsg': 'success',
@@ -147,10 +189,10 @@ def match(args):
     }
     return res
 
-
 # 接口字典, api名称:api函数, 新增接口地址更新此字典
 dic_api = {'api1': api1,
-           'match': match}
+           'match': match,
+           'addrules': addrules}
 
 
 # restful接口类
@@ -171,7 +213,7 @@ class Service_name(Resource):
         return json.dumps(res, ensure_ascii=False)
 
 
-api.add_resource(Service_name, '/service-sample/<string:api_name>')  # sample 替换为service_name
+api.add_resource(Service_name, '/liushui/<string:api_name>')  # sample 替换为service_name
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5100)

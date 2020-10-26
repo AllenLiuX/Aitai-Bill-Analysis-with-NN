@@ -4,6 +4,11 @@ import time
 import Modules.mongodb as mongo
 import Modules.public_module as md
 
+
+# def clear_company_file(path, name):
+#     mongo.delete_datas({'path': path}, name, 'mapping')
+
+
 class Matcher:
     def __init__(self, file_path, output_path, user_name):
         # dataframes
@@ -57,7 +62,6 @@ class Matcher:
 
                 if (self.raw_df.loc[index].values[i] in keywords_dict['header_key']):       # 通过关键词寻找表头位置
                     row_num = index + 1
-                    # print(self.raw_df.loc[index].values[i])
                     row_num_found = True
                     break
             if row_num_found:
@@ -65,9 +69,11 @@ class Matcher:
         if row_num_found:
             self.target_df = pd.read_excel(self.file_path, header=row_num)      # 重新建立dataframe
             self.option_list = self.target_df.columns.ravel()   #表头list
-        # print(self.self_account, self.self_name, self.start_date, self.end_date)
+        else:
+            return 'titles not found!'
+        return True
 
-    def rule_setup(self):
+    def rule_setup(self):       # 初始化base_rule
         mongo.delete_col('base_rule', 'mapping')    # 每次删掉原有collection
         target_headers = ['交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称',
                           '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类']
@@ -77,7 +83,7 @@ class Matcher:
             'target_headers': target_headers,
             'target_summary': target_summary}], 'base_rule', 'mapping')
         mapping_rules = {       # 可以多对一，在后面匹配上后reverse便形成一对一，不冲突
-            'type': 'base_rules',
+            'type': 'base_rule',
             '交易日': '交易日期',
             '交易时间': '交易时间',
             '收/付方名称': '对方名称',
@@ -88,23 +94,20 @@ class Matcher:
             '借方金额': '流出金额',
             '余额': '交易后余额',
             # '交易类型': '系统分类',
-            # '起息日': '本方银行', # wrong
         }
         mongo.insert_data(mapping_rules, 'base_rule', 'mapping')
-        # print(mongo.show_datas('base_rule', db='mapping'))
 
     def mapping(self):
         # get base rule and rule summary from mongodb
         self.base_rules_summary = mongo.show_datas('base_rule', {'type': 'rule_summary'}, 'mapping')[0]
-        self.base_rules = mongo.show_datas('base_rule', {'type': 'base_rules'}, 'mapping')[0]
+        self.base_rules = mongo.show_datas('base_rule', {'type': 'base_rule'}, 'mapping')[0]
         try:
-            self.user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': self.user_name}, 'mapping')[0]
+            self.user_rules = mongo.show_datas('user_rule', {'type': 'user_rule', 'name': self.user_name}, 'mapping')[0]
             # self.base_rules.update(self.user_rules)         # 合并user_rules 进base_rule!
         except:
-            self.user_rules["type"] = "user_rules"
+            self.user_rules["type"] = "user_rule"
             self.user_rules['name'] = self.user_name
-            print('no user rules yet.')
-        # print(self.base_rules)
+            # print('no user rules yet.')
         self.matched_mapping = {}
         self.target_unmatched = self.base_rules_summary['target_headers'].copy()    # 需要.copy，防止总的headers list被修改
         self.option_unmatched = list(self.option_list).copy()
@@ -132,9 +135,6 @@ class Matcher:
         self.target_unmatched = target_unmatched
         return [self.target_unmatched, self.option_unmatched]
 
-        # print(self.matched_mapping)
-        # print(self.option_unmatched, self.target_unmatched)
-
     def update_rule(self, query):       # query should be in the form of {'target': 'option'}
         for key in query:
             selected = query[key]
@@ -146,11 +146,6 @@ class Matcher:
             # 2. 分情况更新target_unmatched和user_rule
             if key in self.target_unmatched:  # 还没被match的
                 self.target_unmatched.remove(key)
-            # else:  # 之前有设置过tar对应哪个，如果是user_rule，应该删掉该规则
-                # for k, v in self.user_rules.items():
-                #     if self.reversed_mapping[key] == k and key == v:       #当前mapping和userrule左右均能对应上的一条
-                #         del self.user_rules[k]
-            # self.user_rules[selected] = key
             self.user_rules[key] = selected
             mongo.delete_col('user_rule', 'mapping')  # 每次删掉原有collection
             mongo.insert_data(self.user_rules, 'user_rule', 'mapping')
@@ -158,7 +153,7 @@ class Matcher:
             # 3. 更新reversed_mapping 为之后生成excel作准备
             self.reversed_mapping[key] = selected
             if selected != 'none':  # none 不去掉，因为还可能被选择
-                self.option_unmatched.remove(selected)  # 可多选？去不去掉呢？去掉
+                self.option_unmatched.remove(selected)
         return True
 
     def clear_user_rule(self):
@@ -166,8 +161,6 @@ class Matcher:
         # mongo.delete_col('user_rule', 'mapping')
         
     def manual_mapping(self):
-        # Manually add rules
-        i = 0
         while self.target_unmatched:    # 一个个处理还没有匹配上的target选项
             cur_tar = self.target_unmatched[0]
             print(cur_tar)
@@ -179,45 +172,32 @@ class Matcher:
                 print(self.option_unmatched[i:i + 4])
             selected = input('与"{}"对应的是：'.format(cur_tar))
             self.update_rule({cur_tar: selected})
-            # if selected not in self.option_unmatched:
-            #     print('错误！不存在此选项')
-            #     continue
-            # print(self.reversed_mapping)
-            # self.matched_mapping[selected] = cur_tar
-            # self.reversed_mapping[cur_tar] = selected
-            # if selected != 'none':  # none 不去掉，因为还可能被选择
-            #     self.option_unmatched.remove(selected)      # 可多选？去不去掉呢？去掉
-            # self.target_unmatched.remove(cur_tar)
-
-        # print(self.matched_mapping, self.option_unmatched, self.target_unmatched)
-
-    def clear_company_file(self, path, name):
-        mongo.delete_datas({'path': path}, name, 'mapping')
 
     def database_input(self):
         name_mapping = {  # 之后可以考虑用头四个字转拼音来生成collection名字
             '上海爱钛技术咨询有限公司': 'aitai',
             '宜昌华昊新材料科技有限公司': 'huahao'
         }
+        # clear_company_file(self.output_path, name_mapping[self.self_name])
+        mongo.delete_datas({'path': self.output_path}, name_mapping[self.self_name], 'mapping')
 
-        self.clear_company_file(self.output_path, name_mapping[self.self_name])
-
-        info = {}
-        info['type'] = 'form'
-        info['path'] = self.output_path
-        info['company_name'] = self.self_name       # 方便账号间比对加入的。其实可以不要
-        info['dates'] = [self.start_date, self.end_date]
-        info['account'] = self.self_account
-        info['currency'] = self.currency
-        info['gen_date'] = self.gen_date
-        self.transaction_num = self.target_df.shape[1]
-        info['transctions_num'] = self.transaction_num
+        info = {
+            'type': 'form',
+            'path': self.output_path,
+            'company_name': self.self_name,
+            'dates': [self.start_date, self.end_date],
+            'account': self.self_account,
+            'currency': self.currency,
+            'gen_date': self.gen_date,
+            'transactions_num': self.target_df.shape[1]
+        }
+        # self.transaction_num = self.target_df.shape[1]
+        # info['transctions_num'] = self.transaction_num
         if self.self_name in name_mapping:
             col_name = name_mapping[self.self_name]
         else:
             col_name = self.self_name
         mongo.insert_data(info, col_name, 'mapping')
-
 
     def dataframe_generator(self):
         self.generated_df = pd.DataFrame(columns=self.base_rules_summary['target_headers'])
@@ -250,6 +230,22 @@ class Matcher:
         print('DataFrame is written successfully to the Excel File.')
 
 
+def add_rules(query, user):
+    user_rules = {}
+    try:
+        user_rules = mongo.show_datas('user_rule', {'type': 'user_rule', 'name': user}, 'mapping')[0]
+    except:
+        user_rules["type"] = "user_rules"
+        user_rules['name'] = user
+        # print('no user rules yet.')
+    user_rules.update(query)
+    # for key, val in query.items():
+    #     user_rules[key] = val
+    mongo.delete_datas({'name': user}, 'user_rule', 'mapping')  # 每次删掉原有collection
+    mongo.insert_data(user_rules, 'user_rule', 'mapping')
+    return 'success'
+
+
 def store(file_path, output_path, user_name):
     matcher = Matcher(file_path, output_path, user_name)
     # matcher.clear_user_rule()
@@ -258,13 +254,19 @@ def store(file_path, output_path, user_name):
     remains = matcher.mapping()
     if remains[0]:      # target_unmatched is not empty
         return remains
-    data_store(matcher)
+    else:
+        data_store(file_path, output_path, user_name)
     return 'success'
 
-def data_store(matcher):
+
+def data_store(file_path, output_path, user_name):
+    matcher = Matcher(file_path, output_path, user_name)
+    matcher.info_extractor()
+    matcher.mapping()
     matcher.database_input()
     matcher.dataframe_generator()
     matcher.excel_generator()
+
 
 def run(file_path, output_path, user_name):
     matcher = Matcher(file_path, output_path, user_name)
@@ -282,6 +284,7 @@ def run(file_path, output_path, user_name):
 if __name__ == '__main__':
     start_time = time.time()
     res = store('data/sample1.xls', 'output/sample1.xlsx', 'vincent2')
+    res = add_rules({'a': 'b'}, 'vincent3')
     print(res)
     # run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
     print("--- %s seconds ---" % (time.time() - start_time))

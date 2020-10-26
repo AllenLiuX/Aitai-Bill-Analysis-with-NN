@@ -22,3 +22,173 @@ Traceback (most recent call last):
   File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 126, in test
     arg1 = args['arg1']  # str
 KeyError: 'arg1'
+
+2020-10-23 14:58:03.219 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 195, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 170, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 14:58:09.577 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 195, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 170, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 14:59:09.202 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 196, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 171, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 14:59:33.124 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 196, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 171, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 15:00:04.379 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 197, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 172, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 15:00:18.792 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 197, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 172, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 15:01:15.563 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 196, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 171, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 15:01:39.701 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 196, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 171, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 15:01:58.462 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 268, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 196, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 171, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 270, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment
+
+2020-10-23 15:04:03.886 addrules {"query": "{\"\u672c\u65b9\u94f6\u884c\": \"none\", \"\u7cfb\u7edf\u5206\u7c7b\": \"none\"}", "user": "vincent3"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 269, in add_rules
+    user_rules = mongo.show_datas('user_rule', {'type': 'user_rules', 'name': user}, 'mapping')[0]
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 196, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 171, in addrules
+    data = matcher.add_rules(query, user)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 271, in add_rules
+    user_rules["type"] = "user_rules"
+UnboundLocalError: local variable 'user_rules' referenced before assignment

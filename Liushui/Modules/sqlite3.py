@@ -1,8 +1,13 @@
-import sqlite3
+# import sqlite3
+import pymysql
+
+
 
 class Database():
     def __init__(self, db):
-        self.conn = sqlite3.connect(db)
+        # self.conn = sqlite3.connect(db)
+        self.conn = pymysql.connect(host='rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com', user='bank_dev', password='072EeAb717e269bF',
+                             db='bank_dev')
         self.cursor = self.conn.cursor()
 
     def drop_table(self, table):
@@ -56,8 +61,9 @@ class Database():
         self.conn.commit()
 
 if __name__ == '__main__':
+
     db = Database('test1.db')
-    db.drop_table('REPORTS')
+    # db.drop_table('REPORTS')
     db.create('REPORTS', ['BEGIN_DATE TEXT', 'END_DATE TEXT'])
     db.insert('REPORTS', ['20000101', '20000103'])
     res = db.show_table('reports')
