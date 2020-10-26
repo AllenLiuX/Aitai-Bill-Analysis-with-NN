@@ -6,7 +6,7 @@ import pandas as pd
 from operator import itemgetter
 
 def to_date(str):
-    if len(str) == 10:
+    if len(str) > 8:
         str = str[:4] + str[5:7] + str[8:10]
     date = datetime.datetime.strptime(str, '%Y%m%d').date()
     return date

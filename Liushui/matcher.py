@@ -42,7 +42,7 @@ class Matcher:
         # mapping variables
         self.matched_mapping = {}
         self.reversed_mapping = {}
-        self.option_unmatched = []
+        # self.option_unmatched = []
         self.target_unmatched = []
 
 
@@ -56,7 +56,8 @@ class Matcher:
                     'start_date': ['查询开始日期'],
                     'end_date': ['查询结束日期'],
                     'init_balance': ['对帐单期初余额'],
-                    'gen_date': ['生成日期']
+                    'gen_date': ['生成日期'],
+                    'currency': ['账户币种'],
         }
         for index in self.raw_df.index:     # 逐行看关键词是否存在
             for i in range(len(self.raw_df.loc[index].values)):
@@ -72,7 +73,7 @@ class Matcher:
                 break
         if row_num_found:
             self.target_df = pd.read_excel(self.file_path, header=row_num)      # 重新建立dataframe
-            self.option_list = self.target_df.columns.ravel()   #表头list
+            self.option_list = self.target_df.columns.ravel().tolist()   #表头list
         else:
             return 'titles not found!'
         return True
@@ -100,6 +101,7 @@ class Matcher:
             '收取金额': '流入金额',
             '支出金额': '流出金额',
             '账户余额': '交易后余额',
+            '对方户名': '对方名称',
             '对方账号': '对方账号',
             # '交易类型': '系统分类',
         }
@@ -118,13 +120,14 @@ class Matcher:
             # print('no user rules yet.')
         self.matched_mapping = {}
         self.target_unmatched = self.base_rules_summary['target_headers'].copy()    # 需要.copy，防止总的headers list被修改
-        self.option_unmatched = list(self.option_list).copy()
-        self.option_unmatched.append('none')        # 用作空选项
+        # self.option_unmatched = list(self.option_list).copy()
+        # self.option_unmatched.append('none')        # 用作空选项
+        self.option_list.append('none')
         for item in self.option_list:
             if item in self.base_rules:     # 如果在baserule里已找到匹配项
                 self.matched_mapping[item] = self.base_rules[item]
                 self.target_unmatched.remove(self.base_rules[item])
-                self.option_unmatched.remove(item)            # 可多选？去不去掉呢？？
+                # self.option_unmatched.remove(item)            # 可多选？去不去掉呢？？
         # 去掉input excel中随录信息包含值
         if self.self_name:
             self.target_unmatched.remove('本方名称')
@@ -141,13 +144,15 @@ class Matcher:
             if i not in self.reversed_mapping:        # user_rule被加进reversemap了，但target_unmatched并没有被update
                 target_unmatched.append(i)
         self.target_unmatched = target_unmatched
-        return [self.target_unmatched, self.option_unmatched]
+        # return [self.target_unmatched, self.option_unmatched]
+        return [self.target_unmatched, self.option_list]
 
     def update_rule(self, query):       # query should be in the form of {'target': 'option'}
         for key in query:
             selected = query[key]
             # 1.更新option_unmatched
-            if selected not in self.option_unmatched:
+            # if selected not in self.option_unmatched:
+            if selected not in self.option_list:
                 print('错误！不存在此选项')
                 return False
 
@@ -160,8 +165,8 @@ class Matcher:
 
             # 3. 更新reversed_mapping 为之后生成excel作准备
             self.reversed_mapping[key] = selected
-            if selected != 'none':  # none 不去掉，因为还可能被选择
-                self.option_unmatched.remove(selected)
+            # if selected != 'none':  # none 不去掉，因为还可能被选择
+            #     self.option_unmatched.remove(selected)
         return True
 
     def clear_user_rule(self):
@@ -176,8 +181,10 @@ class Matcher:
                 self.target_unmatched.remove(cur_tar)
                 continue
             print('Options: ')
-            for i in range(0, len(self.option_unmatched), 4):   # 每四个换一行显示
-                print(self.option_unmatched[i:i + 4])
+            # for i in range(0, len(self.option_unmatched), 4):   # 每四个换一行显示
+            #     print(self.option_unmatched[i:i + 4])
+            for i in range(0, len(self.option_list), 4):   # 每四个换一行显示
+                print(self.option_list[i:i + 4])
             selected = input('与"{}"对应的是：'.format(cur_tar))
             self.update_rule({cur_tar: selected})
 
@@ -193,6 +200,7 @@ class Matcher:
             comp_id = 'temp'
         else:
             comp_id = self.self_name
+        print(comp_id)
         # clear_company_file(self.output_path, name_mapping[self.self_name])
         mongo.delete_datas({'path': self.output_path}, comp_id, 'mapping')
 
