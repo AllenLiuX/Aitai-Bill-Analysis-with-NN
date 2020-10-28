@@ -1,3 +1,4 @@
+# -- coding:UTF-8 --
 import pandas as pd
 import numpy as np
 import time
@@ -13,9 +14,6 @@ class Analyzer:
         self.self_accounts = []
         self.path2account = {}
 
-    """
-    @:param error_tolerance 是交易后算余额所能容忍的误差值。建议设置大于1
-    """
     def get_paths(self):
         return self.file_paths
 
@@ -38,7 +36,9 @@ class Analyzer:
         print(self.self_accounts)
         return True
 
-
+    """
+       @:param error_tolerance 是交易后算余额所能容忍的误差值。建议设置大于1
+    """
     def balance_check(self, error_tolerance, file_path):
         cur_df = pd.read_excel(file_path)
         invalid = []

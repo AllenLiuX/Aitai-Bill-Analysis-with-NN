@@ -1,3 +1,4 @@
+# -- coding:UTF-8 --
 import re
 import pandas as pd
 import time
@@ -6,8 +7,8 @@ import hashlib
 import re
 import Modules.mongodb as mongo
 import Modules.public_module as md
-# sys.encoding = 'utf8'
-
+import Modules.pymysql as mysql
+from sqlalchemy import create_engine
 
 
 # def clear_company_file(path, name):
@@ -46,6 +47,7 @@ class Matcher:
         self.reversed_mapping = {}
         # self.option_unmatched = []
         self.target_unmatched = []
+        self.name_mapping = {}
 
 
     def info_extractor(self):
@@ -194,7 +196,7 @@ class Matcher:
             self.update_rule({cur_tar: selected})
 
     def database_input(self):
-        name_mapping = {  # 之后可以考虑用头四个字转拼音来生成collection名字
+        self.name_mapping = {  # 之后可以考虑用头四个字转拼音来生成collection名字
             '上海爱钛技术咨询有限公司': 'aitai',
             '宜昌华昊新材料科技有限公司': 'huahao',
             '爱钛': 'aitai',
@@ -204,7 +206,7 @@ class Matcher:
         }
         # 从标题提取name
         if not self.self_name:
-            for name in name_mapping:
+            for name in self.name_mapping:
                 if name in self.title:
                     self.self_name = name
 
@@ -226,8 +228,8 @@ class Matcher:
                 self.start_date = res[0] + '0' + res[2] + '30'
             print(res)
 
-        if self.self_name in name_mapping:
-            comp_id = name_mapping[self.self_name]
+        if self.self_name in self.name_mapping:
+            comp_id = self.name_mapping[self.self_name]
         elif not self.self_name:
             comp_id = 'temp'
         else:
@@ -286,10 +288,51 @@ class Matcher:
             self.generated_df['流出金额'].fillna(0, inplace=True)
 
     def excel_generator(self):
+        # column names to english
+        self.english_mapping = {
+            '交易日期': 'date text',
+            '交易时间': 'time text',
+            '本方名称': 'sender_name text',
+            '本方账号': 'sender_account text',
+            '本方银行': 'sender_bank text',
+            '对方名称': 'receiver_name text',
+            '对方账号': 'receiver_account text',
+            '交易类型': 'type text',
+            '摘要': 'abstract text',
+            '流入金额': 'received_amount text',
+            '流出金额': 'sent_amount text',
+            '交易后余额': 'balance text',
+            '系统分类': 'system_classification text'
+        }
+        
+        self.generated_df.rename(columns=self.english_mapping, inplace=True)
+        print(self.generated_df)
+        # to excel
         writer = pd.ExcelWriter(self.output_path)
         self.generated_df.to_excel(writer, sheet_name='Sheet1')
         writer.save()
         print('DataFrame is written successfully to the Excel File.')
+
+        # to mysql
+        table_name = self.name_mapping[self.self_name]+self.start_date+'-'+self.end_date
+
+        # db = mysql.Database()
+        # columns_name = []
+        # for i in self.base_rules_summary['target_headers']:
+        #     columns_name.append(self.english_mapping[i])
+        # db.create('aitai3', columns_name)
+        # for index in self.generated_df.index:
+        #     # break
+        #     vals = self.generated_df.loc[index].values.tolist()
+        #     vals2 = [str(i) for i in vals]
+        #     vals = ['nan' if i=='' else i for i in vals2]
+        #     print(vals)
+        #     db.insert('aitai3', vals)
+
+        # engine = create_engine('mysql+pymysql://bank_dev:072EeAb717e269bF@rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com:3306/bank_dev?charset=utf8')
+        #
+        # self.generated_df.to_sql(table_name, engine, index=False)
+        # print('DataFrame is written successfully to mysql')
 
 
 def add_rules(query, user):
@@ -306,6 +349,9 @@ def add_rules(query, user):
     mongo.delete_datas({'name': user}, 'user_rule', 'mapping')  # 每次删掉原有collection
     mongo.insert_data(user_rules, 'user_rule', 'mapping')
     return 'success'
+
+def add_stats(query, user):
+    pass
 
 
 def store(file_path, output_path, user_name):
