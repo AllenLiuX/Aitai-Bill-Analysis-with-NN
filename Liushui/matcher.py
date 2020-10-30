@@ -28,10 +28,11 @@ class Matcher:
         self.title = file_path.split('/')[-1]
         self.self_name = ''
         self.self_account = ''
+        self.self_bank = ''
         self.start_date = ''
         self.end_date = ''
         self.transaction_num = 0
-        self.currency = 'CNY'
+        self.currency = ''
         self.init_balance = 0
         self.gen_date = ''
 
@@ -41,6 +42,8 @@ class Matcher:
         self.base_rules_summary = None
         self.base_rules = None
         self.user_rules = {}
+        self.necessary_info = {}
+        self.necessary_items = ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date']
 
         # mapping variables
         # self.matched_mapping = {}
@@ -55,6 +58,7 @@ class Matcher:
         row_num = 0
         keywords_dict = {
                     'header_key': ['摘要', '交易类型', '交易时间', '日期', '备注'],
+                    'self_bank': ['本方银行'],
                     'self_name': ['公司名称'],
                     'self_account': ['银行帐号', '银行账号'],
                     'start_date': ['查询开始日期'],
@@ -123,7 +127,15 @@ class Matcher:
             self.user_rules["type"] = "user_rule"
             self.user_rules['name'] = self.user_name
             # print('no user rules yet.')
+        try:
+            self.necessary_info = mongo.show_datas('necessary', {'type': 'necessary', 'path': self.output_path}, 'mapping')[0]
+        except:
+            self.necessary_info = {
+                'type': 'necessary',
+                'path': self.output_path,
+            }
         self.target_unmatched = self.base_rules_summary['target_headers'].copy()    # 需要.copy，防止总的headers list被修改
+        self.necessary_unmatched = self.necessary_items
         # self.option_unmatched = list(self.option_list).copy()
         # self.option_unmatched.append('none')        # 用作空选项
         self.option_list.append('none')
@@ -137,8 +149,30 @@ class Matcher:
         # 去掉input excel中随录信息包含值
         if self.self_name:
             self.target_unmatched.remove('本方名称')
+            # self.necessary_unmatched.remove('self_name')
+            # necessary['self_name'] = self.self_name
         if self.self_account:
             self.target_unmatched.remove('本方账号')
+            # self.necessary_unmatched.remove('self_account')
+            # necessary['self_account'] = self.self_account
+
+        # TODO: 根据库里的necc，把self.数据更新
+        for key, val in self.necessary_info.items():
+            if key not in ['type', 'path', '_id']:
+                exec('self.{} = "{}"'.format(key, val))
+        
+        # 去除necessary
+        for i in self.necessary_unmatched:
+            if exec('self.{}'.format(i)) != '':
+                exec('self.necessary_unmatched.remove("{}")'.format(i))     # 注意，在里面如果要变量变str，需要加""
+                exec('self.necessary_info["{}"] = self.{}'.format(i, i))
+        for i in self.necessary_info:
+            if i in self.necessary_unmatched:
+                self.necessary_unmatched.remove(i)
+        print(self.necessary_info, self.necessary_unmatched)
+        mongo.delete_datas({'type': 'necessary', 'path': self.output_path}, 'necessary', 'mapping')
+        mongo.insert_data(self.necessary_info, 'necessary', 'mapping')
+
 
         # 生成反向mapping
         # for key, val in self.matched_mapping.items():  # 如果有多个none怎么办呢？:此时还无none, 所以需要先reverse，再加none
@@ -151,7 +185,7 @@ class Matcher:
                 target_unmatched.append(i)
         self.target_unmatched = target_unmatched
         # return [self.target_unmatched, self.option_unmatched]
-        return [self.target_unmatched, self.option_list]
+        return [self.target_unmatched, self.option_list, self.necessary_unmatched]
 
     def update_rule(self, query):       # query should be in the form of {'target': 'option'}
         for key, selected in query.items():
@@ -194,6 +228,12 @@ class Matcher:
                 print(self.option_list[i:i + 4])
             selected = input('与"{}"对应的是：'.format(cur_tar))
             self.update_rule({cur_tar: selected})
+
+        while self.necessary_unmatched:
+            cur_tar = self.necessary_unmatched[0]
+            val = input('{} = '.format(cur_tar))
+            add_stats({cur_tar: val}, self.output_path)
+            self.necessary_unmatched.remove(cur_tar)
 
     def database_input(self):
         self.name_mapping = {  # 之后可以考虑用头四个字转拼音来生成collection名字
@@ -261,9 +301,10 @@ class Matcher:
             insert_row = {
                 '本方名称': self.self_name,
                 '本方账号': self.self_account,
+                '本方银行': self.self_bank,
             }
             for item in self.base_rules_summary['target_headers']:
-                if item == '本方名称' or item == '本方账号':
+                if item in ['本方名称', '本方账号', '本方银行']:
                     continue
                 elif self.reversed_mapping[item] == 'none':
                     # mapped_item = ''
@@ -350,8 +391,21 @@ def add_rules(query, user):
     mongo.insert_data(user_rules, 'user_rule', 'mapping')
     return 'success'
 
-def add_stats(query, user):
-    pass
+
+def add_stats(query, path):
+    necc_info = {}
+    try:
+        necc_info = mongo.show_datas('necessary', {'type': 'necessary', 'path': path}, 'mapping')[0]
+    except:
+        necc_info["type"] = "necessary"
+        necc_info['path'] = path
+        # print('no user rules yet.')
+    necc_info.update(query)
+    # for key, val in query.items():
+    #     user_rules[key] = val
+    mongo.delete_datas({'type': 'necessary', 'path': path}, 'necessary', 'mapping')  # 每次删掉原有collection
+    mongo.insert_data(necc_info, 'necessary', 'mapping')
+    return 'success'
 
 
 def store(file_path, output_path, user_name):
@@ -394,6 +448,7 @@ def run(file_path, output_path, user_name):
 if __name__ == '__main__':
     start_time = time.time()
     # res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent')
+    add_stats({'self_bank':'招行'}, 'output/sample3.xls')
     res = run('data/sample1.xls', 'output/sample3.xlsx', 'aitai')
     # res = add_rules({'交易时间': 'none'}, 'vincent')
     print(res)

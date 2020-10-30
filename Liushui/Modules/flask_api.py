@@ -190,6 +190,37 @@ def addrules(args):
     }
     return res
 
+def addnec(args):
+    keys = [
+        'query',
+        'path',
+    ]
+    lost_keys = get_lost_keys(args, keys)
+    if lost_keys:
+        return {'respCode': '9999',
+                'respMsg': '缺少参数: %s' % ' '.join(lost_keys)}
+    try:
+        query = json.loads(args['query'])
+        path = args['path']
+        print(query.items())
+    except Exception as e:
+        return {
+            'respCode': '9999',
+            'respMsg': '数据类型错误: %s' % str(e),
+            'sample_args': {
+                'arg1': '文本',
+            }  # 后端传递入参都是字符, 需要检查数据类型
+        }
+    data = matcher.add_rules(query, path)
+    res = {
+        'respCode': '0000',
+        'respMsg': 'success',
+        'data': {
+            'data': data
+        }
+    }
+    return res
+
 
 def analyze(args):
     keys = [
@@ -224,6 +255,7 @@ dic_api = {'api1': api1,
            'match': match,
            'addrules': addrules,
            'analyze': analyze,
+           'addnec': addnec,
            }
 
 
