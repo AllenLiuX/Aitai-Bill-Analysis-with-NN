@@ -24,6 +24,7 @@ class Matcher:
         self.target_df = None
         self.generated_df = None
 
+        self.sheet_name = sheet
         self.user_name = user_name
         self.file_path = file_path
         self.output_path = output_path
@@ -34,7 +35,7 @@ class Matcher:
         self.start_date = ''
         self.end_date = ''
         self.transaction_num = 0
-        self.currency = ''
+        self.currency = 'CNY'
         self.init_balance = 0
         self.gen_date = ''
 
@@ -58,8 +59,31 @@ class Matcher:
     def info_extractor(self):
         row_num_found = False
         row_num = 0
+        if '银行' in self.sheet_name:
+            self.self_bank = self.sheet_name
+        # 从标题提取日期
+        if not self.start_date or not self.end_date:
+            res = re.findall(r'(20[12]\d)(\d*)-?(\d*)', self.title)[0]
+            print(res)
+            if not res[1] and not res[2]:  # 只匹配到年份
+                self.start_date = res[0] + '0101'
+                self.end_date = res[0] + '1231'
+            elif not res[2]:
+                self.start_date = res[0] + res[1] + '01'
+                self.end_date = res[0] + res[1] + '30'
+            elif len(res[1]) == 2:
+                if len(res[2]) == 6:
+                    self.start_date = res[0] + res[1] + '01'
+                    self.end_date = res[2] + '30'
+                if len(res[2]) == 2:
+                    self.start_date = res[0] + res[1] + '01'
+                    self.end_date = res[0] + res[2] + '30'
+                if len(res[2]) == 1:
+                    self.start_date = res[0] + res[1] + '01'
+                    self.end_date = res[0] + '0' + res[2] + '30'
+            print(res)
         keywords_dict = {
-                    'header_key': ['摘要', '交易类型', '交易时间', '日期', '备注'],
+                    'header_key': ['摘要', '交易类型', '交易时间', '日期', '备注','交易日期','对方账号'],
                     'self_bank': ['本方银行'],
                     'self_name': ['公司名称'],
                     'self_account': ['银行帐号', '银行账号'],
@@ -70,9 +94,19 @@ class Matcher:
                     'currency': ['账户币种'],
         }
         for index in self.raw_df.index:     # 逐行看关键词是否存在
+            # 看是否本来就匹配
+            cols = self.raw_df.columns.ravel().tolist()
+            for i in cols:
+                if i in keywords_dict['header_key']:
+                    row_num = 0
+                    row_num_found = True
+                    break
+            if row_num_found:
+                break
             for i in range(len(self.raw_df.loc[index].values)):
                 #需要先找表头
-                if (self.raw_df.loc[index].values[i] in keywords_dict['header_key']):       # 通过关键词寻找表头位置
+                cell = self.raw_df.loc[index].values[i]
+                if cell in keywords_dict['header_key']:       # 通过关键词寻找表头位置
                     row_num = index + 1
                     row_num_found = True
                     break
@@ -80,14 +114,13 @@ class Matcher:
                 for key in keywords_dict:   # 获取表头前统计信息
                     if (self.raw_df.loc[index].values[i] in keywords_dict[key]):
                         exec('self.{} = self.raw_df.loc[index].values[i + 1]'.format(key))      # i+1为被匹配信息右边一项
-
-            if row_num_found:
-                break
         if row_num_found:
             self.target_df = pd.read_excel(self.file_path, header=row_num)      # 重新建立dataframe
             self.option_list = self.target_df.columns.ravel().tolist()   #表头list
         else:
-            return 'titles not found!'
+            print('titles not found!')
+            # exit(1)
+            return False
         return True
 
     def rule_setup(self):       # 初始化base_rule
@@ -107,10 +140,13 @@ class Matcher:
             '收/付方帐号': '对方账号',
             '交易类型': '交易类型',
             '摘要': '摘要',
+            '备注': '摘要',
             '贷方金额': '流入金额',
             '借方金额': '流出金额',
             '余额': '交易后余额',
             '收取金额': '流入金额',
+            '汇入金额': '流入金额',
+            '汇出金额': '流出金额',
             '支出金额': '流出金额',
             '账户余额': '交易后余额',
             '对方户名': '对方名称',
@@ -199,26 +235,6 @@ class Matcher:
                 target_unmatched.append(i)
         self.target_unmatched = target_unmatched
         # return [self.target_unmatched, self.option_unmatched]
-
-        #从标题提取日期
-        if not self.start_date or not self.end_date:
-            res = re.findall(r'(20[12]\d)(\d*)-?(\d*)', self.title)[0]
-            print (res)
-            if not res[1] and not res[2]:   # 只匹配到年份
-                self.start_date = res[0]+'0101'
-                self.end_date = res[0] + '1231'
-            elif not res[2]:
-                self.start_date = res[0]+res[1]+'01'
-                self.start_date = res[0] + res[1] + '30'
-            elif len(res[1]) == 2 and len(res[2]) == 2:
-                self.start_date = res[0] + res[1] + '01'
-                self.start_date = res[0] + res[2] + '30'
-            elif len(res[1]) == 2 and len(res[2]) == 1:
-                self.start_date = res[0] + res[1] + '01'
-                self.start_date = res[0] + '0' + res[2] + '30'
-            print(res)
-
-
         return [self.target_unmatched, self.option_list, self.necessary_unmatched]
 
     def update_rule(self, query):       # query should be in the form of {'target': 'option'}
@@ -273,6 +289,7 @@ class Matcher:
         self.name_mapping = {  # 之后可以考虑用头四个字转拼音来生成collection名字
             '上海爱钛技术咨询有限公司': 'aitai',
             '宜昌华昊新材料科技有限公司': 'huahao',
+            '浙江亿控自动化设备有限公司': 'yikong',
             '爱钛': 'aitai',
             '华昊': 'huahao',
             '亿控': 'yikong',
@@ -293,7 +310,8 @@ class Matcher:
         print(comp_id)
         # clear_company_file(self.output_path, name_mapping[self.self_name])
         mongo.delete_datas({'path': self.output_path}, comp_id, 'mapping')
-
+        print(self.raw_df)
+        print(self.target_df)
         info = {
             'type': 'form',
             'path': self.output_path,
@@ -362,7 +380,7 @@ class Matcher:
             '系统分类': 'system_classification'
         }
         
-        self.generated_df.rename(columns=self.english_mapping, inplace=True)
+        # self.generated_df.rename(columns=self.english_mapping, inplace=True)
         print(self.generated_df)
         # to excel
         writer = pd.ExcelWriter(self.output_path)
@@ -371,7 +389,7 @@ class Matcher:
         print('DataFrame is written successfully to the Excel File.')
 
         # to mysql
-        table_name = self.name_mapping[self.self_name]+self.start_date+'-'+self.end_date
+        # table_name = self.name_mapping[self.self_name]+self.start_date+'-'+self.end_date
 
         # db = mysql.Database()
         # columns_name = []
@@ -427,7 +445,8 @@ def add_stats(query, path):
 def store(file_path, output_path, user_name):
     matcher = Matcher(file_path, output_path, user_name)
     # matcher.clear_user_rule()
-    matcher.info_extractor()
+    if not matcher.info_extractor():
+        return 'failed'
     matcher.rule_setup()
     remains = matcher.mapping()
     if remains[0]:      # target_unmatched is not empty
@@ -439,7 +458,8 @@ def store(file_path, output_path, user_name):
 
 def data_store(file_path, output_path, user_name):
     matcher = Matcher(file_path, output_path, user_name)
-    matcher.info_extractor()
+    if not matcher.info_extractor():
+        return 'failed'
     matcher.mapping()
     matcher.database_input()
     matcher.dataframe_generator()
@@ -450,7 +470,8 @@ def data_store(file_path, output_path, user_name):
 def run(file_path, sheet, output_path, user_name):
     matcher = Matcher(file_path, sheet, output_path, user_name)
     # matcher.clear_user_rule()
-    matcher.info_extractor()
+    if not matcher.info_extractor():
+        return 'failed'
     matcher.rule_setup()
     matcher.mapping()
     matcher.manual_mapping()
@@ -463,11 +484,24 @@ def run(file_path, sheet, output_path, user_name):
 def entry(file_path, output_path, user_name):
     sheets = pd.ExcelFile(file_path)
     result = []
-
+    cache_tables = []
     for sheet in sheets.sheet_names:
-        res = run(file_path, sheet, 'output/'+sheet+'2.xlsx', user_name)
+        print('------ Processing sheet ' + sheet + ' ------')
+        table = 'cache/'+sheet+'.xlsx'
+        res = run(file_path, sheet, table, file_path)
+        if res == 'failed':
+            continue
         result.append(res)
+        cache_tables.append(table)
     # 合并进同一张表
+    final_df = pd.read_excel(cache_tables[0])
+    for i in cache_tables[1:]:
+        new_df = pd.read_excel(i)
+        final_df = pd.concat([final_df, new_df], ignore_index=True)
+    writer = pd.ExcelWriter(output_path)
+    final_df.to_excel(writer, sheet_name='Sheet1')
+    writer.save()
+    print('DataFrame is written successfully to the Excel File.')
     return result
 
 
@@ -475,13 +509,32 @@ def entry(file_path, output_path, user_name):
 if __name__ == '__main__':
     start_time = time.time()
     # res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent')
-    add_stats({'self_bank':'招行'}, 'output/sample3.xlsx')
-    x1 = pd.ExcelFile(path)
-    print(x1.sheet_names)
+    # add_stats({'self_bank':'招行'}, 'output/sample3.xlsx')
 
-    res = entry(path, 'output/sample3.xlsx', 'yikong')
+    yikong = os.listdir('data/yikong')
+    all_excels = []
+    print(yikong)
+    for file in yikong:
+        if file[0] == '~':
+            continue
+        print('------ Processing file '+file+' ------')
+        outpos = 'output/'+file+'.xlsx'
+        entry('data/yikong/'+file, 'output/'+file+'.xlsx', 'yikong2')
+        all_excels.append(outpos)
+    final_df = pd.read_excel(all_excels[0])
+    for i in all_excels[1:]:
+        new_df = pd.read_excel(i)
+        final_df = pd.concat([final_df, new_df], ignore_index=True)
+    writer = pd.ExcelWriter('output/yikongall.xlsx')
+    final_df.to_excel(writer, sheet_name='Sheet1')
+    writer.save()
+    print('======= Final DataFrame is written successfully to the Excel File.')
+
+
+    # res = entry(path, 'output/sample3.xlsx', 'yikong')
+
     # res = run(path, 'output/sample3.xlsx', 'aitai')
     # res = add_rules({'交易时间': 'none'}, 'vincent')
-    print(res)
+    # print(res)
     # run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
     print("--- %s seconds ---" % (time.time() - start_time))
