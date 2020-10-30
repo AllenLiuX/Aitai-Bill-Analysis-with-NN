@@ -14,11 +14,13 @@ from sqlalchemy import create_engine
 # def clear_company_file(path, name):
 #     mongo.delete_datas({'path': path}, name, 'mapping')
 
+path = 'data/亿控2019年银行日记账.xls'
+
 
 class Matcher:
-    def __init__(self, file_path, output_path, user_name):
+    def __init__(self, file_path, sheet, output_path, user_name):
         # dataframes
-        self.raw_df = pd.read_excel(file_path)
+        self.raw_df = pd.read_excel(file_path, sheet_name=sheet)
         self.target_df = None
         self.generated_df = None
 
@@ -69,14 +71,16 @@ class Matcher:
         }
         for index in self.raw_df.index:     # 逐行看关键词是否存在
             for i in range(len(self.raw_df.loc[index].values)):
-                for key in keywords_dict:   # 获取表头前统计信息
-                    if (self.raw_df.loc[index].values[i] in keywords_dict[key]):
-                        exec('self.{} = self.raw_df.loc[index].values[i + 1]'.format(key))      # i+1为被匹配信息右边一项
-
+                #需要先找表头
                 if (self.raw_df.loc[index].values[i] in keywords_dict['header_key']):       # 通过关键词寻找表头位置
                     row_num = index + 1
                     row_num_found = True
                     break
+
+                for key in keywords_dict:   # 获取表头前统计信息
+                    if (self.raw_df.loc[index].values[i] in keywords_dict[key]):
+                        exec('self.{} = self.raw_df.loc[index].values[i + 1]'.format(key))      # i+1为被匹配信息右边一项
+
             if row_num_found:
                 break
         if row_num_found:
@@ -135,7 +139,7 @@ class Matcher:
                 'path': self.output_path,
             }
         self.target_unmatched = self.base_rules_summary['target_headers'].copy()    # 需要.copy，防止总的headers list被修改
-        self.necessary_unmatched = self.necessary_items
+        self.necessary_unmatched = self.necessary_items.copy()
         # self.option_unmatched = list(self.option_list).copy()
         # self.option_unmatched.append('none')        # 用作空选项
         self.option_list.append('none')
@@ -156,18 +160,28 @@ class Matcher:
             # self.necessary_unmatched.remove('self_account')
             # necessary['self_account'] = self.self_account
 
-        # TODO: 根据库里的necc，把self.数据更新
+        # 三步，库数据更新表，表数据更新库，找到空项
+        # TODO 库里的necc，把表数据更新
         for key, val in self.necessary_info.items():
-            if key not in ['type', 'path', '_id']:
+            if key not in ['type', 'path', '_id'] and val:
                 exec('self.{} = "{}"'.format(key, val))
-        
-        # 去除necessary
+                self.necessary_unmatched.remove(key)
+
+        # TODO 表数据更新库。去除表里包含的necessary
+        # neccs = [self.self_name, self.self_account, self.self_bank, self.currency, self.start_date, self.end_date]
+        # for i in range(len(neccs)):
+        #     if neccs[i]:
+        #         self.necessary_unmatched.remove(self.necessary_items[i])
+        #         self.necessary_info[self.necessary_items[i]] = neccs[i]
+
         for i in self.necessary_unmatched:
-            if exec('self.{}'.format(i)) != '':
-                exec('self.necessary_unmatched.remove("{}")'.format(i))     # 注意，在里面如果要变量变str，需要加""
-                exec('self.necessary_info["{}"] = self.{}'.format(i, i))
-        for i in self.necessary_info:
-            if i in self.necessary_unmatched:
+            # if exec('temp = "self.{}"'.format(i)):
+                # exec('self.necessary_unmatched.remove("{}")'.format(i))     # 注意，在里面如果要变量变str，需要加""
+            exec('self.necessary_info["{}"] = self.{}'.format(i, i))
+
+        #  TODO 根据库数据找到未匹配数据
+        for i, val in self.necessary_info.items():
+            if i in self.necessary_unmatched and val:
                 self.necessary_unmatched.remove(i)
         print(self.necessary_info, self.necessary_unmatched)
         mongo.delete_datas({'type': 'necessary', 'path': self.output_path}, 'necessary', 'mapping')
@@ -185,6 +199,26 @@ class Matcher:
                 target_unmatched.append(i)
         self.target_unmatched = target_unmatched
         # return [self.target_unmatched, self.option_unmatched]
+
+        #从标题提取日期
+        if not self.start_date or not self.end_date:
+            res = re.findall(r'(20[12]\d)(\d*)-?(\d*)', self.title)[0]
+            print (res)
+            if not res[1] and not res[2]:   # 只匹配到年份
+                self.start_date = res[0]+'0101'
+                self.end_date = res[0] + '1231'
+            elif not res[2]:
+                self.start_date = res[0]+res[1]+'01'
+                self.start_date = res[0] + res[1] + '30'
+            elif len(res[1]) == 2 and len(res[2]) == 2:
+                self.start_date = res[0] + res[1] + '01'
+                self.start_date = res[0] + res[2] + '30'
+            elif len(res[1]) == 2 and len(res[2]) == 1:
+                self.start_date = res[0] + res[1] + '01'
+                self.start_date = res[0] + '0' + res[2] + '30'
+            print(res)
+
+
         return [self.target_unmatched, self.option_list, self.necessary_unmatched]
 
     def update_rule(self, query):       # query should be in the form of {'target': 'option'}
@@ -250,24 +284,6 @@ class Matcher:
                 if name in self.title:
                     self.self_name = name
 
-        #从标题提取日期
-        if not self.start_date:
-            res = re.findall(r'(20[12]\d)(\d*)-?(\d*)', self.title)[0]
-            print (res)
-            if not res[1] and not res[2]:   # 只匹配到年份
-                self.start_date = res[0]+'0101'
-                self.end_date = res[0] + '1231'
-            elif not res[2]:
-                self.start_date = res[0]+res[1]+'01'
-                self.start_date = res[0] + res[1] + '30'
-            elif len(res[1]) == 2 and len(res[2]) == 2:
-                self.start_date = res[0] + res[1] + '01'
-                self.start_date = res[0] + res[2] + '30'
-            elif len(res[1]) == 2 and len(res[2]) == 1:
-                self.start_date = res[0] + res[1] + '01'
-                self.start_date = res[0] + '0' + res[2] + '30'
-            print(res)
-
         if self.self_name in self.name_mapping:
             comp_id = self.name_mapping[self.self_name]
         elif not self.self_name:
@@ -331,19 +347,19 @@ class Matcher:
     def excel_generator(self):
         # column names to english
         self.english_mapping = {
-            '交易日期': 'date text',
-            '交易时间': 'time text',
-            '本方名称': 'sender_name text',
-            '本方账号': 'sender_account text',
-            '本方银行': 'sender_bank text',
-            '对方名称': 'receiver_name text',
-            '对方账号': 'receiver_account text',
-            '交易类型': 'type text',
-            '摘要': 'abstract text',
-            '流入金额': 'received_amount text',
-            '流出金额': 'sent_amount text',
-            '交易后余额': 'balance text',
-            '系统分类': 'system_classification text'
+            '交易日期': 'date',
+            '交易时间': 'time',
+            '本方名称': 'sender_name',
+            '本方账号': 'sender_account',
+            '本方银行': 'sender_bank',
+            '对方名称': 'receiver_name',
+            '对方账号': 'receiver_account',
+            '交易类型': 'type',
+            '摘要': 'abstract',
+            '流入金额': 'received_amount',
+            '流出金额': 'sent_amount',
+            '交易后余额': 'balance',
+            '系统分类': 'system_classification'
         }
         
         self.generated_df.rename(columns=self.english_mapping, inplace=True)
@@ -431,8 +447,8 @@ def data_store(file_path, output_path, user_name):
     matcher.excel_generator()
 
 
-def run(file_path, output_path, user_name):
-    matcher = Matcher(file_path, output_path, user_name)
+def run(file_path, sheet, output_path, user_name):
+    matcher = Matcher(file_path, sheet, output_path, user_name)
     # matcher.clear_user_rule()
     matcher.info_extractor()
     matcher.rule_setup()
@@ -444,12 +460,27 @@ def run(file_path, output_path, user_name):
     matcher.excel_generator()
     return 'success'
 
+def entry(file_path, output_path, user_name):
+    sheets = pd.ExcelFile(file_path)
+    result = []
+
+    for sheet in sheets.sheet_names:
+        res = run(file_path, sheet, 'output/'+sheet+'2.xlsx', user_name)
+        result.append(res)
+    # 合并进同一张表
+    return result
+
+
 
 if __name__ == '__main__':
     start_time = time.time()
     # res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent')
-    add_stats({'self_bank':'招行'}, 'output/sample3.xls')
-    res = run('data/sample1.xls', 'output/sample3.xlsx', 'aitai')
+    add_stats({'self_bank':'招行'}, 'output/sample3.xlsx')
+    x1 = pd.ExcelFile(path)
+    print(x1.sheet_names)
+
+    res = entry(path, 'output/sample3.xlsx', 'yikong')
+    # res = run(path, 'output/sample3.xlsx', 'aitai')
     # res = add_rules({'交易时间': 'none'}, 'vincent')
     print(res)
     # run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
