@@ -206,3 +206,155 @@ Traceback (most recent call last):
   File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 282, in separate_col
     self.generated_df['流入金额'][self.generated_df['流入金额'] <= 0] = 0
 TypeError: 'NoneType' object is not subscriptable
+
+2020-11-02 10:39:48.512 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent", "sheet": ""}
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 271, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 142, in match
+    data = matcher.store(file_path, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 446, in store
+    matcher = Matcher(file_path, output_path, user_name)
+TypeError: __init__() missing 1 required positional argument: 'user_name'
+
+2020-11-02 10:40:00.998 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent", "sheet": "1"}
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 271, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 142, in match
+    data = matcher.store(file_path, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 446, in store
+    matcher = Matcher(file_path, output_path, user_name)
+TypeError: __init__() missing 1 required positional argument: 'user_name'
+
+2020-11-02 10:40:36.348 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent", "sheet": "\u4ebf\u63a7\u6cf0\u9686\u94f6\u884c"}
+Traceback (most recent call last):
+  File "Modules/flask_api.py", line 271, in post
+    res = dic_api[api_name](args)
+  File "Modules/flask_api.py", line 142, in match
+    data = matcher.store(file_path, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 446, in store
+    matcher = Matcher(file_path, output_path, user_name)
+TypeError: __init__() missing 1 required positional argument: 'user_name'
+
+2020-11-02 10:41:23.282 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent", "sheet": "\u4ebf\u63a7\u6cf0\u9686\u94f6\u884c"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 271, in post
+    res = dic_api[api_name](args)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 142, in match
+    data = matcher.store(file_path, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher.py", line 446, in store
+    matcher = Matcher(file_path, output_path, user_name)
+TypeError: __init__() missing 1 required positional argument: 'user_name'
+
+2020-11-02 10:41:43.514 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent", "sheet": "\u4ebf\u63a7\u6cf0\u9686\u94f6\u884c"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 271, in post
+    res = dic_api[api_name](args)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 142, in match
+    data = matcher.store(file_path, output_path, user_name)
+TypeError: store() missing 1 required positional argument: 'user_name'
+
+2020-11-02 10:42:40.971 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent", "sheet": ""}
+Traceback (most recent call last):
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/xlrd/book.py", line 474, in sheet_by_name
+    sheetx = self._sheet_names.index(sheet_name)
+ValueError: '' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 273, in post
+    res = dic_api[api_name](args)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 144, in match
+    data = matcher.store(file_path, sheet, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 336, in store
+    matcher = Matcher(file_path, sheet, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 23, in __init__
+    self.raw_df = pd.read_excel(file_path, sheet_name=sheet)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 375, in read_excel
+    **kwds)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 718, in parse
+    **kwds)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 522, in parse
+    sheet = self.book.sheet_by_name(asheetname)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/xlrd/book.py", line 476, in sheet_by_name
+    raise XLRDError('No sheet named <%r>' % sheet_name)
+xlrd.biffh.XLRDError: No sheet named <''>
+
+2020-11-02 10:42:45.450 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent", "sheet": "1"}
+Traceback (most recent call last):
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/xlrd/book.py", line 474, in sheet_by_name
+    sheetx = self._sheet_names.index(sheet_name)
+ValueError: '1' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 273, in post
+    res = dic_api[api_name](args)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 144, in match
+    data = matcher.store(file_path, sheet, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 336, in store
+    matcher = Matcher(file_path, sheet, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 23, in __init__
+    self.raw_df = pd.read_excel(file_path, sheet_name=sheet)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/util/_decorators.py", line 188, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 375, in read_excel
+    **kwds)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 718, in parse
+    **kwds)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/io/excel.py", line 522, in parse
+    sheet = self.book.sheet_by_name(asheetname)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/xlrd/book.py", line 476, in sheet_by_name
+    raise XLRDError('No sheet named <%r>' % sheet_name)
+xlrd.biffh.XLRDError: No sheet named <'1'>
+
+2020-11-02 10:45:31.063 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 271, in post
+    res = dic_api[api_name](args)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 142, in match
+    data = matcher.entry(file_path, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 375, in entry
+    res = store(file_path, sheet, table, file_path)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 347, in store
+    matcher.separate_col()
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 289, in separate_col
+    self.generated_df['流入金额'][self.generated_df['流入金额'] <= 0] = 0
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/core/ops.py", line 1766, in wrapper
+    res = na_op(values, other)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/core/ops.py", line 1625, in na_op
+    result = _comp_method_OBJECT_ARRAY(op, x, y)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/core/ops.py", line 1603, in _comp_method_OBJECT_ARRAY
+    result = libops.scalar_compare(x, y, op)
+  File "pandas/_libs/ops.pyx", line 97, in pandas._libs.ops.scalar_compare
+TypeError: '<=' not supported between instances of 'str' and 'int'
+
+2020-11-02 10:47:42.179 match {"file_path": "data/\u4ebf\u63a72019\u5e74\u94f6\u884c\u65e5\u8bb0\u8d26.xls", "output_path": "output/yikong2.xlsx", "user_name": "vincent"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 271, in post
+    res = dic_api[api_name](args)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 142, in match
+    data = matcher.entry(file_path, output_path, user_name)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 375, in entry
+    res = store(file_path, sheet, table, file_path)
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 347, in store
+    matcher.separate_col()
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/matcher2.py", line 289, in separate_col
+    self.generated_df['流入金额'][self.generated_df['流入金额'] <= 0] = 0
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/core/ops.py", line 1766, in wrapper
+    res = na_op(values, other)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/core/ops.py", line 1625, in na_op
+    result = _comp_method_OBJECT_ARRAY(op, x, y)
+  File "/Users/vincentl/anaconda3/lib/python3.7/site-packages/pandas/core/ops.py", line 1603, in _comp_method_OBJECT_ARRAY
+    result = libops.scalar_compare(x, y, op)
+  File "pandas/_libs/ops.pyx", line 97, in pandas._libs.ops.scalar_compare
+TypeError: '<=' not supported between instances of 'str' and 'int'

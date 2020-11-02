@@ -11,11 +11,11 @@ import numpy as np
 
 sys.path.append('/Users/vincentl/PycharmProjects/Aita-Tech/Liushui')
 import analysis as analysis
-import matcher as matcher
+import matcher2 as matcher
 
 app = Flask(__name__)
 api = Api(app)
-app.debug = False
+app.debug = True
 app.config['JSON_AS_ASCII'] = False
 pd.set_option('display.max_columns', None)
 
@@ -139,7 +139,7 @@ def match(args):
                 'arg1': '文本',
             }  # 后端传递入参都是字符, 需要检查数据类型
         }
-    data = matcher.store(file_path, output_path, user_name)
+    data = matcher.entry(file_path, output_path, user_name)
     if data != 'success':
         res = {
             'respCode': '0000',
