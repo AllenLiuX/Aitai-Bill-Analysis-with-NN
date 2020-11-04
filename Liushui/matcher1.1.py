@@ -8,7 +8,7 @@ import re
 import Modules.mongodb as mongo
 import Modules.public_module as md
 import Modules.pymysql as mysql
-import data as data
+import mydata as data
 from sqlalchemy import create_engine
 
 # def clear_company_file(path, name):
@@ -110,9 +110,8 @@ class Matcher:
 
     def rule_setup(self):  # 初始化base_rule
         mongo.delete_col('base_rule', 'mapping')  # 每次删掉原有collection
-        target_headers = ['交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称',
-                          '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类']
-        target_summary = ['开始日期', '结束日期', '货币种类', '流水条数', '流入总额', '流出总额']
+        target_headers = data.target_headers
+        target_summary = data.target_summary
         mongo.insert_datas([{
             'type': 'rule_summary',
             'target_headers': target_headers,
@@ -182,7 +181,7 @@ class Matcher:
             if i not in self.reversed_mapping:  # user_rule被加进reversemap了，但target_unmatched并没有被update
                 target_unmatched.append(i)
         self.target_unmatched = target_unmatched
-        return [self.target_unmatched, self.option_list, self.necessary_unmatched]
+        return [self.target_unmatched, self.option_list, self.necessary_unmatched, self.necessary_info]
 
     def update_rule(self, query):  # query should be in the form of {'target': 'option'}
         for key, selected in query.items():
@@ -218,6 +217,8 @@ class Matcher:
             for i in range(0, len(self.option_list), 4):  # 每四个换一行显示
                 print(self.option_list[i:i + 4])
             selected = input('与"{}"对应的是：'.format(cur_tar))
+            if selected == '':
+                selected = 'none'
             self.update_rule({cur_tar: selected})
 
         while self.necessary_unmatched:
@@ -253,8 +254,8 @@ class Matcher:
             'gen_date': self.gen_date,
             'transactions_num': self.target_df.shape[1]
         }
-        # self.transaction_num = self.target_df.shape[1]
-        # info['transctions_num'] = self.transaction_num
+        self.transaction_num = self.target_df.shape[1]
+        info['transctions_num'] = self.transaction_num
 
         mongo.insert_data(info, comp_id, 'mapping')
 
@@ -283,9 +284,6 @@ class Matcher:
 
     def separate_col(self):
         if self.reversed_mapping['流出金额'] == self.reversed_mapping['流入金额']:
-            print(self.generated_df['流入金额'].values)
-            pd.set_option('display.max_columns', None)
-            print(self.generated_df.head())
             self.generated_df['流入金额'][self.generated_df['流入金额'] <= 0] = 0
             self.generated_df['流出金额'][self.generated_df['流出金额'] >= 0] = 0
             self.generated_df['流出金额'] = -self.generated_df['流出金额']
@@ -297,7 +295,7 @@ class Matcher:
         self.english_mapping = data.english_mapping
 
         # self.generated_df.rename(columns=self.english_mapping, inplace=True)
-        print(self.generated_df)
+        # print(self.generated_df)
         # to excel
         writer = pd.ExcelWriter(self.output_path)
         self.generated_df.to_excel(writer, sheet_name='Sheet1')
@@ -339,7 +337,7 @@ def store(file_path, sheet, output_path, user_name):
         return 'failed'
     matcher.rule_setup()
     remains = matcher.mapping()
-    if remains[0]:  # target_unmatched is not empty
+    if remains[0] or remains[2]:  # target_unmatched is not empty
         return remains
     else:
         matcher.database_input()
@@ -364,19 +362,28 @@ def run(file_path, sheet, output_path, user_name):
     return 'success'
 
 
-def entry(file_path, output_path, user_name):
+# TODO 保存模版 复制模版？
+# TODO 规则id/位置 整理
+# TODO
+'''
+以output_path为用户名建立规则
+依次处理每张表单, necstats应该以表单为单位建立 -> output_path = 'cache/' + sheet + '.xlsx'
+输出list of 'success or unmatched'
+'''
+def entry(file_path, output_path):
     sheets = pd.ExcelFile(file_path)
     result = []
     cache_tables = []
     for sheet in sheets.sheet_names:
         print('------ Processing sheet ' + sheet + ' ------')
-        table = 'cache/' + sheet + '.xlsx'
-        # res = run(file_path, sheet, table, file_path)
-        res = run(file_path, sheet, table, output_path)
-        if res == 'failed':
+        # table = 'cache/' + sheet + '.xlsx'
+        table_path = 'cache/' + sheet + '-' + output_path.split('/')[-1]      # necstats应该以表单为单位建立
+        res = run(file_path, sheet, table_path, output_path)        # username为output path，这样同一个文件下的user_rule共享
+        # res = store(file_path, sheet, table_path, output_path)
+        if res == 'failed': # 没找到表头行
             continue
         result.append(res)
-        cache_tables.append(table)
+        cache_tables.append(table_path)
     # 合并进同一张表
     final_df = pd.read_excel(cache_tables[0])
     for i in cache_tables[1:]:
@@ -389,34 +396,34 @@ def entry(file_path, output_path, user_name):
     return result
 
 
-if __name__ == '__main__':
-    start_time = time.time()
-    # res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent')
-    # add_stats({'self_bank':'招行'}, 'output/sample3.xlsx')
-    print(entry('data/亿控2019年银行日记账.xls', 'output/yikong2.xlsx', 'yikong3'))
-
-    yikong = os.listdir('data/yikong')
+def process_dir(dir_path, final_outpath):
+    files = os.listdir(dir_path)  # 上海同普电力技术有限公司
     all_excels = []
-    print(yikong)
-    for file in yikong:
+    print(files)
+    for file in files:
         if file[0] == '~':
             continue
         print('------ Processing file ' + file + ' ------')
-        outpos = 'output/' + file + '.xlsx'
-        entry('data/yikong/' + file, 'output/' + file + '.xlsx', 'yikong2')
-        all_excels.append(outpos)
+        output_path = 'output/' + file.split('.')[0] + '.xlsx'
+        entry(os.path.join(dir_path, file), output_path)
+        all_excels.append(output_path)
     final_df = pd.read_excel(all_excels[0])
     for i in all_excels[1:]:
         new_df = pd.read_excel(i)
         final_df = pd.concat([final_df, new_df], ignore_index=True)
-    writer = pd.ExcelWriter('output/yikongall.xlsx')
+    writer = pd.ExcelWriter(final_outpath)
     final_df.to_excel(writer, sheet_name='Sheet1')
     writer.save()
     print('======= Final DataFrame is written successfully to the Excel File.')
 
-    # res = entry(path, 'output/sample3.xlsx', 'yikong')
 
-    # res = run(path, 'output/sample3.xlsx', 'aitai')
+if __name__ == '__main__':
+    start_time = time.time()
+    # res = run('data/202001-03同普泰隆流水.xls', 'output/sample1.xlsx', 'vincent')
+    # add_stats({'self_bank':'招行'}, 'output/sample3.xlsx')
+    # print(entry('data/亿控2019年银行日记账.xls', 'output/yikong2.xlsx', 'yikong3'))
+    process_dir('data/tongpu', 'output/tongpuall2.xlsx')
+
     # res = add_rules({'交易时间': 'none'}, 'vincent')
     # run('data/sample2.xls', 'output/sample2.xlsx', 'vincent')
     print("--- %s seconds ---" % (time.time() - start_time))

@@ -189,6 +189,6 @@ def run(name):
 
 if __name__ == '__main__':
     start_time = time.time()
-    res = run('yikong')
+    res = run('tongpu')
     print(res)
     print("--- %s seconds ---" % (time.time() - start_time))
