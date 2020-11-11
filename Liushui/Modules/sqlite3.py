@@ -20,7 +20,7 @@ class Database():
         sql = 'select * from ' + table
         self.cursor.execute(sql)
         res = self.cursor.fetchall()
-        print(res)
+        # print(res)
         return res
 
     def close_db(self):
@@ -67,4 +67,5 @@ if __name__ == '__main__':
     db.create('REPORTS', ['BEGIN_DATE TEXT', 'END_DATE TEXT'])
     db.insert('REPORTS', ['20000101', '20000103'])
     res = db.show_table('reports')
+    print(res)
     db.close_db()

@@ -12,7 +12,7 @@ import mydata as data
 
 
 class Matcher:
-    def __init__(self, company, file_path, table, rule_name):
+    def __init__(self, company, file_path, table, rule_name, batch_id):
         # dataframes
         self.raw_df = pd.read_excel(file_path, sheet_name=table)
         self.target_df = None
@@ -21,6 +21,7 @@ class Matcher:
         self.company = company
         self.table = table
         self.file_path = file_path
+        self.batch_id = batch_id
         self.title = file_path.split('/')[-1]
         self.self_name = ''
         self.self_account = ''
@@ -77,6 +78,15 @@ class Matcher:
                         exec('self.{} = self.raw_df.loc[index].values[i + 1]'.format(key))  # i+1为被匹配信息右边一项
                         break
 
+        if row_num_found:
+            self.target_df = pd.read_excel(self.file_path, header=row_num)  # 重新建立dataframe
+            self.option_list = self.target_df.columns.ravel().tolist()  # 表头list
+            self.transaction_num = self.target_df.shape[0]
+        else:
+            print('titles not found!')
+            return False
+        print(self.target_df)
+
         # 从标题提取name
         self.name_mapping = data.name_mapping
         if not self.self_name:
@@ -87,6 +97,14 @@ class Matcher:
         # 从表名提取银行
         if '银行' in self.table:
             self.self_bank = self.table
+
+        # 从第一格提取账号
+        cell = self.raw_df.columns.ravel()[0]
+        match = re.findall(r'(\d{16,19})', cell)
+        if match:
+            print('Found self account number: ', match[0])
+            self.self_account = match[0]
+
 
         # 从标题提取日期
         if not self.start_date or not self.end_date:
@@ -110,14 +128,6 @@ class Matcher:
                         self.start_date = res[0] + res[1] + '01'
                         self.end_date = res[0] + '0' + res[2] + '30'
 
-        if row_num_found:
-            self.target_df = pd.read_excel(self.file_path, header=row_num)  # 重新建立dataframe
-            self.option_list = self.target_df.columns.ravel().tolist()  # 表头list
-            self.transaction_num = self.target_df.shape[0]
-        else:
-            print('titles not found!')
-            return False
-        print(self.target_df)
 
         # store as json
         df_json = self.target_df.to_json(orient='columns', force_ascii=False)
@@ -127,9 +137,11 @@ class Matcher:
             'table': self.table,
             'data': df_json
         }
-        query = {'company': self.company, 'file': self.title, 'table':self.table}
+        query = {'company': self.company, 'file': self.title, 'table': self.table, 'batchid': self.batch_id}
         if mongo.show_datas('unmapped_df', query, 'Cache'):
-            mongo.update_datas(query, {'$set': df_data}, 'unmapped_df', 'Cache')
+            # mongo.update_datas(query, {'$set': df_data}, 'unmapped_df', 'Cache')
+            mongo.delete_datas(query, 'unmapped_df', 'Cache')
+            mongo.insert_data(df_data, 'unmapped_df', 'Cache')
         else:
             mongo.insert_data(df_data, 'unmapped_df', 'Cache')
 
@@ -261,6 +273,7 @@ class Matcher:
                     self.mapping(rule_name)
                     asked_template = True
                     continue
+                asked_template = True
 
             # write new rule
             cur_tar = self.target_unmatched[0]
@@ -283,17 +296,22 @@ class Matcher:
         while self.necessary_unmatched:
             cur_tar = self.necessary_unmatched[0]
             val = input('{} = '.format(cur_tar))
-            add_stats({cur_tar: val}, self.company, self.title, self.table)
+            add_stats({cur_tar: val}, self.company, self.title, self.table, self.batch_id)
             self.necessary_unmatched.remove(cur_tar)
 
     def dataframe_generator(self):
         print(self.reversed_mapping)
         self.generated_df = pd.DataFrame(columns=self.target_headers)
+
         for col in self.target_headers:
             if col not in ['本方名称', '本方账号', '本方银行']:
                 mapped_col = self.reversed_mapping[col]
                 if mapped_col not in ['none']:
                     self.generated_df[col] = self.target_df[mapped_col]
+        dates = self.generated_df['交易日期'].astype(str).apply(md.to_date)
+        times = self.generated_df['交易时间'].astype(str).apply(md.to_date)     # 现在还没有implement time conversion to str
+        self.generated_df['交易日期'] = dates
+        self.generated_df['交易时间'] = times
         self.generated_df['本方名称'].fillna(self.self_name, inplace=True)
         self.generated_df['本方账号'].fillna(self.self_account, inplace=True)
         self.generated_df['本方银行'].fillna(self.self_bank, inplace=True)
@@ -313,13 +331,17 @@ class Matcher:
             'company': self.company,
             'file': self.title,
             'table': self.table,
+            'batch_id': self.batch_id,
             'data': df_json
         }
-        query = {'company': self.company, 'file': self.title, 'table': self.table}
+        query = {'company': self.company, 'file': self.title, 'table': self.table, 'batch_id': self.batch_id}
         if mongo.show_datas('mapped_df', query, 'Cache'):
-            mongo.update_datas(query, {'$set': df_data}, 'mapped_df', 'Cache')
+            # mongo.update_datas(query, {'$set': df_data}, 'mapped_df', 'Cache')
+            mongo.delete_datas(query, 'mapped_df', 'Cache')
+            mongo.insert_data(df_data, 'mapped_df', 'Cache')
         else:
             mongo.insert_data(df_data, 'mapped_df', 'Cache')
+            print('batch_id is ', self.batch_id)
 
 
 def add_rules(request, company, rule_name):
@@ -338,9 +360,9 @@ def add_rules(request, company, rule_name):
     return 'success'
 
 
-def add_stats(request, company, file, table):
+def add_stats(request, company, file, table, batch_id):
+    query = {'company': company, 'file': file, 'table': table, 'batch_id': batch_id}
     try:
-        query = {'company': company, 'file': file, 'table': table}
         necc_info = mongo.show_datas('sheet_info', query, 'Info')[0]
         mongo.delete_datas(query, 'sheet_info', 'Info')
     except:
@@ -351,9 +373,10 @@ def add_stats(request, company, file, table):
     return 'success'
 
 
-def process_table(company, file_path, sheet='Sheet1', rule_name=''):
-    matcher = Matcher(company, file_path, sheet, rule_name)
-    matcher.info_extractor()
+def process_table(company, file_path, table='Sheet1', rule_name='', batch_id = 'default'):
+    matcher = Matcher(company, file_path, table, rule_name, batch_id=batch_id)
+    if not matcher.info_extractor():
+        return 'fail'
     matcher.mapping(rule_name)
     infos = matcher.save_info()
     print(infos)
@@ -361,9 +384,67 @@ def process_table(company, file_path, sheet='Sheet1', rule_name=''):
     matcher.dataframe_generator()
     matcher.separate_col()
     matcher.save_df()
+    return 'success'
+
+def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id = 'default'):
+    matcher = Matcher(company, file_path, table, rule_name, batch_id = batch_id)
+    if not matcher.info_extractor():
+        return 'fail'
+    map_res = matcher.mapping(rule_name)
+    info_res = matcher.save_info()
+    if map_res[0] or info_res[0]:
+        return map_res + info_res
+    matcher.dataframe_generator()
+    matcher.separate_col()
+    matcher.save_df()
+    return 'success'
+
+
+def process_file(company, file_path, batch_id):
+    tables = pd.ExcelFile(file_path)
+    result = []
+    for table in tables.sheet_names:
+        print('------ Processing table ' + table + ' ------')
+        rule_name = file_path.split('/')[-1]+'-'+table
+        res = process_table(company, file_path, table, rule_name, batch_id=batch_id)
+        if res == 'fail': # 没找到表头行
+            continue
+        result.append(res)
+    return result
+
+
+def process_dir(company, dir_path, batch_id):
+    files = os.listdir(dir_path)
+    print(files)
+    result = []
+    for file in files:
+        if file[0] == '~':
+            continue
+        print('------ Processing file ' + file + ' ------')
+        file_path = os.path.join(dir_path, file)
+        res = process_file(company, file_path, batch_id=batch_id)
+        result.append(res)
+    return res
+
+def output_excel(company, batch_id, file_output):
+    datas = mongo.show_datas('mapped_df', {'company': company, 'batch_id': batch_id}, 'Cache')
+    final_df = pd.read_json(datas[0]['data'])
+    for i in range(1, len(datas)):
+        cur_table = datas[i]['data']
+        cur_df = df = pd.read_json(cur_table)
+        final_df = pd.concat([final_df, cur_df], ignore_index=True)
+    print(final_df)
+    writer = pd.ExcelWriter(file_output)
+    final_df.to_excel(writer, sheet_name='Sheet1')
+    writer.save()
+    print('DataFrame is written successfully to the Excel File.')
+
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    process_table('aitai', 'data/sample1.xls', rule_name='test_rule2')
+    # res = process_table_api('aitai', 'data/sample1.xls', rule_name='test_rule2')
+    res = process_dir('yikong', 'data/yikong', batch_id='3')
+    print(res)
+    output_excel('yikong', '3', 'output/yikong1.xlsx')
     print("--- %s seconds ---" % (time.time() - start_time))
