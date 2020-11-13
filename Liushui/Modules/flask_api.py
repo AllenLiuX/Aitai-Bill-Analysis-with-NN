@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_restful import Api, Resource
+from werkzeug import secure_filename
 import pandas as pd
 import json
 import datetime
@@ -17,7 +18,7 @@ app = Flask(__name__)
 api = Api(app)
 app.debug = True
 app.config['JSON_AS_ASCII'] = False
-pd.set_option('display.max_columns', None)
+# pd.set_option('display.max_columns', None)
 
 # ========================================================
 
@@ -250,25 +251,65 @@ def analyze(args):
     }
     return res
 
+
+def upload(file, args):
+    # 设置请求内容的大小限制，即限制了上传文件的大小
+    app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+
+    # 设置上传文件存放的目录
+    UPLOAD_FOLDER = './'+args['company']
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.mkdir(UPLOAD_FOLDER)
+
+    # 设置允许上传的文件类型
+    ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'xlsx'])
+
+    # 检查文件类型是否合法
+    def allowed_file(filename):
+        # 判断文件的扩展名是否在配置项ALLOWED_EXTENSIONS中
+        return '.' in filename and \
+               filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+    # if request.method == 'POST':
+        # 获取上传过来的文件对象
+    # 检查文件对象是否存在，且文件名合法
+    if file and allowed_file(file.filename):
+        # 去除文件名中不合法的内容
+        filename = secure_filename(file.filename)
+        # 将文件保存在本地UPLOAD_FOLDER目录下
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        return 'Upload Successfully'
+    else:  # 文件不合法
+        return 'Upload Failed'
+    # else:  # GET方法
+    #     return render_template('upload.html')
+
 # 接口字典, api名称:api函数, 新增接口地址更新此字典
-dic_api = {'api1': api1,
-           'match': match,
-           'addrules': addrules,
-           'analyze': analyze,
-           'addnec': addnec,
-           }
+dic_api = {
+    'api1': api1,
+    'match': match,
+    'addrules': addrules,
+    'analyze': analyze,
+    'addnec': addnec,
+    'upload': upload,
+}
 
 
 # restful接口类
 class Service_name(Resource):
     def post(self, api_name):
         # 获取入参
+        file = request.files['file']
         args = request.form.to_dict()
 
         # api接口
         if api_name in dic_api:
             try:
-                res = dic_api[api_name](args)
+                print(args)
+                if api_name == 'upload':
+                    res = dic_api[api_name](file, args)
+                else:
+                    res = dic_api[api_name](args)
             except:
                 res = {'respCode': '9999', 'respMsg': 'fail'}
                 save_errlog('%s %s %s' % (timestamp(), api_name, json.dumps(args)), 'sample')  # 错误日志

@@ -400,13 +400,16 @@ def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id
     return 'success'
 
 
-def process_file(company, file_path, batch_id):
+def process_file(company, file_path, batch_id, method='local'):
     tables = pd.ExcelFile(file_path)
     result = []
     for table in tables.sheet_names:
         print('------ Processing table ' + table + ' ------')
         rule_name = file_path.split('/')[-1]+'-'+table
-        res = process_table(company, file_path, table, rule_name, batch_id=batch_id)
+        if method=='local':
+            res = process_table(company, file_path, table, rule_name, batch_id=batch_id)
+        elif method == 'api':
+            res = process_table_api(company, file_path, table, rule_name, batch_id=batch_id)
         if res == 'fail': # 没找到表头行
             continue
         result.append(res)
