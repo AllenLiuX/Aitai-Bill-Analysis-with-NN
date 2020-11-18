@@ -9,6 +9,7 @@ import Modules.mongodb as mongo
 import Modules.public_module as md
 import Modules.pymysql as mysql
 import mydata as data
+from sqlalchemy import create_engine
 
 
 class Matcher:
@@ -386,6 +387,7 @@ def process_table(company, file_path, table='Sheet1', rule_name='', batch_id = '
     matcher.save_df()
     return 'success'
 
+
 def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id = 'default'):
     matcher = Matcher(company, file_path, table, rule_name, batch_id = batch_id)
     if not matcher.info_extractor():
@@ -429,6 +431,7 @@ def process_dir(company, dir_path, batch_id):
         result.append(res)
     return res
 
+
 def output_excel(company, batch_id, file_output):
     datas = mongo.show_datas('mapped_df', {'company': company, 'batch_id': batch_id}, 'Cache')
     final_df = pd.read_json(datas[0]['data'])
@@ -442,12 +445,23 @@ def output_excel(company, batch_id, file_output):
     writer.save()
     print('DataFrame is written successfully to the Excel File.')
 
+    # mysql
+    db = create_engine('mysql+pymysql://bank_dev:072EeAb717e269bF@rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com:3306/bank_dev')
+    # cursor = db.cursor()
+    df = pd.read_excel('output/yikong1.xlsx')
+    df.rename(columns=data.english_mapping, inplace=True)
+    df = df.iloc[:, 1:]
+    print(df)
+    df.to_sql('liushui', db, index=False, if_exists='append')
+    # final_df.rename(columns=data.english_mapping, inplace=True)
+    # print(final_df)
+    # final_df.to_sql('aitai1', db, index=False, if_exists='append')
 
 
 if __name__ == '__main__':
     start_time = time.time()
     # res = process_table_api('aitai', 'data/sample1.xls', rule_name='test_rule2')
-    res = process_dir('yikong', 'data/yikong', batch_id='3')
-    print(res)
+    # res = process_dir('yikong', 'data/yikong', batch_id='3')
+    # print(res)
     output_excel('yikong', '3', 'output/yikong1.xlsx')
     print("--- %s seconds ---" % (time.time() - start_time))
