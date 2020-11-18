@@ -96,7 +96,6 @@ def process_file(process_path, in_map, out_map):
     plt.tick_params(axis='x', labelsize=8)  # 设置x轴标签大小
     plt.xticks(rotation=-25)
     bar_plot = sns.barplot(x=list(stats.keys()), y=list(stats.values()), palette='muted')
-
     plt.show()
 
 if __name__ == '__main__':
