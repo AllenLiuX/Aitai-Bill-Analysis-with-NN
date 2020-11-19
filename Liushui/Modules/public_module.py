@@ -34,6 +34,18 @@ def to_date(str):
 #             print(table)
 #     # return table
 
+def reverse_map(rules):
+    rev_map = {}
+    for key, val in rules.items():
+        for v in val:
+            rev_map[v] = key
+    return rev_map
+
+def reverse_oneone_map(map):
+    rev_map = {}
+    for key, val in map.items():
+        rev_map[val] = key
+    return rev_map
 
 def correlation_coefficient(a, b):
     a_avg = sum(a) / len(a)

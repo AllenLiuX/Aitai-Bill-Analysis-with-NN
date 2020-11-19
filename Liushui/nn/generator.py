@@ -115,4 +115,4 @@ if __name__ == '__main__':
     # print(out_map[''])
     # print(in_map.keys())
     process_file(process_path, in_map, out_map)
-    # print("--- %s seconds ---" % (time.time() - start_time))
+    print("--- %s seconds ---" % (time.time() - start_time))
