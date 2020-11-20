@@ -6,8 +6,9 @@ import seaborn as sns
 
 filePath = 'system type rules.xlsx'
 
-process_path = '../output/yikongall2.xlsx'
-
+# process_path = '../output/yikongall2.xlsx'
+process_path = '../output/tongpuall2.xlsx'
+output_path = 'output2.xlsx'
 
 def reverse_map(rules):
     rev_map = {}
@@ -52,11 +53,15 @@ def process_file(process_path, in_map, out_map):
     df = pd.read_excel(process_path)
     stats = {}
     for i in df.index:
-        row = df.loc[i].values
-        receiver = row[6]
-        abstract = row[9]
-        inval = row[10]
-        outval = row[11]
+        # row = df.loc[i].values
+        # receiver = row[6]
+        # abstract = row[9]
+        # inval = row[10]
+        # outval = row[11]
+        receiver = df['对方名称'].loc[i]
+        abstract = df['摘要'].loc[i]
+        inval = df['流入金额'].loc[i]
+        outval = df['流出金额'].loc[i]
         try:
             if float(inval) > 0:
                 for key in in_map.keys():
@@ -81,7 +86,7 @@ def process_file(process_path, in_map, out_map):
                             stats[out_map[key]] = 1
         except Exception as e:
             print(e)
-    writer = pd.ExcelWriter('output.xlsx')
+    writer = pd.ExcelWriter(output_path)
     df.to_excel(writer, sheet_name='Sheet1')
     writer.save()
     print('DataFrame is written successfully to the Excel File.')
