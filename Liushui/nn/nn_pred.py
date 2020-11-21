@@ -11,13 +11,14 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import time
 import math
-# import sys
-# sys.path.append('/Users/vincentl/PycharmProjects/Aita-Tech/Liushui')
+import sys
+sys.path.append('/Users/vincentl/PycharmProjects/Aita-Tech/Liushui')
 import mydata as data
 import Modules.public_module as md
 
-input_path = 'output2.xlsx'
-output_path = 'predict2.xlsx'
+input_path = 'xlsx_files/yikong_label.xlsx'
+output_path = 'xlsx_files/yikong_predict.xlsx'
+plot_path = 'plots/yikong_predict'
 
 def pre_review(texts, in_data, out_data):
     with open('word_tok.pickle', 'rb') as handle:
@@ -49,8 +50,8 @@ if __name__ == '__main__':
     # append in and out money amount
     in_data = df['received_amount'].to_list()
     out_data = df['sent_amount'].to_list()
-    in_data = [math.log(i, 2) if i > 1 else 0 for i in in_data]
-    out_data = [math.log(i, 2) if i > 1 else 0 for i in out_data]
+    in_data = [math.log(i, 2) if type(i)!=str and i > 1 else 0 for i in in_data]
+    out_data = [math.log(i, 2) if type(i)!=str and i > 1 else 0 for i in out_data]
     predicts = pre_review(texts, in_data, out_data)
 
     with open('label_tok.pickle', 'rb') as handle:
@@ -80,6 +81,8 @@ if __name__ == '__main__':
     plt.xticks(rotation=-25)
     bar_plot = sns.barplot(x=list(dict(counter).keys()), y=list(dict(counter).values()), palette='muted')
     # sns.countplot(data=predicts)
+    plt.title('predicted distribution for %s'%input_path)
+    plt.savefig(plot_path)
     plt.show()
     end_time = time.time()
     print('======= Time taken: %f =======' %(end_time - start_time))

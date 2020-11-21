@@ -4,11 +4,15 @@ import matplotlib.pyplot as plt
 import time
 import seaborn as sns
 
-filePath = 'system type rules.xlsx'
+filePath = 'xlsx_files/system type rules.xlsx'
 
-# process_path = '../output/yikongall2.xlsx'
-process_path = '../output/tongpuall2.xlsx'
-output_path = 'output2.xlsx'
+process_path = '../output/yikongall2.xlsx'
+output_path = 'xlsx_files/yikong_label.xlsx'
+plot_path = 'plots/yikong_label'
+
+# process_path = '../output/tongpuall2.xlsx'
+# output_path = 'xlsx_files/tongpu_label.xlsx'
+# plot_path = 'plots/tongpu_label'
 
 def reverse_map(rules):
     rev_map = {}
@@ -53,11 +57,6 @@ def process_file(process_path, in_map, out_map):
     df = pd.read_excel(process_path)
     stats = {}
     for i in df.index:
-        # row = df.loc[i].values
-        # receiver = row[6]
-        # abstract = row[9]
-        # inval = row[10]
-        # outval = row[11]
         receiver = df['对方名称'].loc[i]
         abstract = df['摘要'].loc[i]
         inval = df['流入金额'].loc[i]
@@ -101,18 +100,15 @@ def process_file(process_path, in_map, out_map):
     plt.tick_params(axis='x', labelsize=8)  # 设置x轴标签大小
     plt.xticks(rotation=-25)
     bar_plot = sns.barplot(x=list(stats.keys()), y=list(stats.values()), palette='muted')
+    plt.savefig(plot_path)
     plt.show()
 
 if __name__ == '__main__':
     start_time = time.time()
     in_map, out_map = get_rules(filePath)
-    # print(out_map[''])
     try:
-        # del in_map['']
-        # del in_map[' ']
         del in_map['nan']
         del out_map['']
-        # del out_map[' ']
         del out_map['nan']
     except Exception as e:
         print(e)

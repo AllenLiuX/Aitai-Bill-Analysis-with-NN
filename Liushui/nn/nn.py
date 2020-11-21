@@ -22,7 +22,7 @@ sys.path.append('/Users/vincentl/PycharmProjects/Aita-Tech/Liushui')
 import mydata as data
 
 
-path = 'output.xlsx'
+path = 'xlsx_files/output.xlsx'
 
 def get_data():
     df = pd.read_excel(path)
@@ -58,16 +58,16 @@ def get_data():
     word_tok = Tokenizer(num_words=600, lower=False, split=' ')
     word_tok.fit_on_texts(abstracts)
     token_sentences = word_tok.texts_to_sequences(abstracts)
-    # word2index = word_tok.word_index
-    # print(word2index)
+    word2index = word_tok.word_index
+    print(word2index)
     x_train = sequence.pad_sequences(token_sentences, maxlen=15, padding='post')
     print(x_train[:10])
 
     # append in and out money amount
     in_data = np.array(data_df['received_amount'].to_list())
     out_data = np.array(data_df['sent_amount'].to_list())
-    in_data = [math.log(i, 2) if i >0 else 0 for i in in_data]
-    out_data = [math.log(i, 2) if i>0 else 0 for i in out_data]
+    in_data = [math.log(i, 2) if i > 0 else 0 for i in in_data]
+    out_data = [math.log(i, 2) if i > 0 else 0 for i in out_data]
     # # scale to 0-1000 method
     # k = 1000 / (max(in_data) - min(in_data))
     # in_data = [k * (x - min(in_data)) for x in in_data]
