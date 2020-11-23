@@ -40,6 +40,7 @@ def upload_file():
         else:  # 文件不合法
             return 'Upload Failed'
     else:  # GET方法
+        print(type(render_template('upload.html')))
         return render_template('upload.html')
 
 if __name__ == '__main__':

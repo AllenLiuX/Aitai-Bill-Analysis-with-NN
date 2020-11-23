@@ -22,3 +22,39 @@ Traceback (most recent call last):
   File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api.py", line 275, in upload
     file = args['file']
 KeyError: 'file'
+
+2020-11-23 15:25:03.536 process_file {"company": "yikong"}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api2.py", line 368, in post
+    res = dic_api[api_name](args)
+TypeError: process_file() missing 1 required positional argument: 'args'
+
+2020-11-23 16:30:16.092 process_file {}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api2.py", line 384, in get
+    res = dic_api[api_name](args)
+TypeError: process_file() missing 1 required positional argument: 'args'
+
+2020-11-23 16:30:20.428 process_file {}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api2.py", line 384, in get
+    res = dic_api[api_name](args)
+TypeError: process_file() missing 1 required positional argument: 'args'
+
+2020-11-23 16:31:02.048 process_file {}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api2.py", line 384, in get
+    res = dic_api[api_name](args)
+TypeError: process_file() missing 1 required positional argument: 'args'
+
+2020-11-23 16:31:15.957 process_file {}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api2.py", line 384, in get
+    res = dic_api[api_name]()
+TypeError: process_file() missing 2 required positional arguments: 'file' and 'args'
+
+2020-11-23 16:32:06.441 process_file {}
+Traceback (most recent call last):
+  File "/Users/vincentl/PycharmProjects/Aita-Tech/Liushui/Modules/flask_api2.py", line 384, in get
+    try:
+TypeError: process_file() missing 2 required positional arguments: 'file' and 'args'

@@ -5,11 +5,49 @@
     <title>upload</title>
 </head>
 <body>
-<form action="http://localhost:5100/liushui/upload" method="post" enctype="multipart/form-data">
-    <input type="text" name="company">
-    <br>
-    <input type="file" name="file">
+<form action="http://localhost:5100/liushui/process_file" method="post" enctype="multipart/form-data">
+    <label for="company">Company:</label>
+    <input type="text" name="company" id="company">
+<!--    <br>-->
+    <input type="file" name="file" class="file">
     <input type="submit" value="Upload">
 </form>
+<div id="container">
+    <h1 id="content">{{name}}</h1>
+</div>
 </body>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        outline: none;
+    }
+
+    body {
+        background: linear-gradient(45deg, #5c6773 30%, #ffffff);
+        /*background: #eeeeee;*/
+        /*background-image: url("statics/grey7.png");*/
+        background-position: center 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+
+        font-family: HTF;
+    }
+
+    form{
+        margin-left:30vw;
+        margin-top: 15vh;
+    }
+
+    #content{
+        margin-left:30vw;
+        margin-top: 5vh;
+    }
+
+    #company{
+        width: 200px;
+    }
+
+</style>
 </html>

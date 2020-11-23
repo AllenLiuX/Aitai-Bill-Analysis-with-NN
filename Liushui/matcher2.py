@@ -374,28 +374,20 @@ def add_stats(request, company, file, table, batch_id):
     return 'success'
 
 
-def process_table(company, file_path, table='Sheet1', rule_name='', batch_id = 'default'):
+def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id='default', method='api'):
     matcher = Matcher(company, file_path, table, rule_name, batch_id=batch_id)
-    if not matcher.info_extractor():
-        return 'fail'
-    matcher.mapping(rule_name)
-    infos = matcher.save_info()
-    print(infos)
-    matcher.manual_mapping()
-    matcher.dataframe_generator()
-    matcher.separate_col()
-    matcher.save_df()
-    return 'success'
-
-
-def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id = 'default'):
-    matcher = Matcher(company, file_path, table, rule_name, batch_id = batch_id)
     if not matcher.info_extractor():
         return 'fail'
     map_res = matcher.mapping(rule_name)
     info_res = matcher.save_info()
-    if map_res[0] or info_res[0]:
-        return map_res + info_res
+    if method == 'api':
+        if map_res[0] or info_res[0]:
+            return map_res + info_res
+    elif method == 'local':
+        print(info_res)
+        matcher.manual_mapping()
+    else:
+        return 'wrong parameter for method'
     matcher.dataframe_generator()
     matcher.separate_col()
     matcher.save_df()
@@ -407,14 +399,12 @@ def process_file(company, file_path, batch_id, method='local'):
     result = []
     for table in tables.sheet_names:
         print('------ Processing table ' + table + ' ------')
-        rule_name = file_path.split('/')[-1]+'-'+table
-        if method=='local':
-            res = process_table(company, file_path, table, rule_name, batch_id=batch_id)
-        elif method == 'api':
-            res = process_table_api(company, file_path, table, rule_name, batch_id=batch_id)
+        rule_name = file_path.split('/')[-1]+'-'+table      # 目前暂时的rule_name命名方法！
+        res = process_table_api(company, file_path, table, rule_name, batch_id=batch_id, method=method)
         if res == 'fail': # 没找到表头行
             continue
         result.append(res)
+    print(result)
     return result
 
 
@@ -429,7 +419,7 @@ def process_dir(company, dir_path, batch_id):
         file_path = os.path.join(dir_path, file)
         res = process_file(company, file_path, batch_id=batch_id)
         result.append(res)
-    return res
+    return result
 
 
 def output_excel(company, batch_id, file_output):
@@ -437,7 +427,7 @@ def output_excel(company, batch_id, file_output):
     final_df = pd.read_json(datas[0]['data'])
     for i in range(1, len(datas)):
         cur_table = datas[i]['data']
-        cur_df = df = pd.read_json(cur_table)
+        cur_df = pd.read_json(cur_table)
         final_df = pd.concat([final_df, cur_df], ignore_index=True)
     print(final_df)
     writer = pd.ExcelWriter(file_output)
@@ -445,23 +435,27 @@ def output_excel(company, batch_id, file_output):
     writer.save()
     print('DataFrame is written successfully to the Excel File.')
 
-    # mysql
-    db = create_engine('mysql+pymysql://bank_dev:072EeAb717e269bF@rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com:3306/bank_dev')
-    # cursor = db.cursor()
-    df = pd.read_excel('output/yikong1.xlsx')
-    df.rename(columns=data.english_mapping, inplace=True)
-    df = df.iloc[:, 1:]
+
+def upload_mysql(company, batch_id):
+    datas = mongo.show_datas('mapped_df', {'company': company, 'batch_id': batch_id}, 'Cache')
+    final_df = pd.read_json(datas[0]['data'])
+    db = create_engine(
+        'mysql+pymysql://bank_dev:072EeAb717e269bF@rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com:3306/bank_dev')
+    for i in range(1, len(datas)):
+        cur_table = datas[i]['data']
+        cur_df = pd.read_json(cur_table)
+        final_df = pd.concat([final_df, cur_df], ignore_index=True)
+    final_df.rename(columns=data.english_mapping, inplace=True)
+    df = final_df.iloc[:, 1:]
+    df['batch_id'] = batch_id
     print(df)
     df.to_sql('liushui', db, index=False, if_exists='append')
-    # final_df.rename(columns=data.english_mapping, inplace=True)
-    # print(final_df)
-    # final_df.to_sql('aitai1', db, index=False, if_exists='append')
-
 
 if __name__ == '__main__':
     start_time = time.time()
     # res = process_table_api('aitai', 'data/sample1.xls', rule_name='test_rule2')
     # res = process_dir('yikong', 'data/yikong', batch_id='3')
     # print(res)
-    output_excel('yikong', '3', 'output/yikong1.xlsx')
+    # output_excel('yikong', '3', 'output/yikong1.xlsx')
+    upload_mysql('yikong', '3')
     print("--- %s seconds ---" % (time.time() - start_time))
