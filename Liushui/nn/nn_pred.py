@@ -17,20 +17,27 @@ import mydata as data
 import Modules.public_module as md
 
 input_path = 'xlsx_files/yikong_label.xlsx'
-output_path = 'xlsx_files/yikong_predict.xlsx'
-plot_path = 'plots/yikong_predict'
+output_path = 'xlsx_files/yikong_predict2.xlsx'
+plot_path = 'plots/yikong_predict2'
 
-def pre_review(texts, in_data, out_data):
+ABSTRACT_MAX_LEN = 20
+
+
+def pre_review(texts, in_data, out_data, label_dig):
     with open('word_tok.pickle', 'rb') as handle:
         word_tok = pickle.load(handle)
     model = load_model('class.h5')
-
+    # get the abstracts
     texts = list(map(lambda x: x if type(x) == str else '', texts))  # replace nan cell into ''
-    texts = [jieba.cut(i, cut_all=False) for i in texts]
+    texts = [jieba.cut(i, cut_all=True) for i in texts]
     texts = [' '.join(i) for i in texts]  # 'xxxx' into 'xx xx xx'
     input_seq = word_tok.texts_to_sequences(texts)
-    x_test = sequence.pad_sequences(input_seq, maxlen=15, padding='post')
+    x_test = sequence.pad_sequences(input_seq, maxlen=ABSTRACT_MAX_LEN, padding='post')
     # print(word_tok.word_index)
+    # insert the keyword matching
+    x_test = np.insert(x_test, -1, label_dig, axis=1)
+
+    # insert the in and out money
     x_test = np.insert(x_test, -1, in_data, axis=1)
     x_test = np.insert(x_test, -1, out_data, axis=1)
     print(x_test)
@@ -47,15 +54,22 @@ if __name__ == '__main__':
     df.rename(columns=data.english_mapping, inplace=True)
     texts = df['receiver_name'] + df['abstract']
     print(texts.values)
+    # get label
+    with open('label_tok.pickle', 'rb') as handle:
+        label_tok = pickle.load(handle)
+
+    labels = df['system_classification'].tolist()
+    labels = ['' if pd.isna(i) else str(i) for i in labels]
+    labels = [i.replace('/', '') for i in labels]
+    label_dig = [0 if not i else label_tok.word_index[i] for i in labels]
+
     # append in and out money amount
     in_data = df['received_amount'].to_list()
     out_data = df['sent_amount'].to_list()
     in_data = [math.log(i, 2) if type(i)!=str and i > 1 else 0 for i in in_data]
     out_data = [math.log(i, 2) if type(i)!=str and i > 1 else 0 for i in out_data]
-    predicts = pre_review(texts, in_data, out_data)
+    predicts = pre_review(texts, in_data, out_data, label_dig)
 
-    with open('label_tok.pickle', 'rb') as handle:
-        label_tok = pickle.load(handle)
     map = label_tok.word_index
     rev_map = md.reverse_oneone_map(map)
     cn_predicts = [rev_map[i] for i in predicts]

@@ -22,7 +22,9 @@ sys.path.append('/Users/vincentl/PycharmProjects/Aita-Tech/Liushui')
 import mydata as data
 
 
-path = 'xlsx_files/output.xlsx'
+path = 'xlsx_files/yikong_label.xlsx'
+ABSTRACT_MAX_LEN = 20
+
 
 def get_data():
     df = pd.read_excel(path)
@@ -52,16 +54,26 @@ def get_data():
     # abstract tokenizing
     abstracts = data_df['texts'].tolist()
     abstracts = list(map(lambda x: x if type(x) == str else '', abstracts)) # replace nan cell into ''
-    abstracts = [jieba.cut(i, cut_all=False) for i in abstracts]
+    abstracts = [jieba.cut(i, cut_all=True) for i in abstracts]
     abstracts = [' '.join(i) for i in abstracts]        # 'xxxx' into 'xx xx xx'
-    print(abstracts[:5])
+    print(abstracts[:10])
     word_tok = Tokenizer(num_words=600, lower=False, split=' ')
     word_tok.fit_on_texts(abstracts)
     token_sentences = word_tok.texts_to_sequences(abstracts)
     word2index = word_tok.word_index
     print(word2index)
-    x_train = sequence.pad_sequences(token_sentences, maxlen=15, padding='post')
+    x_train = sequence.pad_sequences(token_sentences, maxlen=ABSTRACT_MAX_LEN, padding='post')
     print(x_train[:10])
+
+    # append keyword matching label as new feature
+    labels = data_df['system_classification'].tolist()
+    labels = ['' if pd.isna(i) else str(i) for i in labels]
+    labels = [i.replace('/', '') for i in labels]
+    label_dig = [0 if not i else label_tok.word_index[i] for i in labels]
+    print(label_dig[:50])
+    print(label_tok.word_index)
+    x_train = np.insert(x_train, -1, label_dig, axis=1)
+
 
     # append in and out money amount
     in_data = np.array(data_df['received_amount'].to_list())
@@ -94,7 +106,7 @@ def get_data():
     model.add(Embedding(
         output_dim=32,
         input_dim=2000,     # after append the in and out, max value may be 1000, which exceeds input_dim if set to 1000.
-        input_length=17
+        input_length=ABSTRACT_MAX_LEN+3
     ))
     model.add(Dropout(0.1))
     model.add(SimpleRNN(units=16))
