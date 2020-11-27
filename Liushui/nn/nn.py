@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.utils import to_categorical
@@ -18,12 +18,14 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import time
 import sys
+
 sys.path.append('/Users/vincentl/PycharmProjects/Aita-Tech/Liushui')
 import mydata as data
 
-
+model_path = 'models/class.h5'
 path = 'xlsx_files/yikong_label.xlsx'
 ABSTRACT_MAX_LEN = 20
+IMPRECISE_CUT = True
 
 
 def get_data():
@@ -53,9 +55,9 @@ def get_data():
 
     # abstract tokenizing
     abstracts = data_df['texts'].tolist()
-    abstracts = list(map(lambda x: x if type(x) == str else '', abstracts)) # replace nan cell into ''
-    abstracts = [jieba.cut(i, cut_all=True) for i in abstracts]
-    abstracts = [' '.join(i) for i in abstracts]        # 'xxxx' into 'xx xx xx'
+    abstracts = list(map(lambda x: x if type(x) == str else '', abstracts))  # replace nan cell into ''
+    abstracts = [jieba.cut(i, cut_all=IMPRECISE_CUT) for i in abstracts]
+    abstracts = [' '.join(i) for i in abstracts]  # 'xxxx' into 'xx xx xx'
     print(abstracts[:10])
     word_tok = Tokenizer(num_words=600, lower=False, split=' ')
     word_tok.fit_on_texts(abstracts)
@@ -73,7 +75,6 @@ def get_data():
     print(label_dig[:50])
     print(label_tok.word_index)
     x_train = np.insert(x_train, -1, label_dig, axis=1)
-
 
     # append in and out money amount
     in_data = np.array(data_df['received_amount'].to_list())
@@ -98,15 +99,12 @@ def get_data():
     x_train = np.insert(x_train, -1, out_data, axis=1)
     print(x_train[:10])
 
-
-
-
     model = Sequential()
 
     model.add(Embedding(
         output_dim=32,
-        input_dim=2000,     # after append the in and out, max value may be 1000, which exceeds input_dim if set to 1000.
-        input_length=ABSTRACT_MAX_LEN+3
+        input_dim=2000,  # after append the in and out, max value may be 1000, which exceeds input_dim if set to 1000.
+        input_length=ABSTRACT_MAX_LEN + 3
     ))
     model.add(Dropout(0.1))
     model.add(SimpleRNN(units=16))
@@ -131,14 +129,13 @@ def get_data():
     plot_model(model, to_file='model.png')
 
     # save model and tokenizers
-    model.save('class.h5')
+    model.save(model_path)
 
-    with open('word_tok.pickle', 'wb') as handle:
+    with open('models/word_tok.pickle', 'wb') as handle:
         pickle.dump(word_tok, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    with open('label_tok.pickle', 'wb') as handle:
+    with open('models/label_tok.pickle', 'wb') as handle:
         pickle.dump(label_tok, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
 
 
 if __name__ == '__main__':
@@ -146,4 +143,4 @@ if __name__ == '__main__':
     get_data()
     end_time = time.time()
 
-    print('======= Time taken: %f =======' %(end_time - start_time))
+    print('======= Time taken: %f =======' % (end_time - start_time))

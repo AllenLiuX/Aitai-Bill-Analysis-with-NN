@@ -1,16 +1,17 @@
+# coding:utf-8
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import time
 import seaborn as sns
 
-filePath = 'xlsx_files/system type rules.xlsx'
+rulePath = 'xlsx_files/system type rules.xlsx'
 
-process_path = '../output/yikongall2.xlsx'
+input_path = '../output/yikongall2.xlsx'
 output_path = 'xlsx_files/yikong_label.xlsx'
 plot_path = 'plots/yikong_label'
 
-# process_path = '../output/tongpuall2.xlsx'
+# input_path = '../output/tongpuall2.xlsx'
 # output_path = 'xlsx_files/tongpu_label.xlsx'
 # plot_path = 'plots/tongpu_label'
 
@@ -23,8 +24,8 @@ plot_path = 'plots/yikong_label'
 #     return rev_map
 
 
-def get_rules(filePath):
-    df = pd.read_excel(filePath, sheet_name=1, header=1)
+def get_rules(rulePath):
+    df = pd.read_excel(rulePath, sheet_name=1, header=1)
     ins = list(range(0, 8)) + list(range(23, 28)) + list(range(32, 35))
     data_df = df.iloc[:, [2, 3]]
     types = data_df['系统分类'].values
@@ -55,8 +56,8 @@ def get_rules(filePath):
     return in_map, out_map
 
 
-def process_file(process_path, in_map, out_map):
-    df = pd.read_excel(process_path)
+def process_file(input_path, output_path, in_map, out_map, write_excel, show_plot):
+    df = pd.read_excel(input_path)
     stats = {}
     for i in df.index:
         receiver = df['对方名称'].loc[i]
@@ -87,35 +88,42 @@ def process_file(process_path, in_map, out_map):
                             stats[out_map[key]] = 1
         except Exception as e:
             print(e)
-    writer = pd.ExcelWriter(output_path)
-    df.to_excel(writer, sheet_name='Sheet1')
-    writer.save()
-    print('DataFrame is written successfully to the Excel File.')
 
-    # x轴中文乱码问题
-    plt.rcParams['font.family'] = ['Arial Unicode MS']  # 用来正常显示中文标签
-    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
-    sns.set_style('whitegrid', {'font.sans-serif': ['Arial Unicode MS', 'Arial']})
-    
-    # 显示不完全问题
-    plt.figure(figsize=(15, 8))
-    plt.tick_params(axis='x', labelsize=8)  # 设置x轴标签大小
-    plt.xticks(rotation=-25)
-    bar_plot = sns.barplot(x=list(stats.keys()), y=list(stats.values()), palette='muted')
-    plt.savefig(plot_path)
-    plt.show()
+    if write_excel:
+        writer = pd.ExcelWriter(output_path)
+        df.to_excel(writer, sheet_name='Sheet1')
+        writer.save()
+        print('DataFrame is written successfully to the Excel File.')
 
-if __name__ == '__main__':
-    start_time = time.time()
-    in_map, out_map = get_rules(filePath)
+    if show_plot:
+        # x轴中文乱码问题
+        plt.rcParams['font.family'] = ['Arial Unicode MS']  # 用来正常显示中文标签
+        plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+        sns.set_style('whitegrid', {'font.sans-serif': ['Arial Unicode MS', 'Arial']})
+
+        # 显示不完全问题
+        plt.figure(figsize=(15, 8))
+        plt.tick_params(axis='x', labelsize=8)  # 设置x轴标签大小
+        plt.xticks(rotation=-25)
+        bar_plot = sns.barplot(x=list(stats.keys()), y=list(stats.values()), palette='muted')
+        plt.savefig(plot_path)
+        plt.show()
+    return df
+
+
+def main(input_path, output_path, write_excel=True, show_plot=True):
+    in_map, out_map = get_rules(rulePath)
     try:
         del in_map['nan']
         del out_map['']
         del out_map['nan']
     except Exception as e:
         print(e)
-    print(out_map.keys())
-    # print(out_map[''])
-    # print(in_map.keys())
-    process_file(process_path, in_map, out_map)
+    df = process_file(input_path, output_path, in_map, out_map, write_excel=write_excel, show_plot=show_plot)
+    return df
+
+
+if __name__ == '__main__':
+    start_time = time.time()
+    main(input_path, output_path)
     print("--- %s seconds ---" % (time.time() - start_time))
