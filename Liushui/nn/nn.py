@@ -124,6 +124,7 @@ def get_data():
     plt.ylabel('Accuracy')
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Test'], loc='upper left')
+    plt.savefig('plots/training accuracy.png')
     plt.show()
 
     plot_model(model, to_file='model.png')
