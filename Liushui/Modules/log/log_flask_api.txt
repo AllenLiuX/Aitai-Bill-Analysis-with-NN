@@ -1,0 +1,26 @@
+ * Serving Flask app "flask_api2" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "flask_api2.py", line 402, in <module>
+    app.run(host='0.0.0.0', port=5100)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/serving.py", line 1030, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "flask_api2" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5101/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 308-328-577
+ * Detected change in '/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api2.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 308-328-577
