@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import seaborn as sns
+import re
 
 rulePath = 'xlsx_files/system type rules.xlsx'
 
@@ -120,6 +121,11 @@ def main(input_path, output_path, write_excel=True, show_plot=True):
     except Exception as e:
         print(e)
     df = process_file(input_path, output_path, in_map, out_map, write_excel=write_excel, show_plot=show_plot)
+    cols = df.columns.ravel()
+    unnamed = [i for i in cols if re.search(r'Unnamed.*', i)]
+    for i in unnamed:
+        df = df.drop(columns=i)
+    print(df)
     return df
 
 

@@ -382,7 +382,14 @@ def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id
     info_res = matcher.save_info()
     if method == 'api':
         if map_res[0] or info_res[0]:
-            return map_res + info_res
+            res = {
+                'unmapped': map_res[0],
+                'options': map_res[1],
+                'mapped': map_res[2],
+                'necessary_unmatched': info_res[0],
+                'info': info_res[1]
+            }
+            return res
     elif method == 'local':
         print(info_res)
         matcher.manual_mapping()
@@ -397,6 +404,7 @@ def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id
 def process_file(company, file_path, batch_id, method='local'):
     tables = pd.ExcelFile(file_path)
     result = []
+    result_dict = {}
     for table in tables.sheet_names:
         print('------ Processing table ' + table + ' ------')
         rule_name = file_path.split('/')[-1]+'-'+table      # 目前暂时的rule_name命名方法！
@@ -404,8 +412,11 @@ def process_file(company, file_path, batch_id, method='local'):
         if res == 'fail': # 没找到表头行
             continue
         result.append(res)
-    print(result)
-    return result
+        result_dict[table] = res
+    # print(result)
+    # return result
+    print(result_dict)
+    return result_dict
 
 
 def process_dir(company, dir_path, batch_id):
@@ -445,7 +456,8 @@ def upload_mysql(company, batch_id):
         cur_table = datas[i]['data']
         cur_df = pd.read_json(cur_table)
         final_df = pd.concat([final_df, cur_df], ignore_index=True)
-    final_df.rename(columns=data.english_mapping, inplace=True)
+    if not 'type' in df.columns.ravel():
+        final_df.rename(columns=data.english_mapping, inplace=True)
     df = final_df.iloc[:, 1:]
     df['batch_id'] = batch_id
     print(df)

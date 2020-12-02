@@ -30,7 +30,8 @@ IMPRECISE_CUT = True
 
 def get_data():
     df = pd.read_excel(path)
-    df.rename(columns=data.english_mapping, inplace=True)
+    if not 'type' in df.columns.ravel():
+        df.rename(columns=data.english_mapping, inplace=True)
 
     df['system_classification'] = df['system_classification'].fillna('null')  # 将df中A列所有空值赋值为'null'
     df = df[df['system_classification'] != 'null']

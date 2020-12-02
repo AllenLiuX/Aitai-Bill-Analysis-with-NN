@@ -55,7 +55,8 @@ def main(input_path, output_path, input_by_df=False, write_excel=True, show_plot
         df = input_path
     else:
         df = pd.read_excel(input_path)
-    df.rename(columns=data.english_mapping, inplace=True)
+    if not 'type' in df.columns.ravel():
+        df.rename(columns=data.english_mapping, inplace=True)
     texts = df['receiver_name'] + df['abstract']
     print(texts.values)
     # get label

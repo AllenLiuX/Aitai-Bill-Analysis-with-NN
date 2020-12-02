@@ -12,8 +12,8 @@ import numpy as np
 
 sys.path.append('/Users/vincentl/PycharmProjects/Aita-Tech/Liushui')
 sys.path.append('/home/bank_dev/Aita-Tech/Liushui/')
-import analysis2 as analysis
-import matcher2 as matcher
+import analysis as analysis
+import matcher as matcher
 
 app = Flask(__name__)
 api = Api(app)
@@ -304,7 +304,7 @@ def process_file(file, args):
             }  # 后端传递入参都是字符, 需要检查数据类型
         }
     # data = matcher.entry(file_path, output_path, user_name)
-    data = matcher.process_file(company, upload_path, batch_id=timestamp(), method='api')
+    data = matcher.process_file(company, upload_path, batch_id='test', method='api')
     # if data != 'success':
     #     res = {
     #         'respCode': '0000',
