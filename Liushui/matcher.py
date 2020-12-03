@@ -470,6 +470,7 @@ if __name__ == '__main__':
     # print(res)
     # res = process_dir('test', 'data/2019/1月', batch_id='1')
     # print(res)
-    output_excel('test', '1', 'output/2019.xlsx')
+#    output_excel('test', '1', 'output/2019.xlsx')
+    add_rules({"本方银行": "none", "系统分类": "none"}, 'yikong', 'yikongall.xlsx-Sheet1')
     # upload_mysql('yikong', '3')
     print("--- %s seconds ---" % (time.time() - start_time))
