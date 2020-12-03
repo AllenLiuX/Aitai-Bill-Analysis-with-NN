@@ -185,7 +185,8 @@ def addrules(args):
             }  # 后端传递入参都是字符, 需要检查数据类型
         }
     # data = matcher.add_rules(query, user)
-    data = matcher.add_rules(query, company, rule_name)
+    # data = matcher.add_rules(query, company, rule_name)
+    data = ''
     res = {
         'respCode': '0000',
         'respMsg': 'success',
@@ -264,9 +265,9 @@ def analyze(args):
     return res
 
 
-@app.route('/main')
-def test():
-    return render_template('upload.html' )
+# @app.route('/main')
+# def test():
+#     return render_template('upload.html' )
 
 
 def process_file(file, args):
@@ -377,8 +378,13 @@ dic_api = {
 class Service_name(Resource):
     def post(self, api_name):
         # 获取入参
-        file = request.files['file']
+        print(request.form)
+        try:
+            file = request.files['file']
+        except Exception:
+            pass
         args = request.form.to_dict()
+        print(args)
 
         # api接口
         if api_name in dic_api:
