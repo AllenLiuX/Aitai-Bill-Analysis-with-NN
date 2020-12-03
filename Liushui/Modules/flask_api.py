@@ -185,8 +185,7 @@ def addrules(args):
             }  # 后端传递入参都是字符, 需要检查数据类型
         }
     # data = matcher.add_rules(query, user)
-    # data = matcher.add_rules(query, company, rule_name)
-    data = ''
+    data = matcher.add_rules(query, company, rule_name)
     res = {
         'respCode': '0000',
         'respMsg': 'success',
