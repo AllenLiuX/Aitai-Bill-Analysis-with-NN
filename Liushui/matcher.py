@@ -346,19 +346,19 @@ class Matcher:
 
 
 def add_rules(request, company, rule_name):
-    user_rules = {}
+    query = {'company': company, 'rule_name': rule_name}
     try:
-        user_rules = mongo.show_datas('user_rule', {'company':company, 'rule_name': rule_name}, 'Mapping')[0]
-        user_rules.update(request)
-        mongo.update_datas({'company':company, 'rule_name': rule_name}, {'$set': user_rules}, 'user_rule', 'Mapping')
+        user_rules = mongo.show_datas('user_rule', query, 'Mapping')[0]
+        # user_rules.update(request)
+        # mongo.update_datas({'company':company, 'rule_name': rule_name}, {'$set': user_rules}, 'user_rule', 'Mapping')
+        mongo.delete_datas(query, 'user_rule', 'Mapping')
     except:
-        user_rules['company'] = company
-        user_rules['rule_name'] = rule_name
+        user_rules = query
         # print('no user rules yet.')
-        user_rules.update(request)
-        print(user_rules)
-        mongo.insert_data(user_rules, 'user_rule', 'Mapping')
-    return 'success'
+    user_rules.update(request)
+    mongo.insert_data(user_rules, 'user_rule', 'Mapping')
+    print(user_rules)
+    return 'success update '+str(request)
 
 
 def add_stats(request, company, file, table, batch_id):
@@ -371,7 +371,7 @@ def add_stats(request, company, file, table, batch_id):
     necc_info.update(request)
     mongo.insert_data(necc_info, 'sheet_info', 'Info')
     print(necc_info)
-    return 'success'
+    return 'success update '+str(request)
 
 
 def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id='default', method='api'):
