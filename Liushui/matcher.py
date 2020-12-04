@@ -456,7 +456,7 @@ def upload_mysql(company, batch_id):
         cur_table = datas[i]['data']
         cur_df = pd.read_json(cur_table)
         final_df = pd.concat([final_df, cur_df], ignore_index=True)
-    if not 'type' in df.columns.ravel():
+    if not 'type' in final_df.columns.ravel():
         final_df.rename(columns=data.english_mapping, inplace=True)
     df = final_df.iloc[:, 1:]
     df['batch_id'] = batch_id

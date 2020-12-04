@@ -166,6 +166,8 @@ def first_last_occur_analysis():
     df = df[df['type'] == '合计']
     first_occur = {}
     last_occur = {}
+    first_month_to_money = {}
+    last_month_to_money = {}
     print(df)
     for index in df.index:
         row_val = df.loc[index, months].values
@@ -180,13 +182,23 @@ def first_last_occur_analysis():
                 last = i+1
         first_occur[company] = first
         last_occur[company] = last
-    first_dic = {'公司': list(first_occur.keys()), '月份': list(first_occur.values())}
-    first_df = pd.DataFrame(first_dic)
+        if first in first_month_to_money:
+            first_month_to_money[first] += row_val[first - 1]
+        else:
+            first_month_to_money[first] = row_val[first - 1]
+        if last in last_month_to_money:
+            last_month_to_money[last] += row_val[last - 1]
+        else:
+            last_month_to_money[last] = row_val[last - 1]
+
+    # generate first df and last df
+    first_company_to_month = {'公司': list(first_occur.keys()), '月份': list(first_occur.values())}
+    first_df = pd.DataFrame(first_company_to_month)
     first_df = first_df.sort_values(by='月份', ascending=False)
     print(first_df)
     first_df.to_excel('first_occur.xlsx')
-    last_dic = {'公司': list(last_occur.keys()), '月份': list(last_occur.values())}
-    last_df = pd.DataFrame(last_dic)
+    last_company_to_month = {'公司': list(last_occur.keys()), '月份': list(last_occur.values())}
+    last_df = pd.DataFrame(last_company_to_month)
     last_df = last_df.sort_values(by='月份', ascending=False)
     print(last_df)
     last_df.to_excel('last_occur.xlsx')
@@ -226,6 +238,80 @@ def first_last_occur_analysis():
     plt.title('每月流失供应商数量')
     plt.show()
     print(summary_count)
+
+    # calculate money for first and last in each month
+    print(first_month_to_money)
+    all_money_dic = {}
+    for month in months[:-1]:  # remove month 12
+        month_all = np.sum(df[month].values)
+        all_money_dic[int(month)] = month_all
+    print(all_money_dic)
+    first_ratio = {}
+    last_ratio = {}
+    for key, val in first_month_to_money.items():
+        first_ratio[key] = val / all_money_dic[key]
+    for key, val in last_month_to_money.items():
+        last_ratio[key] = val / all_money_dic[key]
+    print(first_ratio)
+
+    ## calculate money in all for each first and last month
+    company_to_money = df.set_index('company')['total'].to_dict()
+    first_month_to_company = {}
+    last_month_to_company = {}
+    first_month_to_money_all = {}
+    last_month_to_money_all = {}
+
+    for key, val in first_company_to_month.items():
+        if val in first_month_to_company:
+            first_month_to_company[val] += [key]
+            first_month_to_money_all[val] += company_to_money[key]
+        else:
+            first_month_to_company[val] = [key]
+            first_month_to_money_all[val] = company_to_money[key]
+    for key, val in last_company_to_month.items():
+        if val in last_month_to_company:
+            last_month_to_company[val] += [key]
+            last_month_to_money_all[val] += company_to_money[key]
+        else:
+            last_month_to_company[val] = [key]
+            last_month_to_money_all[val] = company_to_money[key]
+    
+    first_month_to_all = {}  # eg 3月计算3月到12月一共的公司总金额
+    last_month_to_all = {}
+    first_sum = 0
+    last_sum = 0
+    for i in months[:-1]:  # ['01', '02', ..., '11']
+        first_cur = 12 - int(i)
+        last_cur = int(i)
+        first_sum += all_money_dic[first_cur]
+        first_month_to_all[first_cur] = first_sum
+        last_sum += all_money_dic[last_cur]
+        last_month_to_all[last_cur] = last_sum
+    print(first_month_to_all)  # 公司持续总金额
+    print(last_month_to_all)
+
+    # calculate ratio of month / all
+    first_ratio_all = {}
+    last_ratio_all = {}
+    for key, val in first_month_to_money_all.items():
+        first_ratio_all[key] = val / first_month_to_all[key]
+    for key, val in last_month_to_money_all.items():
+        last_ratio_all[key] = val / last_month_to_all[key]
+    print(first_ratio_all)
+    
+    # generate excel
+    first_all = {'新增供应商月度总金额': first_month_to_money, '公司总月度金额': all_money_dic, '月度金额占比': first_ratio,
+                 '新增供应商持续总金额': first_month_to_money_all, '公司总持续金额': first_month_to_all, '持续金额占比': first_ratio_all}
+    first_all_df = pd.DataFrame(first_all)
+    first_all_df = first_all_df.sort_index()
+    first_all_df.to_excel('新增月金额占比统计.xlsx')
+
+    last_all = {'新增供应商月度总金额': last_month_to_money, '公司总月度金额': all_money_dic, '金额月度占比': last_ratio,
+                '新增供应商持续总金额': last_month_to_money_all, '公司总持续金额': last_month_to_all, '持续金额占比': last_ratio_all}
+    last_all_df = pd.DataFrame(last_all)
+    last_all_df = last_all_df.sort_index()
+    last_all_df.to_excel('流失月金额占比统计.xlsx')
+
 
 if __name__ == '__main__':
     start_time = time.time()
