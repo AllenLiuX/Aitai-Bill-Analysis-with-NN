@@ -79,7 +79,7 @@ def type_analysis(df):
     type_all_df['company'] = company
     type_all_df.index = pd.Series([i for i in range(type_all_df.shape[0])])
     print(type_all_df)
-    type_all_df.to_excel('type summary.xlsx', sheet_name='Sheet1')
+    type_all_df.to_excel('output/type summary.xlsx', sheet_name='Sheet1')
     print('DataFrame is written successfully to the Excel File.')
 
 
@@ -115,12 +115,12 @@ def  provider_analysis(df):
     provider_df['type'] = type
     provider_df.index = pd.Series([i for i in range(provider_df.shape[0])])
     print(provider_df)
-    provider_df.to_excel('provider summary.xlsx', sheet_name='Sheet1')
+    provider_df.to_excel('output/provider summary.xlsx', sheet_name='Sheet1')
     print('DataFrame is written successfully to the Excel File.')
 
 
 def provider_freq_analysis():
-    provider_df = pd.read_excel('provider summary.xlsx')
+    provider_df = pd.read_excel('output/provider summary.xlsx')
     cols = provider_df.columns.ravel()
     unnamed = [i for i in cols if re.search(r'Unnamed.*', i)]
     for i in unnamed:
@@ -137,7 +137,7 @@ def provider_freq_analysis():
     summary_df = pd.DataFrame(summary_dic)
     summary_df = summary_df.sort_values(by='交易月份数', ascending=False)
     print(summary_df)
-    summary_df.to_excel('provider_month_count.xlsx')
+    summary_df.to_excel('output/provider_month_count.xlsx')
     summary_count = {}
     for key, val in summary.items():
         if val in summary_count:
@@ -153,12 +153,13 @@ def provider_freq_analysis():
     for a, b in zip(xs, ys):
         plt.text(a - 1, b, '%d' % b, ha='center', va='bottom', fontsize=7)
     plt.title('供应商交易月数量分布')
-    plt.show()
+    # plt.show()
+    plt.savefig('plot/供应商交易月数量分布')
     print(summary_count)
 
 
 def first_last_occur_analysis():
-    df = pd.read_excel('provider summary.xlsx')
+    df = pd.read_excel('output/provider summary.xlsx')
     cols = df.columns.ravel()
     unnamed = [i for i in cols if re.search(r'Unnamed.*', i)]
     for i in unnamed:
@@ -196,12 +197,12 @@ def first_last_occur_analysis():
     first_df = pd.DataFrame(first_company_to_month)
     first_df = first_df.sort_values(by='月份', ascending=False)
     print(first_df)
-    first_df.to_excel('first_occur.xlsx')
+    first_df.to_excel('output/first_occur.xlsx')
     last_company_to_month = {'公司': list(last_occur.keys()), '月份': list(last_occur.values())}
     last_df = pd.DataFrame(last_company_to_month)
     last_df = last_df.sort_values(by='月份', ascending=False)
     print(last_df)
-    last_df.to_excel('last_occur.xlsx')
+    last_df.to_excel('output/last_occur.xlsx')
 
     # count summary plot
     plt.rcParams['font.family'] = ['Arial Unicode MS']  # 用来正常显示中文标签
@@ -220,7 +221,8 @@ def first_last_occur_analysis():
     for a, b in zip(xs, ys):
         plt.text(a - 1, b, '%d' % b, ha='center', va='bottom', fontsize=7)
     plt.title('每月新增供应商数量')
-    plt.show()
+    # plt.show()
+    plt.savefig('plot/每月新增供应商数量')
     print(summary_count)
     # last occur plot
     summary_count = {}
@@ -236,7 +238,8 @@ def first_last_occur_analysis():
     for a, b in zip(xs, ys):
         plt.text(a - 1, b, '%d' % b, ha='center', va='bottom', fontsize=7)
     plt.title('每月流失供应商数量')
-    plt.show()
+    # plt.show()
+    plt.savefig('plot/每月流失供应商数量')
     print(summary_count)
 
     # calculate money for first and last in each month
@@ -260,15 +263,15 @@ def first_last_occur_analysis():
     last_month_to_company = {}
     first_month_to_money_all = {}
     last_month_to_money_all = {}
-
-    for key, val in first_company_to_month.items():
+    # print(first_company_to_month)
+    for key, val in first_occur.items():
         if val in first_month_to_company:
             first_month_to_company[val] += [key]
             first_month_to_money_all[val] += company_to_money[key]
         else:
             first_month_to_company[val] = [key]
             first_month_to_money_all[val] = company_to_money[key]
-    for key, val in last_company_to_month.items():
+    for key, val in last_occur.items():
         if val in last_month_to_company:
             last_month_to_company[val] += [key]
             last_month_to_money_all[val] += company_to_money[key]
@@ -304,13 +307,13 @@ def first_last_occur_analysis():
                  '新增供应商持续总金额': first_month_to_money_all, '公司总持续金额': first_month_to_all, '持续金额占比': first_ratio_all}
     first_all_df = pd.DataFrame(first_all)
     first_all_df = first_all_df.sort_index()
-    first_all_df.to_excel('新增月金额占比统计.xlsx')
+    first_all_df.to_excel('output/新增月金额占比统计.xlsx')
 
     last_all = {'新增供应商月度总金额': last_month_to_money, '公司总月度金额': all_money_dic, '金额月度占比': last_ratio,
                 '新增供应商持续总金额': last_month_to_money_all, '公司总持续金额': last_month_to_all, '持续金额占比': last_ratio_all}
     last_all_df = pd.DataFrame(last_all)
     last_all_df = last_all_df.sort_index()
-    last_all_df.to_excel('流失月金额占比统计.xlsx')
+    last_all_df.to_excel('output/流失月金额占比统计.xlsx')
 
 
 if __name__ == '__main__':
@@ -331,10 +334,10 @@ if __name__ == '__main__':
     # 交易对手
     # provider_analysis(df)
 
-    # count provider frequency
+    # 月度交易对手频次分析
     # provider_freq_analysis()
 
-    # first_last_occur
+    # 新增流失交易方金额及占比分析
     first_last_occur_analysis()
 
 

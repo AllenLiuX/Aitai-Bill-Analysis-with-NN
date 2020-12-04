@@ -198,7 +198,7 @@ def addrules(args):
 
 def addstats(args):
     keys = [
-        'request',
+        'query',
         'company',
         'file',
         'table',
@@ -287,6 +287,7 @@ def process_file(file, args):
         return 'Upload Failed'
     keys = [
         'company',
+        'batch_id'
     ]
     # print(args)
     lost_keys = get_lost_keys(args, keys)
@@ -295,6 +296,7 @@ def process_file(file, args):
                 'respMsg': '缺少参数: %s' % ' '.join(lost_keys)}
     try:
         company = args['company']  # str
+        batch_id = args['batch_id'] #str
     except Exception as e:
         return {
             'respCode': '9999',
@@ -304,7 +306,7 @@ def process_file(file, args):
             }  # 后端传递入参都是字符, 需要检查数据类型
         }
     # data = matcher.entry(file_path, output_path, user_name)
-    data = matcher.process_file(company, upload_path, batch_id='test', method='api')
+    data = matcher.process_file(company, upload_path, batch_id=batch_id, method='api')    ## 目前测试阶段batch_id为'test'！实际应改为每次特定id
     # if data != 'success':
     #     res = {
     #         'respCode': '0000',

@@ -81,6 +81,10 @@ class Matcher:
 
         if row_num_found:
             self.target_df = pd.read_excel(self.file_path, header=row_num)  # 重新建立dataframe
+            cols = self.target_df.columns.ravel()
+            unnamed = [i for i in cols if re.search(r'Unnamed.*', i)]
+            for i in unnamed:
+                self.target_df = self.target_df.drop(columns=i)
             self.option_list = self.target_df.columns.ravel().tolist()  # 表头list
             self.transaction_num = self.target_df.shape[0]
         else:
@@ -225,7 +229,7 @@ class Matcher:
         else:
             mongo.insert_data(self.info, 'sheet_info', 'Info')
 
-        # 根据库数据找到未匹配数据
+        # 根据表数据找到未匹配数据
         nec_unmatched = []
         for i in self.necessary_items:
             if i not in self.info or self.info[i] == '':
@@ -234,6 +238,7 @@ class Matcher:
 
         return [self.necessary_unmatched, self.info]
 
+    # this function can be abandoned. 可用外部static function addrule替换
     def update_rule(self, query):  # query should be in the form of {'target': 'option'}
         for key, selected in query.items():
             # 1.更新option_unmatched
@@ -374,6 +379,41 @@ def add_stats(request, company, file, table, batch_id):
     return 'success update '+str(request)
 
 
+def output_excel(company, batch_id, file_output):
+    datas = mongo.show_datas('mapped_df', {'company': company, 'batch_id': batch_id}, 'Cache')
+    final_df = pd.read_json(datas[0]['data'])
+    for i in range(1, len(datas)):
+        cur_table = datas[i]['data']
+        cur_df = pd.read_json(cur_table)
+        final_df = pd.concat([final_df, cur_df], ignore_index=True)
+    print(final_df)
+    writer = pd.ExcelWriter(file_output)
+    final_df.to_excel(writer, sheet_name='Sheet1')
+    writer.save()
+    print('DataFrame is written successfully to the Excel File.')
+
+
+def upload_mysql(company, batch_id):
+    datas = mongo.show_datas('mapped_df', {'company': company, 'batch_id': batch_id}, 'Cache')
+    final_df = pd.read_json(datas[0]['data'])
+    db = create_engine(
+        'mysql+pymysql://bank_dev:072EeAb717e269bF@rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com:3306/bank_dev')
+    for i in range(1, len(datas)):
+        cur_table = datas[i]['data']
+        cur_df = pd.read_json(cur_table)
+        final_df = pd.concat([final_df, cur_df], ignore_index=True)
+    if not 'type' in final_df.columns.ravel():
+        final_df.rename(columns=data.english_mapping, inplace=True)
+    df = final_df.iloc[:, 1:]
+    df['batch_id'] = batch_id
+    print(df)
+    df.to_sql('liushui', db, index=False, if_exists='append')
+
+
+'''
+核心入口。调取class Matcher的总流程。
+method可用'local' or 'api'
+'''
 def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id='default', method='api'):
     matcher = Matcher(company, file_path, table, rule_name, batch_id=batch_id)
     if not matcher.info_extractor():
@@ -419,7 +459,7 @@ def process_file(company, file_path, batch_id, method='local'):
     return result_dict
 
 
-def process_dir(company, dir_path, batch_id):
+def process_dir(company, dir_path, batch_id, method='local'):
     files = os.listdir(dir_path)
     print(files)
     result = []
@@ -428,40 +468,10 @@ def process_dir(company, dir_path, batch_id):
             continue
         print('------ Processing file ' + file + ' ------')
         file_path = os.path.join(dir_path, file)
-        res = process_file(company, file_path, batch_id=batch_id)
+        res = process_file(company, file_path, batch_id=batch_id, method=method)
         result.append(res)
     return result
 
-
-def output_excel(company, batch_id, file_output):
-    datas = mongo.show_datas('mapped_df', {'company': company, 'batch_id': batch_id}, 'Cache')
-    final_df = pd.read_json(datas[0]['data'])
-    for i in range(1, len(datas)):
-        cur_table = datas[i]['data']
-        cur_df = pd.read_json(cur_table)
-        final_df = pd.concat([final_df, cur_df], ignore_index=True)
-    print(final_df)
-    writer = pd.ExcelWriter(file_output)
-    final_df.to_excel(writer, sheet_name='Sheet1')
-    writer.save()
-    print('DataFrame is written successfully to the Excel File.')
-
-
-def upload_mysql(company, batch_id):
-    datas = mongo.show_datas('mapped_df', {'company': company, 'batch_id': batch_id}, 'Cache')
-    final_df = pd.read_json(datas[0]['data'])
-    db = create_engine(
-        'mysql+pymysql://bank_dev:072EeAb717e269bF@rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com:3306/bank_dev')
-    for i in range(1, len(datas)):
-        cur_table = datas[i]['data']
-        cur_df = pd.read_json(cur_table)
-        final_df = pd.concat([final_df, cur_df], ignore_index=True)
-    if not 'type' in final_df.columns.ravel():
-        final_df.rename(columns=data.english_mapping, inplace=True)
-    df = final_df.iloc[:, 1:]
-    df['batch_id'] = batch_id
-    print(df)
-    df.to_sql('liushui', db, index=False, if_exists='append')
 
 if __name__ == '__main__':
     start_time = time.time()
