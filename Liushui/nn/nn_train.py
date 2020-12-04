@@ -24,11 +24,12 @@ import mydata as data
 
 model_path = 'models/class.h5'
 path = 'xlsx_files/yikong_label.xlsx'
+rulePath = 'xlsx_files/system type rules.xlsx'
 ABSTRACT_MAX_LEN = 20
 IMPRECISE_CUT = True
 
 
-def get_data():
+def get_data(plot=True):
     df = pd.read_excel(path)
     if not 'type' in df.columns.ravel():
         df.rename(columns=data.english_mapping, inplace=True)
@@ -43,11 +44,19 @@ def get_data():
     # data_df.to_csv('data.csv')
 
     # label generating
+    # add tokenize based sysrule instead of training set's type col
+    label_df = pd.read_excel(rulePath, sheet_name=1, header=1)
+    labels_for_tok = label_df['系统分类'].tolist()
+    labels_for_tok = [i for i in labels_for_tok if type(i) == str]
+    labels_for_tok = [i.replace('/', '') for i in labels_for_tok]
+    label_tok = Tokenizer(num_words=50, lower=False, split=' ')
+    label_tok.fit_on_texts(labels_for_tok)
+
     labels = data_df['system_classification'].tolist()
     labels = [i for i in labels if type(i) == str]
     labels = [i.replace('/', '') for i in labels]
-    label_tok = Tokenizer(num_words=50, lower=False, split=' ')
-    label_tok.fit_on_texts(labels)
+    # label_tok = Tokenizer(num_words=50, lower=False, split=' ')
+    # label_tok.fit_on_texts(labels)
     # print(label_tok.document_count)
     token_label = np.array(label_tok.texts_to_sequences(labels))
     oh_label = to_categorical(token_label.reshape(-1))  # to one hot format
@@ -111,7 +120,7 @@ def get_data():
     model.add(SimpleRNN(units=16))
     model.add(Dense(units=256, activation='relu'))
     model.add(Dropout(0.1))
-    model.add(Dense(units=16, activation='softmax'))  # 0-1
+    model.add(Dense(units=39, activation='softmax'))  # 0-1, units changed from 16 to 39 after change tokenization
     model.compile(
         loss='binary_crossentropy',
         optimizer='adam',
@@ -119,14 +128,15 @@ def get_data():
     )
 
     history = model.fit(x=x_train, y=oh_label, batch_size=40, validation_split=0.2, epochs=10)
-    plt.plot(history.history['acc'])
-    plt.plot(history.history['val_acc'])
-    plt.title('Model accuracy')
-    plt.ylabel('Accuracy')
-    plt.xlabel('Epoch')
-    plt.legend(['Train', 'Test'], loc='upper left')
-    plt.savefig('plots/training accuracy.png')
-    plt.show()
+    if plot:
+        plt.plot(history.history['acc'])
+        plt.plot(history.history['val_acc'])
+        plt.title('Model accuracy')
+        plt.ylabel('Accuracy')
+        plt.xlabel('Epoch')
+        plt.legend(['Train', 'Test'], loc='upper left')
+        plt.savefig('plots/training accuracy.png')
+        plt.show()
 
     plot_model(model, to_file='model.png')
 
@@ -142,7 +152,7 @@ def get_data():
 
 if __name__ == '__main__':
     start_time = time.time()
-    get_data()
+    get_data(False)
     end_time = time.time()
 
     print('======= Time taken: %f =======' % (end_time - start_time))
