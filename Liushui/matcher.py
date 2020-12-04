@@ -368,6 +368,8 @@ def add_rules(request, company, rule_name):
 
 def add_stats(request, company, file, table, batch_id):
     query = {'company': company, 'file': file, 'table': table, 'batch_id': batch_id}
+ #   print(request)
+ #   print(type(request))
     try:
         necc_info = mongo.show_datas('sheet_info', query, 'Info')[0]
         mongo.delete_datas(query, 'sheet_info', 'Info')

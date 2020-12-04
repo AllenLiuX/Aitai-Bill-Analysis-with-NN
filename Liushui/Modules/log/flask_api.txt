@@ -154,3 +154,1061 @@ ImmutableMultiDict([('company', 'tongpu')])
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 308-328-577
+112.64.119.237 - - [03/Dec/2020 17:30:44] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:30:47] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:30:53] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:30:53] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:31:54] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:31:58] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:32:01] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:32:01] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:33:25] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('本方名称', '交易日期'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'本方名称': '交易日期', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'本方名称': '交易日期', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('本方名称', '交易时间'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'本方名称': '交易时间', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'本方名称': '交易时间', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}112.64.119.237 - - [03/Dec/2020 17:33:29] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:33:32] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:33:32] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:37:58] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:38:02] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:38:18] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:38:18] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:39:35] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:39:39] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:39:42] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:39:42] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:42:05] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}112.64.119.237 - - [03/Dec/2020 17:42:09] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:42:13] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:42:13] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:42:58] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:43:02] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:43:04] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:43:05] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:45:05] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:45:12] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:45:20] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:46:21] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:46:29] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:46:49] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:47:02] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:47:11] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:47:22] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:48:09] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+ImmutableMultiDict([('query', "{本方银行：'nong'}"), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': "{本方银行：'nong'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': "{本方银行：'nong'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('query', "{本方银行：'none'}"), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': "{本方银行：'none'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': "{本方银行：'none'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('query', "{'本方银行'：'none'}"), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': "{'本方银行'：'none'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': "{'本方银行'：'none'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('query', '{"本方银行"："none"}'), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': '{"本方银行"："none"}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': '{"本方银行"："none"}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('query', '{"本方银行":"none"}'), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': '{"本方银行":"none"}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': '{"本方银行":"none"}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+dict_items([('本方银行', 'none')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none'}
+ImmutableMultiDict([('query', "{'本方银行':'none'}"), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': "{'本方银行':'none'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': "{'本方银行':'none'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('query', "{本方银行:'none'}"), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': "{本方银行:'none'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': "{本方银行:'none'}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('query', '{本方银行:"none"}'), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': '{本方银行:"none"}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': '{本方银行:"none"}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('query', '{"本方银行":"none"}'), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': '{"本方银行":"none"}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': '{"本方银行":"none"}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+dict_items([('本方银行', 'none')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}112.64.119.237 - - [03/Dec/2020 17:48:12] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:48:15] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:48:15] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:52:34] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:52:38] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:52:39] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:52:39] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:53:08] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:53:12] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:53:14] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:53:14] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:56:41] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:56:41] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:57:01] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+ImmutableMultiDict([('query', '[object Object]'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '[object Object]', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+ImmutableMultiDict([('query', '{"本方银行":\'none;}'), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])
+{'query': '{"本方银行":\'none;}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': '{"本方银行":\'none;}', 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('query', "{'本方银行':'none;}"), ('company', 'yikong'), ('rule_name', 'yikongall.xlsx-Sheet1')])112.64.119.237 - - [03/Dec/2020 17:57:10] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:57:51] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:57:55] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:57:58] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:57:58] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:59:21] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:59:25] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:59:27] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 17:59:27] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:17:00] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+
+{'query': "{'本方银行':'none;}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'query': "{'本方银行':'none;}", 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"本方银行":"none"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"本方银行":"none"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"本方银行":"none"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('本方银行', 'none')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"本方名称":"本方名称"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"本方名称":"本方名称"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"本方名称":"本方名称"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('本方名称', '本方名称')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none', '本方名称': '本方名称'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none']112.64.119.237 - - [03/Dec/2020 18:17:03] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:17:09] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:17:09] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:52:52] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:52:52] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:53:02] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:53:02] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:57:31] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 18:57:34] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:01:41] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+ {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"本方名称":"none"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"本方名称":"none"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"本方名称":"none"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('本方名称', 'none')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none', '本方名称': 'none'}
+ImmutableMultiDict([('query', '{"本方账号":"交易时间"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"本方账号":"交易时间"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"本方账号":"交易时间"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('本方账号', '交易时间')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none', '本方名称': 'none', '本方账号': '交易时间'}
+ImmutableMultiDict([('query', '{"系统分类":"交易日期"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"系统分类":"交易日期"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"系统分类":"交易日期"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('系统分类', '交易日期')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': 'none', '本方账号': '交易时间'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}112.64.119.237 - - [03/Dec/2020 19:01:45] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:05:07] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:05:10] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:08:24] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:08:27] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:09:16] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}112.64.119.237 - - [03/Dec/2020 19:09:20] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:11:37] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:11:40] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:14:03] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:14:06] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:14:21] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:14:32] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+titles not found!
+{}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}112.64.119.237 - - [03/Dec/2020 19:14:35] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:17:24] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:17:27] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:17:31] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:17:45] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:22:46] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:22:50] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:22:53] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:22:53] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:23:39] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+titles not found!
+{}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"本方名称":"本方银行"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"本方名称":"本方银行"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"本方名称":"本方银行"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('本方名称', '本方银行')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': '本方银行', '本方账号': '交易时间'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}112.64.119.237 - - [03/Dec/2020 19:23:42] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:23:45] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:23:45] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:24:17] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:24:20] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:24:23] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:24:23] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:25:17] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:25:21] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:25:23] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:25:23] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:25:53] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+
+ImmutableMultiDict([('query', '{"本方名称":"本方名称"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"本方名称":"本方名称"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"本方名称":"本方名称"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('本方名称', '本方名称')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': '本方名称', '本方账号': '交易时间'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"本方名称":"本方银行"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"本方名称":"本方银行"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"本方名称":"本方银行"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('本方名称', '本方银行')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': '本方银行', '本方账号': '交易时间'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"本方名称":"Unnamed: 0.1.1"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'yikong')])
+{'query': '{"本方名称":"Unnamed: 0.1.1"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+{'query': '{"本方名称":"Unnamed: 0.1.1"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'yikong'}
+dict_items([('本方名称', 'Unnamed: 0.1.1')])
+{'_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]112.64.119.237 - - [03/Dec/2020 19:25:56] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:26:04] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:26:04] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:26:15] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.64.119.237 - - [03/Dec/2020 19:26:15] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+101.86.250.71 - - [03/Dec/2020 21:15:05] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+112.65.61.19 - - [04/Dec/2020 17:05:13] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:05:16] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:05:21] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:05:22] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:06:00] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:06:00] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:06:44] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:06:44] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:06:53] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+
+['本方名称', '本方账号', '本方银行', '系统分类'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}
+{'Sheet1': {'unmapped': ['本方名称', '本方账号', '本方银行', '系统分类'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"本方名称":"本方名称"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '{"本方名称":"本方名称"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '{"本方名称":"本方名称"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+dict_items([('本方名称', '本方名称')])
+{'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '_id': ObjectId('5fc8cb4cacfeb8166c4d6a94')}
+ImmutableMultiDict([('query', '{"系统分类":"本方银行"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '{"系统分类":"本方银行"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '{"系统分类":"本方银行"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+dict_items([('系统分类', '本方银行')])
+{'_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+['本方账号', '本方银行'] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行'}
+{'Sheet1': {'unmapped': ['本方账号', '本方银行'], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"本方账号":"交易时间"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '{"本方账号":"交易时间"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '{"本方账号":"交易时间"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+dict_items([('本方账号', '交易时间')])
+{'_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行', '本方账号': '交易时间'}
+ImmutableMultiDict([('query', '{"本方银行":"交易日期"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '{"本方银行":"交易日期"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '{"本方银行":"交易日期"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+dict_items([('本方银行', '交易日期')])
+{'_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行', '本方账号': '交易时间', '本方银行': '交易日期'}
+ImmutableMultiDict([('query', '{"本方银行":"摘要"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '{"本方银行":"摘要"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '{"本方银行":"摘要"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+dict_items([('本方银行', '摘要')])
+{'_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行', '本方账号': '交易时间', '本方银行': '摘要'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]112.65.61.19 - - [04/Dec/2020 17:06:56] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:07:04] "[37mOPTIONS /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:07:05] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:07:09] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:07:13] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+
+[] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行', '本方账号': '交易时间', '本方银行': '摘要'}
+{'Sheet1': {'unmapped': [], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行', '本方账号': '交易时间', '本方银行': '摘要'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"对方名称":"本方银行"}'), ('rule_name', 'yikongall.xlsx-Sheet1'), ('company', 'tongpu')])
+{'query': '{"对方名称":"本方银行"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+{'query': '{"对方名称":"本方银行"}', 'rule_name': 'yikongall.xlsx-Sheet1', 'company': 'tongpu'}
+dict_items([('对方名称', '本方银行')])
+{'_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行', '本方账号': '交易时间', '本方银行': '摘要', '对方名称': '本方银行'}
+ImmutableMultiDict([('company', 'tongpu')])
+{'company': 'tongpu'}
+{'company': 'tongpu'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+[] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '本方银行', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行', '本方账号': '交易时间', '本方银行': '摘要'}
+{'Sheet1': {'unmapped': [], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '本方银行', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8cb4cacfeb8166c4d6a94'), 'company': 'tongpu', 'rule_name': 'yikongall.xlsx-Sheet1', '本方名称': '本方名称', '系统分类': '本方银行', '本方账号': '交易时间', '本方银行': '摘要'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'tongpu', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('company', 'yikong')])
+{'company': 'yikong'}
+{'company': 'yikong'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+[] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}
+{'Sheet1': {'unmapped': [], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}112.65.61.19 - - [04/Dec/2020 17:10:40] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:21:00] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+ * Detected change in '/home/bank_dev/Aita-Tech/Liushui/matcher.py', reloading
+
+ImmutableMultiDict([('request', '{"self_name": "yikong", "currency": "CNY", "self_bank": ""}'), ('company', 'yikong'), ('file', 'yikongall.xlsx'), ('table', 'Sheet1'), ('batch_id', 'test')])
+{'request': '{"self_name": "yikong", "currency": "CNY", "self_bank": ""}', 'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'batch_id': 'test'}
+{'request': '{"self_name": "yikong", "currency": "CNY", "self_bank": ""}', 'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'batch_id': 'test'}
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 308-328-577
+ * Serving Flask app "flask_api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5101/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 308-328-577
+112.65.61.19 - - [04/Dec/2020 17:24:27] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:24:36] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+ * Detected change in '/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py', reloading
+ImmutableMultiDict([('company', 'yikong'), ('batch_id', 'test')])
+{'company': 'yikong', 'batch_id': 'test'}
+{'company': 'yikong', 'batch_id': 'test'}
+------ Processing table Sheet1 ------
+      Unnamed: 0  Unnamed: 0.1  Unnamed: 0.1.1  ...   流出金额    交易后余额 系统分类
+0              0             0               0  ...   3760  27064.1  NaN
+1              1             1               1  ...   4700  22364.1  NaN
+2              2             2               2  ...   2250  20114.1  NaN
+3              3             3               3  ...   1240  18874.1  NaN
+4              4             4               4  ...  912.8  17961.3  NaN
+...          ...           ...             ...  ...    ...      ...  ...
+8875        8875          2755             685  ...   1500  13259.4  NaN
+8876        8876          2756             686  ...     14  13245.4  NaN
+8877        8877          2757             687  ...      0  37445.4  NaN
+8878        8878          2758             688  ...   6300  31145.4  NaN
+8879        8879          2759             689  ...  321.3  30824.1  NaN
+
+[8880 rows x 16 columns]
+[] ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}
+{'Sheet1': {'unmapped': [], 'options': ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', '交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': '交易日期', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+ImmutableMultiDict([('query', '{"self_name": "yikong", "currency": "CNY", "self_bank": ""}'), ('company', 'yikong'), ('file', 'yikongall.xlsx'), ('table', 'Sheet1'), ('batch_id', 'test')])
+{'query': '{"self_name": "yikong", "currency": "CNY", "self_bank": ""}', 'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'batch_id': 'test'}
+{'query': '{"self_name": "yikong", "currency": "CNY", "self_bank": ""}', 'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'batch_id': 'test'}
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 308-328-577
+ * Serving Flask app "flask_api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "flask_api.py", line 409, in <module>
+    app.run(host='0.0.0.0', port=5101)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/serving.py", line 1030, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+112.65.61.19 - - [04/Dec/2020 17:28:15] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:28:25] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:28:30] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+ * Serving Flask app "flask_api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5101/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 308-328-577
+112.65.61.19 - - [04/Dec/2020 17:30:38] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:30:39] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:30:47] "[37mPOST /liushui/addrules HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:30:51] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+Traceback (most recent call last):
+  File "flask_api.py", line 16, in <module>
+    import matcher as matcher
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 1, in <module>
+    BB# -- coding:UTF-8 --
+NameError: name 'BB' is not defined
+ * Serving Flask app "flask_api" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5101/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 308-328-577
+112.65.61.19 - - [04/Dec/2020 17:42:49] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:42:58] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:43:17] "[37mPOST /liushui/addstats HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:43:24] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+{'query': '{"self_name": "yikong", "currency": "CNY", "self_bank": ""}', 'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'batch_id': 'test'}
+{'_id': ObjectId('5fca0407cfb9ca7301c72ba6'), 'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'batch_id': 'test', 'self_name': 'yikong', 'currency': 'CNY', 'self_bank': ''}
+{'company': 'yikong', 'batch_id': 'test2'}
+------ Processing table Sheet1 ------
+          交易日期       交易时间           本方名称  ...   流出金额    交易后余额 系统分类
+0     20190102 2019-01-02  浙江亿控自动化设备有限公司  ...   3760  27064.1  NaN
+1     20190102 2019-01-02  浙江亿控自动化设备有限公司  ...   4700  22364.1  NaN
+2     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...   2250  20114.1  NaN
+3     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...   1240  18874.1  NaN
+4     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...  912.8  17961.3  NaN
+...        ...        ...            ...  ...    ...      ...  ...
+8875  20181228 2018-12-28  浙江亿控自动化设备有限公司  ...   1500  13259.4  NaN
+8876  20181228 2018-12-28  浙江亿控自动化设备有限公司  ...     14  13245.4  NaN
+8877  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...      0  37445.4  NaN
+8878  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...   6300  31145.4  NaN
+8879  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...  321.3  30824.1  NaN
+
+[8880 rows x 13 columns]
+[] ['交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}
+{'Sheet1': {'unmapped': [], 'options': ['交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+{'query': '{"self_name": "yikong", "currency": "CNY", "self_bank": ""}', 'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'batch_id': 'test2'}
+{'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'batch_id': 'test2', 'self_name': 'yikong', 'currency': 'CNY', 'self_bank': '', '_id': ObjectId('5fca04b598daf58576931bad')}
+{'company': 'yikong', 'batch_id': 'test2'}
+------ Processing table Sheet1 ------
+          交易日期       交易时间           本方名称  ...   流出金额    交易后余额 系统分类
+0     20190102 2019-01-02  浙江亿控自动化设备有限公司  ...   3760  27064.1  NaN
+1     20190102 2019-01-02  浙江亿控自动化设备有限公司  ...   4700  22364.1  NaN
+2     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...   2250  20114.1  NaN
+3     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...   1240  18874.1  NaN
+4     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...  912.8  17961.3  NaN
+...        ...        ...            ...  ...    ...      ...  ...
+8875  20181228 2018-12-28  浙江亿控自动化设备有限公司  ...   1500  13259.4  NaN
+8876  20181228 2018-12-28  浙江亿控自动化设备有限公司  ...     14  13245.4  NaN
+8877  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...      0  37445.4  NaN
+8878  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...   6300  31145.4  NaN
+8879  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...  321.3  30824.1  NaN
+
+[8880 rows x 13 columns]
+[] ['交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'] {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}
+{'Sheet1': {'unmapped': [], 'options': ['交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none'], 'mapped': {'交易日期': '交易日期', '交易时间': '交易时间', '对方名称': '对方名称', '对方账号': '对方账号', '交易类型': '交易类型', '摘要': '摘要', '流入金额': '流入金额', '流出金额': '流出金额', '交易后余额': '交易后余额', '_id': ObjectId('5fc8afe1661e719369bb19a0'), 'company': 'yikong', 'rule_name': 'yikongall.xlsx-Sheet1', '本方银行': 'none', '系统分类': 'none', '本方名称': 'Unnamed: 0.1.1', '本方账号': '交易时间'}, 'necessary_unmatched': ['self_name', 'self_account', 'self_bank', 'currency', 'start_date', 'end_date'], 'info': {'company': 'yikong', 'file': 'yikongall.xlsx', 'table': 'Sheet1', 'self_name': '', 'self_account': '', 'self_bank': '', 'currency': '', 'start_date': '', 'end_date': '', 'gen_date': '', 'transactions_num': 8880, 'init_balance': ''}}}
+{'company': 'yikong', 'batch_id': 'test2'}
+------ Processing table Sheet1 ------
+          交易日期       交易时间           本方名称  ...   流出金额    交易后余额 系统分类
+0     20190102 2019-01-02  浙江亿控自动化设备有限公司  ...   3760  27064.1  NaN
+1     20190102 2019-01-02  浙江亿控自动化设备有限公司  ...   4700  22364.1  NaN
+2     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...   2250  20114.1  NaN
+3     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...   1240  18874.1  NaN
+4     20190103 2019-01-03  浙江亿控自动化设备有限公司  ...  912.8  17961.3  NaN
+...        ...        ...            ...  ...    ...      ...  ...
+8875  20181228 2018-12-28  浙江亿控自动化设备有限公司  ...   1500  13259.4  NaN
+8876  20181228 2018-12-28  浙江亿控自动化设备有限公司  ...     14  13245.4  NaN
+8877  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...      0  37445.4  NaN
+8878  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...   6300  31145.4  NaN
+8879  20181229 2018-12-29  浙江亿控自动化设备有限公司  ...  321.3  30824.1  NaN
+
+[8880 rows x 13 columns]
+[] ['交易日期', '交易时间', '本方名称', '本方账号', '本方银行', '对方名称', '对方账号', '交易类型', '摘要', '流入金额', '流出金额', '交易后余额', '系统分类', 'none']112.65.61.19 - - [04/Dec/2020 17:43:54] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:52:25] "[37mOPTIONS /liushui/process_file HTTP/1.1[0m" 200 -
+112.65.61.19 - - [04/Dec/2020 17:52:28] "[37mPOST /liushui/process_file HTTP/1.1[0m" 200 -

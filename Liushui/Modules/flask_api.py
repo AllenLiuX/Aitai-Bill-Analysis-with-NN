@@ -214,7 +214,7 @@ def addstats(args):
         file = args['file']
         table = args['table']
         batch_id = args['batch_id']
-        print(query.items())
+#        print('type of query is: ', type(query))
     except Exception as e:
         return {
             'respCode': '9999',
@@ -224,7 +224,7 @@ def addstats(args):
             }  # 后端传递入参都是字符, 需要检查数据类型
         }
     # data = matcher.add_rules(query, path)
-    data = matcher.add_stats(request, company, file, table, batch_id)
+    data = matcher.add_stats(query, company, file, table, batch_id)
     res = {
         'respCode': '0000',
         'respMsg': 'success',
@@ -379,13 +379,13 @@ dic_api = {
 class Service_name(Resource):
     def post(self, api_name):
         # 获取入参
-        print(request.form)
+#        print(request.form)
         try:
             file = request.files['file']
         except Exception:
             pass
         args = request.form.to_dict()
-        print(args)
+#        print(args)
 
         # api接口
         if api_name in dic_api:

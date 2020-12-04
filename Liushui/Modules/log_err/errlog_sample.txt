@@ -118,3 +118,111 @@ Traceback (most recent call last):
   File "/home/bank_dev/.local/lib/python3.7/site-packages/pymongo/helpers.py", line 212, in _raise_last_write_error
     raise WriteError(error.get("errmsg"), error.get("code"), error)
 pymongo.errors.WriteError: db already exists with different case already have: [mapping] trying to create [Mapping], full error: {'index': 0, 'code': 13297, 'errmsg': 'db already exists with different case already have: [mapping] trying to create [Mapping]'}
+
+2020-12-04 17:28:15.591 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 376, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
+
+2020-12-04 17:28:30.982 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 376, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
+
+2020-12-04 17:30:38.604 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 376, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
+
+2020-12-04 17:30:39.883 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 376, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
+
+2020-12-04 17:30:51.422 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 376, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
+
+2020-12-04 17:31:18.364 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 376, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
+
+2020-12-04 17:35:53.384 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 378, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
+
+2020-12-04 17:36:59.224 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 378, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
+
+2020-12-04 17:39:27.644 addstats {"query": "{\"self_name\": \"yikong\", \"currency\": \"CNY\", \"self_bank\": \"\"}", "company": "yikong", "file": "yikongall.xlsx", "table": "Sheet1", "batch_id": "test"}
+Traceback (most recent call last):
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 397, in post
+    res = dic_api[api_name](args)
+  File "/home/bank_dev/Aita-Tech/Liushui/Modules/flask_api.py", line 227, in addstats
+    data = matcher.add_stats(request, company, file, table, batch_id)
+  File "/home/bank_dev/Aita-Tech/Liushui/matcher.py", line 378, in add_stats
+    necc_info.update(request)
+  File "/home/bank_dev/.local/lib/python3.7/site-packages/werkzeug/local.py", line 378, in <lambda>
+    __iter__ = lambda x: iter(x._get_current_object())
+TypeError: 'Request' object is not iterable
