@@ -6,9 +6,9 @@ import Modules.mongodb as mongo
 import Modules.public_module as md
 
 '''
-以每个公司为一个Analyzer，从sheet_info里提取公司所含所有表单的基本信息和定位（file+table), 并根据定位依次处理每个表单
+以每个公司为一个Verifier，从sheet_info里提取公司所含所有表单的基本信息和定位（file+table), 并根据定位依次处理每个表单
 '''
-class Analyzer:
+class Verifier:
     def __init__(self, company):
         self.company = company
         self.file_paths = []        # [[file1, table1], [file2, table2], ...]
@@ -213,26 +213,26 @@ class Analyzer:
 
 
 def run(name):
-    analyst = Analyzer(name)
-    infostatus = analyst.get_infos()
+    verifier = Verifier(name)
+    infostatus = verifier.get_infos()
     if not infostatus:
         return 'invalid name'
-    print(analyst.get_paths())
+    print(verifier.get_paths())
     res = {}
     print('------ Reports ------')
-    for path in analyst.get_paths():
+    for path in verifier.get_paths():
         cur_info = {}
         print('----- '+path[0]+path[1]+' ------')
-        cur_info['balence_error_dates'] = analyst.balance_check(1, path)
-        cur_info['benford'] = analyst.benford_check(path)
-        infomiss = analyst.info_missing_check(path)
+        cur_info['balence_error_dates'] = verifier.balance_check(1, path)
+        cur_info['benford'] = verifier.benford_check(path)
+        infomiss = verifier.info_missing_check(path)
         cur_info['abstract_missing'] = infomiss[0]
         cur_info['receiver_missing'] = infomiss[1]
         res[path[0]+path[1]] = cur_info
     print('----- overall report -----')
-    res['dates_coverage'] = analyst.dates_check()
-    res['missing_accounts'] = analyst.inner_account_check()
-    res['unmatched_trans'] = analyst.cross_validation()
+    res['dates_coverage'] = verifier.dates_check()
+    res['missing_accounts'] = verifier.inner_account_check()
+    res['unmatched_trans'] = verifier.cross_validation()
     return res
 
 

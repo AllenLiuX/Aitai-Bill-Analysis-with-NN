@@ -80,7 +80,7 @@ class Matcher:
                         break
 
         if row_num_found:
-            self.target_df = pd.read_excel(self.file_path, header=row_num)  # 重新建立dataframe
+            self.target_df = pd.read_excel(self.file_path, sheet_name=self.table, header=row_num)  # 重新建立dataframe, 注意换table！！
             cols = self.target_df.columns.ravel()
             unnamed = [i for i in cols if re.search(r'Unnamed.*', i)]
             for i in unnamed:
@@ -108,7 +108,7 @@ class Matcher:
         match = re.findall(r'(\d{16,19})', cell)
         if match:
             print('Found self account number: ', match[0])
-            self.self_account = match[0]
+            self.self_account = str(match[0])
 
 
         # 从标题提取日期
@@ -132,7 +132,6 @@ class Matcher:
                     if len(res[2]) == 1:
                         self.start_date = res[0] + res[1] + '01'
                         self.end_date = res[0] + '0' + res[2] + '30'
-
 
         # store as json
         df_json = self.target_df.to_json(orient='columns', force_ascii=False)
@@ -190,7 +189,7 @@ class Matcher:
         print(self.target_unmatched, self.option_list, self.reversed_mapping)
         return [self.target_unmatched, self.option_list, self.reversed_mapping]
 
-    def save_info(self):
+    def save_info(self, batch_id):
         '''
             info 库里的先update表里的，因为方便修改库里的信息然后反映到表上
             不重合时互相update
@@ -201,6 +200,7 @@ class Matcher:
             'company': self.company,
             'file': self.title,
             'table': self.table,
+            'batch_id': batch_id,
             'self_name': self.self_name,
             'self_account': self.self_account,
             'self_bank': self.self_bank,
@@ -211,7 +211,7 @@ class Matcher:
             'transactions_num': self.transaction_num,
             'init_balance': self.init_balance,
         }
-        query = {'company': self.company, 'file': self.title, 'table': self.table}
+        query = {'company': self.company, 'file': self.title, 'table': self.table, 'batch_id': batch_id}
         # 库数据更新表数据
         try:
             db_info = mongo.show_datas('sheet_info', query, 'Info')[0]
@@ -421,7 +421,7 @@ def process_table_api(company, file_path, table='Sheet1', rule_name='', batch_id
     if not matcher.info_extractor():
         return 'fail'
     map_res = matcher.mapping(rule_name)
-    info_res = matcher.save_info()
+    info_res = matcher.save_info(batch_id)
     if method == 'api':
         if map_res[0] or info_res[0]:
             res = {
@@ -483,6 +483,7 @@ if __name__ == '__main__':
     # res = process_dir('test', 'data/2019/1月', batch_id='1')
     # print(res)
 #    output_excel('test', '1', 'output/2019.xlsx')
-    add_rules({"本方银行": "none", "系统分类": "none"}, 'yikong', 'yikongall.xlsx-Sheet1')
+#     add_rules({"本方银行": "none", "系统分类": "none"}, 'yikong', 'yikongall.xlsx-Sheet1')
     # upload_mysql('yikong', '3')
+    res = process_file('yikong', 'data/yikong/亿控2019年银行日记账.xls', batch_id='1')
     print("--- %s seconds ---" % (time.time() - start_time))
