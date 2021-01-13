@@ -4,6 +4,7 @@ import numpy as np
 import time
 import Modules.mongodb as mongo
 import Modules.public_module as md
+import mydata
 import time
 import datetime
 
@@ -80,7 +81,59 @@ def calculation_A(company, batch_id, file_output):
     return balance_all, in_all, out_all
 
 
+def calculate_A_type(company, batch_id):
+    datas = mongo.show_datas('mapped_df', query={'company': company, 'batch_id': batch_id}, db='Cache')
+    df = pd.read_json(datas[0]['data'])
+    for data in datas[1:]:
+        cur_df = pd.read_json(data['data'])
+        df = df.append(cur_df)      # 记得赋值！
+    df.rename(columns=mydata.english_mapping, inplace=True)
+    df['year'] = df['date'].apply(lambda x: str(x)[:4])
+    # df = df.loc[:, ['date', 'receiver_name', 'received_amount', 'sent_amount', 'system_classification']]
+    # df['system_classification'] = df['system_classification'].fillna('其他')
+    in_and_out = ['received_amount', 'sent_amount']
+    result = {}
+    for inout_standard in in_and_out:
+        in_or_out_df = df[df[inout_standard] > 0]
+        if inout_standard == 'received_amount':
+            in_or_out_df['system_classification'] = in_or_out_df['system_classification'].fillna('其他收入')
+        else:
+            in_or_out_df['system_classification'] = in_or_out_df['system_classification'].fillna('其他支出')
+        # calculate the sum of money for each year
+        year_to_money = {}
+        years = list(set(in_or_out_df['year'].tolist()))
+        for year in years:
+            year_df = in_or_out_df[in_or_out_df['year'] == year]
+            year_to_money[year] = year_df['received_amount'].sum()+year_df['sent_amount'].sum()
+
+        type_to_year = {}
+        types = list(set(in_or_out_df['system_classification'].tolist()))
+        for cur_type in types:
+            type_df = in_or_out_df[in_or_out_df['system_classification'] == cur_type]
+            year_to_data = {}
+            years = list(set(type_df['year'].tolist()))
+            for year in years:
+                year_df = type_df[type_df['year'] == year]
+                year_df = year_df.drop(columns=['year'])
+                money = year_df['received_amount'].sum()+year_df['sent_amount'].sum()
+                data = {'number': year_df.shape[0],
+                        'money': money,
+                        'ratio': money/year_to_money[year],
+                        'transactions': year_df}
+                year_to_data[year] = data
+            type_to_year[cur_type] = year_to_data
+        if inout_standard == 'received_amount':
+            result['in_data'] = type_to_year
+        else:
+            result['out_data'] = type_to_year
+    # print(result)
+    return result
+
+
+
+
 if __name__ == '__main__':
     start_time = time.time()
-    calculation_A('yikong', '1', 'output/yikongtest.xlsx')
+    # calculation_A('yikong', '1', 'output/yikongtest.xlsx')
+    calculate_A_type('yikong', '1')
     print('======= Time taken: %f =======' % (time.time() - start_time))

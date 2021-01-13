@@ -6,6 +6,8 @@ import time
 import seaborn as sns
 import re
 
+import Modules.mongodb as mg
+
 rulePath = 'xlsx_files/system type rules.xlsx'
 
 input_path = '../output/yikongall2.xlsx'
@@ -58,7 +60,10 @@ def get_rules(rulePath):
 
 
 def process_file(input_path, output_path, in_map, out_map, write_excel, show_plot):
-    df = pd.read_excel(input_path)
+    if isinstance(input_path, pd.DataFrame):
+        df = input_path
+    else:
+        df = pd.read_excel(input_path)
     stats = {}
     for i in df.index:
         receiver = df['对方名称'].loc[i]
@@ -129,7 +134,26 @@ def main(input_path, output_path, write_excel=True, show_plot=True):
     return df
 
 
+def main_mg(company, batch_id):
+    in_map, out_map = get_rules(rulePath)
+    try:
+        del in_map['nan']
+        del out_map['']
+        del out_map['nan']
+    except Exception as e:
+        print(e)
+    datas = mg.show_datas('mapped_df', query={'company': company, 'batch_id': batch_id}, db='Cache')
+    for data in datas:
+        cur_df = pd.read_json(data['data'])
+        labeled_df = process_file(cur_df, '', in_map, out_map, show_plot=False, write_excel=False)
+        df_json = labeled_df.to_json(orient='columns', force_ascii=False)
+        data['data'] = df_json
+        mg.delete_datas({'batch_id': batch_id, 'file': data['file'], 'table': data['table']}, 'mapped_df', 'Cache')
+        mg.insert_data(data, 'mapped_df', 'Cache')
+        
+
 if __name__ == '__main__':
     start_time = time.time()
-    main(input_path, output_path)
+    # main(input_path, output_path)
+    main_mg('yikong', '1')
     print("--- %s seconds ---" % (time.time() - start_time))

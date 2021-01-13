@@ -14,5 +14,6 @@ if __name__ == '__main__':
     df_sum = df1.add(df3, fill_value=0)
     print(df_sum)
     s = df_sum.iloc[2]
+    print('2021' > '2020')
     # print(s.name)
     print('======= Time taken: %f =======' % (time.time() - start_time))
