@@ -81,14 +81,18 @@ def calculation_A(company, batch_id, file_output):
     return balance_all, in_all, out_all
 
 
-def calculate_A_type(company, batch_id):
+def get_dfs_by_company(company, batch_id):
     datas = mongo.show_datas('mapped_df', query={'company': company, 'batch_id': batch_id}, db='Cache')
     df = pd.read_json(datas[0]['data'])
     for data in datas[1:]:
         cur_df = pd.read_json(data['data'])
-        df = df.append(cur_df)      # 记得赋值！
+        df = df.append(cur_df)  # 记得赋值！
     df.rename(columns=mydata.english_mapping, inplace=True)
     df['year'] = df['date'].apply(lambda x: str(x)[:4])
+    return df
+
+def calculate_A_type(company, batch_id):
+    df = get_dfs_by_company(company, batch_id)
     # df = df.loc[:, ['date', 'receiver_name', 'received_amount', 'sent_amount', 'system_classification']]
     # df['system_classification'] = df['system_classification'].fillna('其他')
     in_and_out = ['received_amount', 'sent_amount']
@@ -130,10 +134,45 @@ def calculate_A_type(company, batch_id):
     return result
 
 
+def rival_calculate(company, batch_id):
+    df = get_dfs_by_company(company, batch_id)
+    in_and_out = ['received_amount', 'sent_amount']
+    result = {}
+    for inout_standard in in_and_out:
+        in_or_out_df = df[df[inout_standard] > 0]
+        year_to_rival = {}
+        years = list(set(in_or_out_df['year'].tolist()))
+        for year in years:
+            year_df = in_or_out_df[in_or_out_df['year'] == year]
+            year_sum_money = year_df['received_amount'].sum() + year_df['sent_amount'].sum()
+            rival_to_data = {}
+            rivals = list(set(year_df['receiver_name'].tolist()))
+            for rival in rivals:
+                rival_df = year_df[year_df['receiver_name'] == rival]
+                money = rival_df['received_amount'].sum()+rival_df['sent_amount'].sum()
+                data = {'money': money,
+                        'ratio': money / year_sum_money}
+                rival_to_data[rival] = data
+            # year_to_rival[year] = rival_to_data
+            summary_df = pd.DataFrame(rival_to_data)
+            summary_df = summary_df.stack().unstack(0)
+            summary_df = summary_df.sort_values(by='money', ascending=False)
+            summary_df = summary_df.iloc[:20, ]
+            # print(summary_df)
+            year_to_rival[year] = summary_df
+        if inout_standard == 'received_amount':
+            result['in_data'] = year_to_rival
+        else:
+            result['out_data'] = year_to_rival
+    print(result)
+
+    return result
+
 
 
 if __name__ == '__main__':
     start_time = time.time()
     # calculation_A('yikong', '1', 'output/yikongtest.xlsx')
-    calculate_A_type('yikong', '1')
+    # calculate_A_type('yikong', '1')
+    rival_calculate('yikong', '1')
     print('======= Time taken: %f =======' % (time.time() - start_time))
