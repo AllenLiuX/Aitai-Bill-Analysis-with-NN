@@ -140,7 +140,7 @@ def rival_calculate(company, batch_id):
     result = {}
     for inout_standard in in_and_out:
         in_or_out_df = df[df[inout_standard] > 0]
-        year_to_rival = {}
+        year_to_data = {}
         years = list(set(in_or_out_df['year'].tolist()))
         for year in years:
             year_df = in_or_out_df[in_or_out_df['year'] == year]
@@ -153,21 +153,37 @@ def rival_calculate(company, batch_id):
                 data = {'money': money,
                         'ratio': money / year_sum_money}
                 rival_to_data[rival] = data
-            # year_to_rival[year] = rival_to_data
+            # year_to_data[year] = rival_to_data
             summary_df = pd.DataFrame(rival_to_data)
             summary_df = summary_df.stack().unstack(0)
             summary_df = summary_df.sort_values(by='money', ascending=False)
-            summary_df = summary_df.iloc[:20, ]
-            # print(summary_df)
-            year_to_rival[year] = summary_df
-        if inout_standard == 'received_amount':
-            result['in_data'] = year_to_rival
+            summary_df = summary_df.iloc[:20, :]
+            year_to_data[year] = summary_df
+            # rivals.append(summary_df.index.tolist())
+        # print(rivals)
+        # print(len(rivals))
+            # 按年份排序
+        rivals = [year_to_data[i].index.tolist() for i in sorted(year_to_data.keys())]
+        print(rivals)
+        two_duplicate = []
+        three_duplicate = []
+        for i in range(len(rivals)-1):
+            dup2 = set(rivals[i]) & set(rivals[i+1])
+            two_duplicate.append(list(dup2))
+            if i < len(rivals)-2:
+                dup3 = set(rivals[i]) & set(rivals[i+1]) & set(rivals[i+2])
+                three_duplicate.append(list(dup3))
+        # print(two_duplicate, three_duplicate)
+        if inout_standard ==   'received_amount':
+            result['in_data'] = year_to_data
+            result['in_two_duplicate'] = two_duplicate
+            result['in_three_duplicate'] = three_duplicate
         else:
-            result['out_data'] = year_to_rival
-    print(result)
-
+            result['out_data'] = year_to_data
+            result['out_two_duplicate'] = two_duplicate
+            result['out_three_duplicate'] = three_duplicate
+    # print(result)
     return result
-
 
 
 if __name__ == '__main__':
