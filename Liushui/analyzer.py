@@ -89,6 +89,7 @@ def get_dfs_by_company(company, batch_id):
         df = df.append(cur_df)  # 记得赋值！
     df.rename(columns=mydata.english_mapping, inplace=True)
     df['year'] = df['date'].apply(lambda x: str(x)[:4])
+    df['month'] = df['date'].apply(lambda x: str(x)[:6])
     return df
 
 def calculate_A_type(company, batch_id):
@@ -164,7 +165,7 @@ def rival_calculate(company, batch_id):
         # print(len(rivals))
             # 按年份排序
         rivals = [year_to_data[i].index.tolist() for i in sorted(year_to_data.keys())]
-        print(rivals)
+        # print(rivals)
         two_duplicate = []
         three_duplicate = []
         for i in range(len(rivals)-1):
@@ -174,7 +175,7 @@ def rival_calculate(company, batch_id):
                 dup3 = set(rivals[i]) & set(rivals[i+1]) & set(rivals[i+2])
                 three_duplicate.append(list(dup3))
         # print(two_duplicate, three_duplicate)
-        if inout_standard ==   'received_amount':
+        if inout_standard == 'received_amount':
             result['in_data'] = year_to_data
             result['in_two_duplicate'] = two_duplicate
             result['in_three_duplicate'] = three_duplicate
@@ -182,7 +183,73 @@ def rival_calculate(company, batch_id):
             result['out_data'] = year_to_data
             result['out_two_duplicate'] = two_duplicate
             result['out_three_duplicate'] = three_duplicate
-    # print(result)
+    print(result)
+    return result
+
+
+def lowfreq_largeval_analyze(company, batch_id, start_date, end_date, max_freq, min_money, month_or_year):
+    df = get_dfs_by_company(company, batch_id)
+    df = df[df["date"] > int(start_date)]
+    df = df[df["date"] < int(end_date)]
+    # print(df)
+    # return
+    in_and_out = ['received_amount', 'sent_amount']
+    result = {}
+    for inout_standard in in_and_out:
+        in_or_out_df = df[df[inout_standard] > 0]
+        rivals = list(set(in_or_out_df['receiver_name'].tolist()))
+        rival_to_data = {}
+        for rival in rivals:
+            rival_df = in_or_out_df[in_or_out_df['receiver_name'] == rival]
+            rival_data = {}
+            rival_filtered_df = pd.DataFrame()
+            has_data = False
+            if month_or_year == 'month':
+                months = list(set(rival_df['month'].tolist()))
+                for month in months:
+                    month_df = rival_df[rival_df['month'] == month]
+                    month_df = month_df.sort_values(by=inout_standard)
+                    month_df = month_df.iloc[:max_freq, :]
+                    money = month_df[inout_standard].sum()
+                    if money >= min_money:
+                        has_data = True
+                        rival_filtered_df = rival_filtered_df.append(month_df)
+                        rival_filtered_df.drop(columns=['year', 'month'], inplace=True)
+                        # print(rival_filtered_df)
+                if has_data:
+                    rival_data['data'] = rival_filtered_df
+                    money = rival_filtered_df[inout_standard].sum()
+                    rival_data['money'] = money
+                    rival_data['number'] = rival_filtered_df.shape[0]
+                    rival_data['average'] = money/rival_filtered_df.shape[0]
+
+            elif month_or_year == 'year':
+                rival_data = {}
+                rival_filtered_df = pd.DataFrame()
+                years = list(set(rival_df['year'].tolist()))
+                for year in years:
+                    year_df = rival_df[rival_df['year'] == year]
+                    year_df = year_df.sort_values(by=inout_standard)
+                    year_df = year_df.iloc[:max_freq, :]
+                    money = year_df[inout_standard].sum()
+                    if money >= min_money:
+                        has_data = True
+                        rival_filtered_df = rival_filtered_df.append(year_df)
+                        rival_filtered_df.drop(columns=['year', 'month'], inplace=True)
+                        # print(rival_filtered_df)
+                if has_data:
+                    rival_data['data'] = rival_filtered_df
+                    money = rival_filtered_df[inout_standard].sum()
+                    rival_data['money'] = money
+                    rival_data['number'] = rival_filtered_df.shape[0]
+                    rival_data['average'] = money / rival_filtered_df.shape[0]
+            if has_data:
+                rival_to_data[rival] = rival_data
+        if inout_standard == 'received_amount':
+            result['in_data'] = rival_to_data
+        else:
+            result['out_data'] = rival_to_data
+    print(result)
     return result
 
 
@@ -190,5 +257,6 @@ if __name__ == '__main__':
     start_time = time.time()
     # calculation_A('yikong', '1', 'output/yikongtest.xlsx')
     # calculate_A_type('yikong', '1')
-    rival_calculate('yikong', '1')
+    # rival_calculate('yikong', '1')
+    lowfreq_largeval_analyze('yikong', '1', '20180101', '20181231', 2, 100000, 'month')
     print('======= Time taken: %f =======' % (time.time() - start_time))
