@@ -3,3 +3,4 @@ Liushui/log_err/
 Liushui/output/
 ./Liushui/nn/imdb/
 Liushui/__pycache__/
+Liushui/bank_config.py
