@@ -6,7 +6,7 @@ import pymysql
 class Database():
     def __init__(self):
         # self.db = sqlite3.connect(db)
-        self.db = pymysql.connect(host='rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com', user='bank_dev', password='072EeAb717e269bF',
+        self.db = pymysql.connect(host='rm-uf6z3yjw3719s70sbuo.mysql.rds.aliyuncs.com', user='bank_dev', password='(fill this blank)',
                              db='bank_dev')
         self.cursor = self.db.cursor()
 
